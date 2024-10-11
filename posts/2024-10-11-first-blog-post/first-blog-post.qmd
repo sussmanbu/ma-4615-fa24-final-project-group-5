@@ -1,70 +1,63 @@
 ---
 title: "First Blog Post"
 description:  |
-  1. NYPD Arrest Data (Year to Date) Source: NYPD Arrest Data Columns:
-  19 Rows: This dataset includes a breakdown of arrests in New York City,
-  with thousands of rows representing individual arrests over the course
-  of the current year. Description and Origin: The dataset is manually
-  extracted and reviewed by the Office of Management Analysis and Planning.
-  It includes information such as arrest records, crime type, and suspect
-  demographics. In addition, it provides a breakdown of the police
-  enforcement activity in NYC, giving insights into the types of crimes and
-  the frequency. Main Questions: Do arrest patterns vary significantly by
-  race across different boroughs or precincts? Are there disparities in the
-  types of crimes different racial groups are arrested for (felonies vs.
-  misdemeanors)? How do demographic factors like age and sex influence arrest
-  rates by race? Challenges: While the dataset has lots of information, it
-  requires us to clean and organize the data effectively when working with
-  location-based data. Additionally, the coordinates need to be interpreted
-  correctly, which makes ensuring accurate data more challenging. Since
-  we are looking at racial disparities, it is essential to recognize
-  that multiple factors influence the data beyond race alone. In other
-  words, we need to control other factors to isolate the specific impact
-  of race on arrest outcomes.
+  1. NYPD Arrest Data (Year to Date)
   
-  2. Chicago Violence Reduction Data Source:
-  https://catalog.data.gov/dataset/violence-reduction-victim-demographics-aggregated
-  Columns: 11 Rows: Each row is aggregated up to victimization type, age
-  group, sex, race, and whether the victimization was domestic-related.
-  There are 54756 rows. Description and Origin: This dataset contains
-  aggregate data on violent index victimizations at the quarter level of
-  each year (i.e., January – March, April – June, July – September, October
+  Source: https://data.cityofnewyork.us/Public-Safety/NYPD-Arrest-Data-Year-to-Date-/uip8-fykc/about_data
+  Columns:19
+  
+  Rows: This dataset includes a breakdown of arrests in New York City, with thousands of rows representing individual arrests over the course of the current year.
+  
+  Description and Origin: The dataset is manually extracted and reviewed by the Office of Management Analysis and Planning. It includes information such as arrest records, crime type, and suspect demographics. In addition, it provides a breakdown of the police enforcement activity in NYC, giving insights into the types of crimes and the frequency.
+  
+  Main Questions:
+  Do arrest patterns vary significantly by race across different boroughs or precincts? Are there disparities in the types of crimes different racial groups are arrested for (felonies vs.
+  misdemeanors)?
+  How do demographic factors like age and sex influence arrest rates by race?
+  
+  Challenges: While the dataset has lots of information, it requires us to clean and organize the data effectively when working with location-based data. Additionally, the coordinates need to be interpreted correctly, which makes ensuring accurate data more challenging. Since we are looking at racial disparities, it is essential to recognize that multiple factors influence the data beyond race alone. In other words, we need to control other factors to isolate the specific impact of race on arrest outcomes.
+  
+  2. Chicago Violence Reduction
+  Data Source: https://catalog.data.gov/dataset/violence-reduction-victim-demographics-aggregated
+  
+  Columns: 11
+  Rows: Each row is aggregated up to victimization type, age group, sex, race, and whether the victimization was domestic-related. There are 54756 rows.
+  
+  Description and Origin: This dataset contains aggregate data on violent index victimizations at the quarter level of each year (i.e., January – March, April – June, July – September, October
   – December), from 2001 to the present (1991 to present for Homicides), with
   a focus on those related to gun violence. This dataset includes only those
   index crimes that involve bodily harm or the threat of bodily harm and
   are reported to the Chicago Police Department (CPD). Index crimes are 10
   crime types selected by the FBI (codes 1-4) for special focus due to their
-  seriousness and frequency. Main Questions: How does the number of victims
-  vary across age groups, sex, and race? Are certain quarters of the year
-  consistently getting more victims with certain demographic perpetrators,
-  and do these patterns change year-over-year? Are domestic-related
-  incidents more prevalent in any particular index crime type or demographic
-  group? Challenge: One challenge we foresee is potential coding logic.
+  seriousness and frequency.
+  
+  Main Questions:
+  How does the number of victims vary across age groups, sex, and race?
+  Are certain quarters of the year consistently getting more victims with certain demographic perpetrators,
+  and do these patterns change year-over-year?
+  Are domestic-related incidents more prevalent in any particular index crime type or demographic
+  group?
+  
+  Challenge:
+  One challenge we foresee is potential coding logic.
   The quarterly system and large data quantity will be something to work
   through. Another thing to note is that the dataset is updated daily,
   so as long as nothing drastic pops up, our analysis will remain smooth
   running. Working with multiple variables can be confusing, but with time,
   we should be able to overcome that.
   
-  3. Job Patterns For Minorities And
-  Women In Private Industry, 2017 EEO-1 National Aggregate Report Source:
-  https://catalog.data.gov/dataset/job-patterns-for-minorities-and-women-in-private-industry-2017-eeo-1-national-aggregate-re
-  Columns: 12 (275 total) Rows: 43729 Description and Origin: As part of
-  its mandate under Title VII of the Civil Rights Act of 1964, as amended,
-  the Equal Employment Opportunity Commission requires periodic reports from
-  public and private employers, and unions and labor organizations which
-  indicate the composition of their work forces by sex and by race/ethnic
-  category. Key among these reports is the EEO-1, which is collected annually
-  from Private employers with 100 or more employees or federal contractors
-  with 50 more employees. Main Questions: How does employment by race (WHT10,
-  BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, TOMRT10) vary across different
-  industries or geographic regions? How does the racial composition of the
-  workforce differ by industry? Are there significant employment disparities
-  between racial groups within the same industry or region? Challenges: This
-  dataset would require high-dimensional analysis which may be difficult with
-  what we learned in class. Another challenge is that much of the data is
-  aggregated or has aggregated variable which may make it difficult to make
-  deeper analyses.
+  3. Job Patterns For Minorities And Women In Private Industry, 2017 EEO-1 National Aggregate Report
+  
+  Source: https://catalog.data.gov/dataset/job-patterns-for-minorities-and-women-in-private-industry-2017-eeo-1-national-aggregate-re
+  Columns: 12 (275 total)
+  Rows: 43729
+  
+  Description and Origin: As part of its mandate under Title VII of the Civil Rights Act of 1964, as amended, the Equal Employment Opportunity Commission requires periodic reports from public and private employers, and unions and labor organizations which indicate the composition of their work forces by sex and by race/ethnic category. Key among these reports is the EEO-1, which is collected annually from Private employers with 100 or more employees or federal contractors with 50 more employees.
+  
+  Main Questions: How does employment by race (WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, TOMRT10) vary across different industries or geographic regions? How does the racial composition of the workforce differ by industry? Are there significant employment disparities between racial groups within the same industry or region? 
+  
+  Challenges: This dataset would require high-dimensional analysis which may be difficult with what we learned in class. Another challenge is that much of the data is aggregated or has aggregated variable which may make it difficult to make deeper analyses.
+  
 author: "Group 5"
 date: "2024-10-11"
 date-modified: "2024-10-11"
