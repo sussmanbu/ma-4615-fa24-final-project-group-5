@@ -28,6 +28,10 @@ I am a senior studying data science.
 Statistic  master student
 # George Jiang
 I am a junior studying data science.
+#Isaac Hu
+I am a senior studying computer science
+#Emily Lin
+I am a junior studying math and statistics
 
 <!-- Please leave in the information below -->
 
