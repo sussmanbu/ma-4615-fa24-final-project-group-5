@@ -22,9 +22,15 @@ This comes from the file `about.qmd`.
 This is a website for the final project for MA[46]15 Data Science with R by Team TEAMNAME.
 The members of this team are below.
 
+# Jay Chiang
+I am a senior studying data science.
+# Yichen Li
+Statistic  master student
+# George Jiang
+I am a junior studying data science.
+
 <!-- Please leave in the information below -->
 
-https://github.com/george962
 ### About this Template.
 
 This is based off of the standard Quarto website template from RStudio (2023.09.0 Build 463).
