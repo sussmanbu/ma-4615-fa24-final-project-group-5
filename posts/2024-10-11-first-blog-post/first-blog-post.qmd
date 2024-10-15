@@ -1,6 +1,11 @@
 ---
 title: "First Blog Post"
-description:  |
+author: "Group 5"
+date: "2024-10-11"
+date-modified: "2024-10-11"
+draft: FALSE
+---
+
   1. NYPD Arrest Data (Year to Date)
   
   Source: https://data.cityofnewyork.us/Public-Safety/NYPD-Arrest-Data-Year-to-Date-/uip8-fykc/about_data
@@ -57,10 +62,3 @@ description:  |
   Main Questions: How does employment by race (WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, TOMRT10) vary across different industries or geographic regions? How does the racial composition of the workforce differ by industry? Are there significant employment disparities between racial groups within the same industry or region? 
   
   Challenges: This dataset would require high-dimensional analysis which may be difficult with what we learned in class. Another challenge is that much of the data is aggregated or has aggregated variable which may make it difficult to make deeper analyses.
-  
-author: "Group 5"
-date: "2024-10-11"
-date-modified: "2024-10-11"
-draft: FALSE
----
-
