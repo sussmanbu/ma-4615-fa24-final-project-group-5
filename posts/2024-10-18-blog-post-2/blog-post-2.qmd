@@ -1,0 +1,19 @@
+---
+title: "blog post 2"
+author: "Group 5"
+date: "2024-10-18"
+date-modified: "2024-10-18"
+draft: FALSE
+---
+Origin: 
+This dataset was published by the US Equal Employment Opportunity Commission and is maintained by Daniel McGregor. As part of its mandate under Title VII of the Civil Rights Act of 1964, as amended, the Equal Employment Opportunity Commission requires periodic reports from public and private employers, unions, and labor organizations that indicate the composition of their workforce by sex and by race/ethnic category. Among these reports, the EEO-1 is collected annually from Private employers with 100 or more employees or federal contractors with 50 more employees. 
+
+Problems with Data:
+The ‘Aggregate’ option shows the sum of employee counts for all other options in the dropdown. This option is offered to maximize the domain of publishable data. Since the ‘Aggregate’ option includes the employee count of alternatives presented within a given dropdown, this option should not be selected if any other option is selected within the same filter.
+Therefore, uncheck the ‘Aggregate’ option from a filter dropdown while selecting any other
+option from the same dropdown for generating reports with unduplicated employee counts. With legally mandated reporting, we assume that the data gathered through the census is thorough enough that there are no concerns about selection bias; one possible area of bias is the fact that the data disregards companies with less than 100 employees; this may cause skew with demographics that might have significant employment in smaller companies, like family-owned businesses.
+
+Importance of Data:
+
+The data’s importance is to distinguish the employment disparities between racial groups within the same industry or region. The data de-identification methodology was developed to ensure the safeguarding of identifiable information to fulfill legal requirements under Section 709 (e) of Title VII of the Civil Rights Act of 1964, as amended by the Equal Employment Opportunity Act of 1972. Aggregated counts of employers and employees at each dimension (geography x job category x NAICS-2 x NAICS-3 x race x sex) were processed through primary and secondary suppression steps to protect identifying information. The programming codes were applied to each year’s data separately.
+
