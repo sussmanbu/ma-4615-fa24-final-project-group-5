@@ -1,0 +1,42 @@
+---
+title: "Blog Post 3"
+author: "Group 5" 
+date: "2024-10-23"
+date-modified: "2024-10-15"
+draft: FALSE
+---
+
+```{r}
+# Step 1: Load the CSV file
+csv_employment_data <- read.csv("~/Downloads/CAS MA 415/ma-4615-fa24-final-project-group-5/dataset/Employment2017.csv")
+csv_employment_data
+
+# Step 2: Save the data as an RDS file
+saveRDS(csv_employment_data, "Employment2017.rds")
+
+#Step 3: Read RDS file
+employment_data <- readRDS("Employment2017.rds")
+employment_data
+```
+
+```{r}
+# Replace all instances of "*" with NA
+employment_data[employment_data == "*"] <- NA
+
+# Check the summary to see if NAs exist
+summary(employment_data)
+
+# Find the number of NAs in the dataset
+sum(is.na(employment_data))
+
+```
+There are 8228939 missing values. Many asterisks are used to protect individuals (employee or establishment) from the risk of identification. An asterisk is sometimes used to protect a vulnerable cell and other times to safeguard another at-risk cell.
+
+
+```{r}
+
+
+
+```
+
+
