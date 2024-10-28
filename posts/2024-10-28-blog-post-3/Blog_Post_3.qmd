@@ -1,42 +1,172 @@
 ---
 title: "Blog Post 3"
 author: "Group 5" 
-date: "2024-10-23"
-date-modified: "2024-10-15"
+date: "2024-10-28"
+date-modified: "2024-10-28"
 draft: FALSE
 ---
 
 ```{r}
 # Step 1: Load the CSV file
 csv_employment_data <- read.csv("~/Downloads/CAS MA 415/ma-4615-fa24-final-project-group-5/dataset/Employment2017.csv")
-csv_employment_data
 
 # Step 2: Save the data as an RDS file
 saveRDS(csv_employment_data, "Employment2017.rds")
 
 #Step 3: Read RDS file
 employment_data <- readRDS("Employment2017.rds")
-employment_data
 ```
 
 ```{r}
-# Replace all instances of "*" with NA
-employment_data[employment_data == "*"] <- NA
-
 # Check the summary to see if NAs exist
 summary(employment_data)
 
 # Find the number of NAs in the dataset
 sum(is.na(employment_data))
-
 ```
 There are 8228939 missing values. Many asterisks are used to protect individuals (employee or establishment) from the risk of identification. An asterisk is sometimes used to protect a vulnerable cell and other times to safeguard another at-risk cell.
 
 
-```{r}
 
+Next, we create 3 charts to help with data visualization. 
+The first bar chart helps us visualize the 10 different job types labeled in the dataset by summing up all the rows within the given columns starting with "TOTAL_" and finding their percentages.
+The second bar chart does something similar, but this time we want to see the proportionality of the 7 given race variables disregarding job types. In a future blog post, we will look into their proportionality with the different job types. 
+The third pie chart looks at the gender variation (male/female0 between all jobs and races. 
 
+```{r p1}
+library(tidyverse)
 
+# Load your dataset
+employment_data <- readRDS("Employment2017.rds")
+employment_data[employment_data == "*"] <- NA
+
+# Define the TOTAL columns
+total_columns <- c("TOTAL1", "TOTAL2", "TOTAL3", "TOTAL4", "TOTAL5", "TOTAL6", "TOTAL7", "TOTAL8", "TOTAL9", "TOTAL1_2")
+
+# Convert TOTAL columns to numeric
+employment_data[total_columns] <- lapply(employment_data[total_columns], function(x) as.numeric(x))
+
+# Replace NA with 0 in specific TOTAL columns
+employment_data[total_columns] <- 
+  lapply(employment_data[total_columns], function(x) replace_na(x, 0))
+
+# Calculate total counts for each job type
+total_counts <- colSums(employment_data[total_columns], na.rm = TRUE)
+
+# Create a data frame for proportions
+proportion_df <- data.frame(Job_Type = names(total_counts), Count = total_counts)
+
+# Rename Job Types
+proportion_df$Job_Type <- recode(proportion_df$Job_Type,
+  TOTAL1 = "Senior Officers and Managers",
+  TOTAL2 = "Professionals",
+  TOTAL3 = "Technicians",
+  TOTAL4 = "Sales Workers",
+  TOTAL5 = "Clericals",
+  TOTAL6 = "Craft",
+  TOTAL7 = "Operatives",
+  TOTAL8 = "Laborers",
+  TOTAL9 = "Services",
+  TOTAL1_2 = "Mid Officers and Managers"
+)
+
+# Calculate proportions
+proportion_df <- proportion_df %>%
+  mutate(Proportion = Count / sum(Count))
+
+# Create a bar chart for proportions with angled x-axis labels
+ggplot(proportion_df, aes(x = Job_Type, y = Proportion, fill = Job_Type)) +
+  geom_bar(stat = "identity") +  
+  labs(title = "Proportionality of Jobs by Type", 
+       x = "Job Type", 
+       y = "Proportion") +
+  theme_gray() +  
+  scale_y_continuous(labels = scales::percent) +  
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+```{r p2}
+# Define the race columns
+race_columns <- c("WHT10", "BLKT10", "HISPT10", "ASIANT10", "AIANT10", "NHOPIT10", "TOMRT10")
+
+# Convert race columns to numeric (if needed)
+employment_data[race_columns] <- lapply(employment_data[race_columns], function(x) as.numeric(x))
+
+# Replace NA with 0 in specific race columns
+employment_data[race_columns] <- 
+  lapply(employment_data[race_columns], function(x) replace_na(x, 0))
+
+# Calculate total counts for each race
+total_race_counts <- colSums(employment_data[race_columns], na.rm = TRUE)
+
+# Create a data frame for proportions
+race_proportion_df <- data.frame(Race = names(total_race_counts), Count = total_race_counts)
+
+# Rename races
+race_proportion_df$Race <- recode(race_proportion_df$Race,
+  WHT10 = "White",
+  BLKT10 = "Black or African American",
+  HISPT10 = "Hispanic",
+  ASIANT10 = "Asian",
+  AIANT10 = "American Indian or Alaska Native",
+  NHOPIT10 = "Native Hawaiian or Other Pacific Islander",
+  TOMRT10 = "Two or more Races"
+)
+
+# Calculate proportions
+race_proportion_df <- race_proportion_df %>%
+  mutate(Proportion = Count / sum(Count))
+
+# Create a bar chart for racial proportions
+ggplot(race_proportion_df, aes(x = Race, y = Proportion, fill = Race)) +
+  geom_bar(stat = "identity") +  
+  labs(title = "Proportionality of Race", 
+       x = "Race", 
+       y = "Proportion") +
+  theme_gray() +  
+  scale_y_continuous(labels = scales::percent) +  
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1)) 
 ```
 
+```{r p3}
+# Define the gender columns
+gender_columns <- c("MT10", "FT10")
+
+# Convert gender columns to numeric (if needed)
+employment_data[gender_columns] <- lapply(employment_data[gender_columns], function(x) as.numeric(x))
+
+# Replace NA with 0 in specific gender columns
+employment_data[gender_columns] <- 
+  lapply(employment_data[gender_columns], function(x) replace_na(x, 0))
+
+# Calculate total counts for each gender
+total_gender_counts <- colSums(employment_data[gender_columns], na.rm = TRUE)
+
+# Create a data frame for proportions
+gender_proportion_df <- data.frame(Gender = names(total_gender_counts), Count = total_gender_counts)
+
+# Rename genders
+gender_proportion_df$Gender <- recode(gender_proportion_df$Gender,
+  MT10 = "Male", FT10 = "Female")
+
+# Calculate proportions
+gender_proportion_df <- gender_proportion_df %>%
+  mutate(Proportion = Count / sum(Count),
+         Percentage = Proportion * 100)  
+
+# Create a pie chart for gender proportions
+ggplot(gender_proportion_df, aes(x = "", y = Proportion, fill = Gender)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") + 
+  labs(title = "Proportionality of Gender", 
+       fill = "Gender") +
+  theme_gray() +  
+  theme(axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank()) +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")), 
+            position = position_stack(vjust = 0.5)) 
+```
 
