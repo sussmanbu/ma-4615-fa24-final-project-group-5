@@ -7,6 +7,11 @@ draft: false
 
 ![](images/data-import-cheatsheet-thumbs.png)
 
+#Write data description
+Blog Post 1: dataset description
+Blog Post 2: dataset origin, problems with data, importance of data 
+Blog Post 3: Data Equity paragraphs, changed "*" to NA and assumed 0, and summed up various columns to see the proportionality of race, gender, and job types with aggregation
+
 
 This comes from the file `data.qmd`.
 
