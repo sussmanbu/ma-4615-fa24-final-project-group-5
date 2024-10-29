@@ -172,10 +172,13 @@ saveRDS(cleaned_data, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Emp
 Data for Equity
 
 Transparency
+
 Transparency is a critical component in equitable data analysis. In our project, being transparent would provide us with any potential limitations in the dataset, such as the lack of representation for smaller sized companies. This exclusion could skew our analysis, if smaller sized companies employ more people from certain demographic groups or adhere to different hiring practices. 
 
 Privacy and Data Protection
+
 In our dataset, the use of asterisks (*) in cells are designed to prevent individual identification, which aligns with the Privacy and Data Protection principle by protecting vulnerable populations. Doing so avoids any attempts to infer or disaggregate data that could lead to re-identifying individuals or small groups, particularly in fields where there is limited representation (e.g., certain job categories or minority groups). This respect for privacy aligns with data equity by fostering a safe environment for marginalized communities.
 
 Inclusivity and Representativeness
+
 In our dataset, focusing on medium sized companies disregards the smaller sized companies, which could include potentially significance in minority or gender-represented employment. It is important to include all data as it better captures a representation of the dataset for all demographic groups. By including data on smaller sized companies, we are able to broaden the analysis and provide a more complete picture of industry disparities and representation across all workforce segments. This is particularly significant as many family businesses, which fall beyond the purview of our dataset, tend to be minority owned.
