@@ -5,26 +5,23 @@ date: "2024-10-28"
 date-modified: "2024-10-28"
 draft: FALSE
 ---
-
 ```{r}
-# Step 1: Load the CSV file
-csv_employment_data <- read.csv("~/Downloads/CAS MA 415/ma-4615-fa24-final-project-group-5/dataset/Employment2017.csv")
+if (!dir.exists("../ma-4615-fa24-final-project-group-5/dataset")) {
+  dir.create("../ma-4615-fa24-final-project-group-5/dataset")
+}
 
-# Step 2: Save the data as an RDS file
-saveRDS(csv_employment_data, "Employment2017.rds")
+csv_employment_data <- read.csv("../ma-4615-fa24-final-project-group-5/dataset/Employment2017.csv")
 
-#Step 3: Read RDS file
-employment_data <- readRDS("Employment2017.rds")
+saveRDS(csv_employment_data, "../ma-4615-fa24-final-project-group-5/dataset/Employment2017.rds")
+
+employment_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Employment2017.rds")
 ```
 
 ```{r}
-# Check the summary to see if NAs exist
-summary(employment_data)
-
-# Find the number of NAs in the dataset
+#summary(employment_data)
 sum(is.na(employment_data))
 ```
-There are 8228939 missing values. Many asterisks are used to protect individuals (employee or establishment) from the risk of identification. An asterisk is sometimes used to protect a vulnerable cell and other times to safeguard another at-risk cell.
+There are 25763 missing values. Many asterisks are used to protect individuals (employee or establishment) from the risk of identification. An asterisk is sometimes used to protect a vulnerable cell and other times to safeguard another at-risk cell.
 
 
 
@@ -36,27 +33,20 @@ The third pie chart looks at the gender variation (male/female0 between all jobs
 ```{r p1}
 library(tidyverse)
 
-# Load your dataset
 employment_data <- readRDS("Employment2017.rds")
 employment_data[employment_data == "*"] <- NA
 
-# Define the TOTAL columns
 total_columns <- c("TOTAL1", "TOTAL2", "TOTAL3", "TOTAL4", "TOTAL5", "TOTAL6", "TOTAL7", "TOTAL8", "TOTAL9", "TOTAL1_2")
 
-# Convert TOTAL columns to numeric
 employment_data[total_columns] <- lapply(employment_data[total_columns], function(x) as.numeric(x))
 
-# Replace NA with 0 in specific TOTAL columns
 employment_data[total_columns] <- 
   lapply(employment_data[total_columns], function(x) replace_na(x, 0))
 
-# Calculate total counts for each job type
 total_counts <- colSums(employment_data[total_columns], na.rm = TRUE)
 
-# Create a data frame for proportions
 proportion_df <- data.frame(Job_Type = names(total_counts), Count = total_counts)
 
-# Rename Job Types
 proportion_df$Job_Type <- recode(proportion_df$Job_Type,
   TOTAL1 = "Senior Officers and Managers",
   TOTAL2 = "Professionals",
@@ -70,11 +60,9 @@ proportion_df$Job_Type <- recode(proportion_df$Job_Type,
   TOTAL1_2 = "Mid Officers and Managers"
 )
 
-# Calculate proportions
 proportion_df <- proportion_df %>%
   mutate(Proportion = Count / sum(Count))
 
-# Create a bar chart for proportions with angled x-axis labels
 ggplot(proportion_df, aes(x = Job_Type, y = Proportion, fill = Job_Type)) +
   geom_bar(stat = "identity") +  
   labs(title = "Proportionality of Jobs by Type", 
@@ -86,23 +74,17 @@ ggplot(proportion_df, aes(x = Job_Type, y = Proportion, fill = Job_Type)) +
         axis.text.x = element_text(angle = 45, hjust = 1)) 
 ```
 ```{r p2}
-# Define the race columns
 race_columns <- c("WHT10", "BLKT10", "HISPT10", "ASIANT10", "AIANT10", "NHOPIT10", "TOMRT10")
 
-# Convert race columns to numeric (if needed)
 employment_data[race_columns] <- lapply(employment_data[race_columns], function(x) as.numeric(x))
 
-# Replace NA with 0 in specific race columns
 employment_data[race_columns] <- 
   lapply(employment_data[race_columns], function(x) replace_na(x, 0))
 
-# Calculate total counts for each race
 total_race_counts <- colSums(employment_data[race_columns], na.rm = TRUE)
 
-# Create a data frame for proportions
 race_proportion_df <- data.frame(Race = names(total_race_counts), Count = total_race_counts)
 
-# Rename races
 race_proportion_df$Race <- recode(race_proportion_df$Race,
   WHT10 = "White",
   BLKT10 = "Black or African American",
@@ -113,11 +95,9 @@ race_proportion_df$Race <- recode(race_proportion_df$Race,
   TOMRT10 = "Two or more Races"
 )
 
-# Calculate proportions
 race_proportion_df <- race_proportion_df %>%
   mutate(Proportion = Count / sum(Count))
 
-# Create a bar chart for racial proportions
 ggplot(race_proportion_df, aes(x = Race, y = Proportion, fill = Race)) +
   geom_bar(stat = "identity") +  
   labs(title = "Proportionality of Race", 
@@ -130,32 +110,24 @@ ggplot(race_proportion_df, aes(x = Race, y = Proportion, fill = Race)) +
 ```
 
 ```{r p3}
-# Define the gender columns
 gender_columns <- c("MT10", "FT10")
 
-# Convert gender columns to numeric (if needed)
 employment_data[gender_columns] <- lapply(employment_data[gender_columns], function(x) as.numeric(x))
 
-# Replace NA with 0 in specific gender columns
 employment_data[gender_columns] <- 
   lapply(employment_data[gender_columns], function(x) replace_na(x, 0))
 
-# Calculate total counts for each gender
 total_gender_counts <- colSums(employment_data[gender_columns], na.rm = TRUE)
 
-# Create a data frame for proportions
 gender_proportion_df <- data.frame(Gender = names(total_gender_counts), Count = total_gender_counts)
 
-# Rename genders
 gender_proportion_df$Gender <- recode(gender_proportion_df$Gender,
   MT10 = "Male", FT10 = "Female")
 
-# Calculate proportions
 gender_proportion_df <- gender_proportion_df %>%
   mutate(Proportion = Count / sum(Count),
          Percentage = Proportion * 100)  
 
-# Create a pie chart for gender proportions
 ggplot(gender_proportion_df, aes(x = "", y = Proportion, fill = Gender)) +
   geom_bar(stat = "identity", width = 1) +
   coord_polar("y") + 
@@ -169,4 +141,41 @@ ggplot(gender_proportion_df, aes(x = "", y = Proportion, fill = Gender)) +
   geom_text(aes(label = paste0(round(Percentage, 1), "%")), 
             position = position_stack(vjust = 0.5)) 
 ```
+Next, we create our cleaned folder. It is also included in the data.qmd as well as the scripts/cleaned_data file. 
+```{r p4}
+library(dplyr)
+library(tidyselect)
 
+employment_data <- readRDS("Employment2017.rds")
+
+cleaned_data <- employment_data %>%
+  select(
+    Nation, Region, Division, State, CBSA, County, NAICS2, NAICS2_Name, NAICS3, NAICS3_Name, Establishments,
+    matches("^WHT_([1-9]|1_2)$"),
+    matches("^BLKT_([1-9]|1_2)$"),
+    matches("^HISPT_([1-9]|1_2)$"),
+    matches("^ASIANT_([1-9]|1_2)$"),
+    matches("^AIANT_([1-9]|1_2)$"),
+    matches("^NHOPIT_([1-9]|1_2)$"),
+    matches("^TOMRT_([1-9]|1_2)$"),
+    matches("^MT_([1-9]|1_2)$"),
+    matches("^FT_([1-9]|1_2)$")
+  )
+
+if (!dir.exists("../ma-4615-fa24-final-project-group-5/dataset")) {
+  dir.create("../ma-4615-fa24-final-project-group-5/dataset", recursive = TRUE)
+}
+
+saveRDS(cleaned_data, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
+```
+
+Data for Equity
+
+Transparency
+Transparency is a critical component in equitable data analysis. In our project, being transparent would provide us with any potential limitations in the dataset, such as the lack of representation for smaller sized companies. This exclusion could skew our analysis, if smaller sized companies employ more people from certain demographic groups or adhere to different hiring practices. 
+
+Privacy and Data Protection
+In our dataset, the use of asterisks (*) in cells are designed to prevent individual identification, which aligns with the Privacy and Data Protection principle by protecting vulnerable populations. Doing so avoids any attempts to infer or disaggregate data that could lead to re-identifying individuals or small groups, particularly in fields where there is limited representation (e.g., certain job categories or minority groups). This respect for privacy aligns with data equity by fostering a safe environment for marginalized communities.
+
+Inclusivity and Representativeness
+In our dataset, focusing on medium sized companies disregards the smaller sized companies, which could include potentially significance in minority or gender-represented employment. It is important to include all data as it better captures a representation of the dataset for all demographic groups. By including data on smaller sized companies, we are able to broaden the analysis and provide a more complete picture of industry disparities and representation across all workforce segments. This is particularly significant as many family businesses, which fall beyond the purview of our dataset, tend to be minority owned.

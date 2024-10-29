@@ -10,7 +10,7 @@ draft: false
 #Write data description
 Blog Post 1: dataset description
 Blog Post 2: dataset origin, problems with data, importance of data 
-Blog Post 3: Data Equity paragraphs, changed "*" to NA and assumed 0, and summed up various columns to see the proportionality of race, gender, and job types with aggregation
+Blog Post 3: Data Equity paragraphs, changed "*" to NA and assumed 0, and summed up various columns to see the proportionality of race, gender, and job types with aggregation, and lastly, create link for cleaned dataset file
 
 
 This comes from the file `data.qmd`.
@@ -51,11 +51,15 @@ For larger datasets, you'll need to create a new folder in the project root dire
 
 Your [load_and_clean_data.R](/scripts/load_and_clean_data.R) file is how you will load and clean your data. Here is a an example of a very simple one.
 
+Your [cleaning script](/scripts/cleaned_data.R) file is how you will load and clean your data. Here is an example of how to use it:
+
 ```{r}
 source(
-  "scripts/load_and_clean_data.R",
+  "../ma-4615-fa24-final-project-group-5/scripts/cleaned_data.R",
   echo = TRUE # Use echo=FALSE or omit it to avoid code output  
 )
+# Load the cleaned dataset
+cleaned_dataset <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
 ```
 You should never use absolute paths (eg. `/Users/danielsussman/path/to/project/` or `C:\MA415\\Final_Project\`).
 
@@ -82,7 +86,7 @@ You will
   * If you have many variables then only describe the most relevant ones and summarize the rest.
 * Describe any cleaning you had to do for your data.
   * You *must* include a link to your `load_and_clean_data.R` file.
-  * Rrename variables and recode factors to make data more clear.
+  * Rename variables and recode factors to make data more clear.
   * Also, describe any additional R packages you used outside of those covered in class.
   * Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.
   * Some repetition of what you do in your `load_and_clean_data.R` file is fine and encouraged if it helps explain what you did.
