@@ -1,0 +1,46 @@
+---
+title: "Blog Post 4"
+author: "Group 5" 
+date: "2024-10-30"
+date-modified: "2024-11-08"
+draft: FALSE
+---
+
+```{r p1}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+cleaned_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
+
+long_data <- cleaned_data %>%
+  pivot_longer(
+    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)_([1-9]|1_2)$"),
+    names_to = c("Category", "JobType"),
+    names_pattern = "^(.*)_(.*)$",
+    values_to = "Count"
+  )
+
+aggregated_data <- long_data %>%
+  group_by(JobType, Category) %>%
+  summarize(TotalCount = sum(Count, na.rm = TRUE), .groups = 'drop')
+
+proportional_data <- aggregated_data %>%
+  group_by(JobType) %>%
+  mutate(Proportion = TotalCount / sum(TotalCount)) %>%
+  ungroup()
+
+ggplot(proportional_data, aes(x = JobType, y = Proportion, fill = Category)) +
+  geom_bar(stat = "identity") +
+  theme_gray() +
+  labs(
+    title = "Proportional Representation of Gender and Race within Job Types",
+    x = "Job Type",
+    y = "Proportion",
+    fill = "Category"
+  ) +
+  theme(legend.position = "bottom")
+
+
+
+```
