@@ -161,7 +161,6 @@ if (!dir.exists("../ma-4615-fa24-final-project-group-5/dataset")) {
 }
 
 saveRDS(cleaned_data, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
-
 ```
 
 Data for Equity

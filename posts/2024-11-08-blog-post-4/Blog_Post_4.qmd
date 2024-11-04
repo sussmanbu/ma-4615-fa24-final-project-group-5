@@ -11,36 +11,37 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
+# Load your cleaned data
 cleaned_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
 
+# Pivot to long format, excluding MT and FT
 long_data <- cleaned_data %>%
   pivot_longer(
-    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)_([1-9]|1_2)$"),
-    names_to = c("Category", "JobType"),
+    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$"),
+    names_to = c("Race", "JobType"),
     names_pattern = "^(.*)_(.*)$",
     values_to = "Count"
-  )
+  ) %>%
+  # Filter out any rows where JobType or Race is NA
+  filter(!is.na(JobType) & !is.na(Race))
 
-aggregated_data <- long_data %>%
-  group_by(JobType, Category) %>%
-  summarize(TotalCount = sum(Count, na.rm = TRUE), .groups = 'drop')
+# Ensure only specified Job Types are included
+valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
+filtered_data <- long_data %>%
+  filter(JobType %in% valid_job_types)
 
-proportional_data <- aggregated_data %>%
-  group_by(JobType) %>%
-  mutate(Proportion = TotalCount / sum(TotalCount)) %>%
-  ungroup()
-
-ggplot(proportional_data, aes(x = JobType, y = Proportion, fill = Category)) +
+# Plotting
+ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
   geom_bar(stat = "identity") +
+  facet_wrap(~ JobType, scales = "free_y") +
   theme_gray() +
   labs(
-    title = "Proportional Representation of Gender and Race within Job Types",
-    x = "Job Type",
-    y = "Proportion",
-    fill = "Category"
+    title = "Proportional Representation by Job Type and Race",
+    x = "Race",
+    y = "Count"
   ) +
-  theme(legend.position = "bottom")
-
-
-
+  theme(
+    legend.position = "none",
+    strip.text = element_text(size = 10, face = "bold")
+  )
 ```
