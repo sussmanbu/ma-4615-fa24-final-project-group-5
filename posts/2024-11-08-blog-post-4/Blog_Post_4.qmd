@@ -17,9 +17,9 @@ cleaned_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_E
 # Pivot to long format, excluding MT and FT
 long_data <- cleaned_data %>%
   pivot_longer(
-    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)[1-9](_2)?$"),
+    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)([1-9]|1_2)?$"),
     names_to = c("Race", "JobType"),
-    names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)([1-9]|1_2)?",
+    names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)([1-9]|1_2)?$",
     values_to = "Count"
   ) %>%
   # Filter out any rows where JobType or Race is NA
