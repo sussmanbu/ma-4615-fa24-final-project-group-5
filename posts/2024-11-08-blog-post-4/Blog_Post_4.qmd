@@ -17,13 +17,18 @@ cleaned_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_E
 # Pivot to long format, excluding MT and FT
 long_data <- cleaned_data %>%
   pivot_longer(
-    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$"),
+    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)[1-9](_2)?$"),
     names_to = c("Race", "JobType"),
-    names_pattern = "^(.*)_(.*)$",
+    names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)([1-9]|1_2)?",
     values_to = "Count"
   ) %>%
   # Filter out any rows where JobType or Race is NA
   filter(!is.na(JobType) & !is.na(Race))
+
+print("Unique Job Types in long_data:")
+print(unique(long_data$JobType))
+print("Unique Races in long_data:")
+print(unique(long_data$Race))
 
 # Ensure only specified Job Types are included
 valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
