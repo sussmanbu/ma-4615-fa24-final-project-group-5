@@ -25,11 +25,6 @@ long_data <- cleaned_data %>%
   # Filter out any rows where JobType or Race is NA
   filter(!is.na(JobType) & !is.na(Race))
 
-print("Unique Job Types in long_data:")
-print(unique(long_data$JobType))
-print("Unique Races in long_data:")
-print(unique(long_data$Race))
-
 # Ensure only specified Job Types are included
 valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
 filtered_data <- long_data %>%
@@ -47,6 +42,39 @@ ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
   ) +
   theme(
     legend.position = "none",
-    strip.text = element_text(size = 10, face = "bold")
+    strip.text = element_text(size = 10, face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+```{r}
+long_data <- cleaned_data %>%
+  pivot_longer(
+    cols = matches("^(Male|Female|Other|MT|FT)[1-9](_2)?$"),
+    names_to = c("Race", "JobType"),
+    names_pattern = "^(Male|Female|Other|MT|FT)[1-9](_2)?$",
+    values_to = "Count"
+  ) %>%
+  # Filter out any rows where JobType or Race is NA
+  filter(!is.na(JobType) & !is.na(Race))
+
+valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
+filtered_data <- long_data %>%
+  filter(JobType %in% valid_job_types)
+
+# Plotting
+ggplot(filtered_data, aes(x = Gender, y = Count, fill = Gender)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ JobType, scales = "free_y") +
+  theme_gray() +
+  labs(
+    title = "Proportional Representation by Job Type and Gender",
+    x = "Gender",
+    y = "Count"
+  ) +
+  theme(
+    legend.position = "none",
+    strip.text = element_text(size = 10, face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1)
   )
 ```
