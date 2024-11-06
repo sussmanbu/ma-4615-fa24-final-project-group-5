@@ -11,24 +11,28 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-# Load your cleaned data
+# Read data
 cleaned_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
 
 # Pivot to long format, excluding MT and FT
 long_data <- cleaned_data %>%
   pivot_longer(
-    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)([1-9]|1_2)?$"),
+    cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$"),
     names_to = c("Race", "JobType"),
-    names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)([1-9]|1_2)?$",
+    names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$",
     values_to = "Count"
   ) %>%
-  # Filter out any rows where JobType or Race is NA
   filter(!is.na(JobType) & !is.na(Race))
 
 # Ensure only specified Job Types are included
 valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
 filtered_data <- long_data %>%
-  filter(JobType %in% valid_job_types)
+  filter(JobType %in% valid_job_types) %>%
+  mutate(
+    Count = gsub("[^0-9.-]", "", Count),  # Clean non-numeric characters
+    Count = as.numeric(Count),            # Convert to numeric
+    Count = ifelse(is.na(Count), 0, Count) # Replace NA with 0
+  )
 
 # Plotting
 ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
@@ -40,41 +44,72 @@ ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
     x = "Race",
     y = "Count"
   ) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   theme(
     legend.position = "none",
     strip.text = element_text(size = 10, face = "bold"),
-    axis.text.x = element_text(angle = 45, hjust = 1))
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 8)
+  )
+
+
+
 ```
 
 
 ```{r}
+
+print(long_data)
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# Pivot to long format
 long_data <- cleaned_data %>%
   pivot_longer(
-    cols = matches("^(Male|Female|Other|MT|FT)[1-9](_2)?$"),
+    cols = matches("^(Male|Female|MT|FT)[1-9](_2)?$"),
     names_to = c("Gender", "JobType"),
-    names_pattern = "^(Male|Female|Other|MT|FT)([1-9]|1_2)?$",
+    names_pattern = "^(Male|Female|MT|FT)([1-9]|1_2)?$",
     values_to = "Count"
   ) %>%
   filter(!is.na(JobType) & !is.na(Gender))
 
+# Ensure 'Count' is numeric, handling non-numeric values
+long_data <- long_data %>%
+  mutate(
+    Count = as.numeric(Count),             # Convert 'Count' to numeric
+    Count = ifelse(is.na(Count), 0, Count)  # Replace any NA with 0
+  )
+
+# Filter for valid job types
 valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
 filtered_data <- long_data %>%
-  filter(JobType %in% valid_job_types)
+  filter(JobType %in% valid_job_types) %>%
+  group_by(JobType, Gender) %>%
+  mutate(
+    Total = sum(Count, na.rm = TRUE),  # Total count for each JobType
+    Percent = Count / Total * 100      # Calculate percentage
+  ) %>%
+  ungroup()
 
-# Plotting
-ggplot(filtered_data, aes(x = Gender, y = Count, fill = Gender)) +
+# Plotting: Show percentages instead of counts
+ggplot(filtered_data, aes(x = Gender, y = Percent, fill = Gender)) +
   geom_bar(stat = "identity") +
   facet_wrap(~ JobType, scales = "free_y") +
   theme_gray() +
   labs(
     title = "Proportional Representation by Job Type and Gender",
     x = "Gender",
-    y = "Count"
+    y = "Percentage"
   ) +
   theme(
-    legend.position = "none",
+    legend.position = "none",              # Remove legend
     strip.text = element_text(size = 10, face = "bold"),
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 8)
   )
+
 
 ```
