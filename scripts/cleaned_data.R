@@ -22,4 +22,4 @@ if (!dir.exists("../ma-4615-fa24-final-project-group-5/dataset")) {
   dir.create("../ma-4615-fa24-final-project-group-5/dataset", recursive = TRUE)
 }
 
-saveRDS(cleaned_dataset, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
+saveRDS(cleaned_data, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")

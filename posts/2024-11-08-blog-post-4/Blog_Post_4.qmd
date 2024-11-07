@@ -15,10 +15,10 @@ library(ggplot2)
 library(tidyr)
 
 # Read data
-cleaned_data <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
+cleaned_dataset <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
 
 # Pivot to long format, excluding MT and FT
-long_data <- cleaned_data %>%
+long_data <- cleaned_dataset %>%
   pivot_longer(
     cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$"),
     names_to = c("Race", "JobType"),
@@ -70,7 +70,7 @@ library(dplyr)
 library(ggplot2)
 
 # Pivot to long format
-long_data <- cleaned_data %>%
+long_data <- cleaned_dataset %>%
   pivot_longer(
     cols = matches("^(Male|Female|MT|FT)[1-9](_2)?$"),
     names_to = c("Gender", "JobType"),
