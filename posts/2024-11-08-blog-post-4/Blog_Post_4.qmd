@@ -5,6 +5,9 @@ date: "2024-10-30"
 date-modified: "2024-11-08"
 draft: FALSE
 ---
+Our initial exploratory data analysis involved some rudimentary breakdowns between the labor statistics and two metrics, particularly race and gender. Utilizing the provided categories of American Indigenous, Asian, Black, Hispanic, Native Hawaiian, two or more, and White, we created a facet showing the racial distributions among the job categories: 1 (senior off and managers), 2 (professionals) 3 (technicians), 4 (sales workers), 5 (clericals), 6 (craft), 7 (operatives), 8 (labors),  9 (service) and 1_2 (mid off and managers). Some more cleaning may be needed to reduce redundant or blank values, but a cursory examination shows approximate parity between various job distributions, with the exception of craft, for which distributions are more uniform. Reducing the seeming uniformity of the different charts may be a matter of controlling for the proportion of the population occupied by each race category, to get more proportionate metrics that are not overshadowed by the gross proportions of each race as represented by the total population. Additionally, a further inquiry into the exact meaning and jobs entailed by the descriptive numbers used by NAICS may be useful, as we find further data sets with descriptive statistics like wages and benefits for particular jobs that need to be linked to the very general categories described by our original dataset.
+
+We also performed a similar breakdown by gender, although in this category it was also difficult to detect any significant discrepancies between various jobs and their gender distribution, contrary to popular notions of gender divides in certain jobs, which may warrant a further inquiry into the source and exact meaning of the data. Like with the racial breakdowns, it may also be useful to derive proportions rather than raw numbers to better account for population differences.
 
 ```{r p1}
 library(dplyr)
