@@ -53,14 +53,6 @@ Your [load_and_clean_data.R](/scripts/load_and_clean_data.R) file is how you wil
 
 Your [cleaning script](/scripts/cleaned_data.R) file is how you will load and clean your data. Here is an example of how to use it:
 
-```{r}
-source(
-  "../ma-4615-fa24-final-project-group-5/scripts/cleaned_data.R",
-  echo = TRUE # Use echo=FALSE or omit it to avoid code output  
-)
-# Load the cleaned dataset
-cleaned_dataset <- readRDS("dataset/Cleaned_Employment2017.rds")
-```
 You should never use absolute paths (eg. `/Users/danielsussman/path/to/project/` or `C:\MA415\\Final_Project\`).
 
 You might consider using the `here` function from the [`here` package](https://here.r-lib.org/articles/here.html) to avoid path problems.
