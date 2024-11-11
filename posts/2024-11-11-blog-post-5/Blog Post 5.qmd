@@ -1,0 +1,14 @@
+---
+title: "Blog Post 5"
+author: "Group 5" 
+date: "2024-11-11"
+date-modified: "2024-11-11"
+draft: FALSE
+---
+
+Previously in Blog Post 4, we explored two breakdowns of the 2017 dataset, focusing on race and gender. For Blog Post 5, our goal is to extend this analysis to the 2007 dataset, creating similar breakdowns for comparison. This will allow us to visually contrast the 2007 and 2017 data. The comparison is particularly valuable because the datasets are relatively niche, with a unique Job Type format that is not commonly found in other datasets.
+
+Since we already have 2017 images in Blog Post 4, this post will be dedicated to 2007 coding scripts as well as the comparisons noted. 
+
+
+
