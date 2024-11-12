@@ -61,7 +61,6 @@ ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
 
 
 ```{r}
-
 print(long_data)
 ```
 
@@ -90,10 +89,10 @@ long_data <- long_data %>%
 valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
 filtered_data <- long_data %>%
   filter(JobType %in% valid_job_types) %>%
-  group_by(JobType, Gender) %>%
+  group_by(JobType) %>%
   mutate(
     Total = sum(Count, na.rm = TRUE),  # Total count for each JobType
-    Percent = Count / Total * 100      # Calculate percentage
+    Percent = (Count / Total) * 100      # Calculate percentage
   ) %>%
   ungroup()
 
@@ -113,6 +112,4 @@ ggplot(filtered_data, aes(x = Gender, y = Percent, fill = Gender)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     axis.text.y = element_text(size = 8)
   )
-
-
 ```
