@@ -37,10 +37,32 @@ filtered_data <- long_data %>%
     Count = ifelse(is.na(Count), 0, Count) # Replace NA with 0
   )
 
+# Add descriptive labels for Job Types and set factor order
+filtered_data <- filtered_data %>%
+  mutate(
+    JobTypeLabel = recode(JobType,
+      "1" = "Senior Off and Managers",
+      "2" = "Professionals",
+      "3" = "Technicians",
+      "4" = "Sales Workers",
+      "5" = "Clericals",
+      "6" = "Craft",
+      "7" = "Operatives",
+      "8" = "Laborers",
+      "9" = "Services",
+      "1_2" = "Mid Off and Managers"
+    ),
+    JobTypeLabel = factor(JobTypeLabel, levels = c(
+      "Senior Off and Managers", "Professionals", "Technicians",
+      "Sales Workers", "Clericals", "Craft", "Operatives", "Laborers", "Services", 
+      "Mid Off and Managers"
+    ))
+  )
+
 # Plotting
 ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
   geom_bar(stat = "identity") +
-  facet_wrap(~ JobType, scales = "free_y") +
+  facet_wrap(~ JobTypeLabel, scales = "free_y") +
   theme_gray() +
   labs(
     title = "Proportional Representation by Job Type and Race",
@@ -54,9 +76,6 @@ ggplot(filtered_data, aes(x = Race, y = Count, fill = Race)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     axis.text.y = element_text(size = 8)
   )
-
-
-
 ```
 
 
@@ -71,9 +90,9 @@ library(ggplot2)
 # Pivot to long format
 long_data <- cleaned_dataset %>%
   pivot_longer(
-    cols = matches("^(Male|Female|MT|FT)[1-9](_2)?$"),
+    cols = matches("^(MT|FT)[1-9](_2)?$"),
     names_to = c("Gender", "JobType"),
-    names_pattern = "^(Male|Female|MT|FT)([1-9]|1_2)?$",
+    names_pattern = "^(MT|FT)([1-9]|1_2)?$",
     values_to = "Count"
   ) %>%
   filter(!is.na(JobType) & !is.na(Gender))
@@ -85,21 +104,42 @@ long_data <- long_data %>%
     Count = ifelse(is.na(Count), 0, Count)  # Replace any NA with 0
   )
 
-# Filter for valid job types
-valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
+# Filter for valid job types and calculate percentages correctly for each gender
 filtered_data <- long_data %>%
   filter(JobType %in% valid_job_types) %>%
   group_by(JobType) %>%
   mutate(
-    Total = sum(Count, na.rm = TRUE),  # Total count for each JobType
-    Percent = (Count / Total) * 100      # Calculate percentage
+    Total = sum(Count, na.rm = TRUE),  # Total count for each JobType and Gender
+    Percent = (Count / Total) * 100      # Calculate percentage within each JobType and Gender
   ) %>%
   ungroup()
+
+# Add descriptive labels for Job Types and set factor order
+filtered_data <- filtered_data %>%
+  mutate(
+    JobTypeLabel = recode(JobType,
+      "1" = "Senior Off and Managers",
+      "2" = "Professionals",
+      "3" = "Technicians",
+      "4" = "Sales Workers",
+      "5" = "Clericals",
+      "6" = "Craft",
+      "7" = "Operatives",
+      "8" = "Laborers",
+      "9" = "Services",
+      "1_2" = "Mid Off and Managers"
+    ),
+    JobTypeLabel = factor(JobTypeLabel, levels = c(
+      "Senior Off and Managers", "Professionals", "Technicians",
+      "Sales Workers", "Clericals", "Craft", "Operatives", "Laborers", "Services", 
+      "Mid Off and Managers"
+    ))
+  )
 
 # Plotting: Show percentages instead of counts
 ggplot(filtered_data, aes(x = Gender, y = Percent, fill = Gender)) +
   geom_bar(stat = "identity") +
-  facet_wrap(~ JobType, scales = "free_y") +
+  facet_wrap(~ JobTypeLabel, scales = "free_y") +
   theme_gray() +
   labs(
     title = "Proportional Representation by Job Type and Gender",
