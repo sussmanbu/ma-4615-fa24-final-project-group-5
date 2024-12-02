@@ -14,288 +14,265 @@ In addition, we have found another dataset that details the wage data associated
 
 Here is the link for the wage data context: https://www.bls.gov/web/empsit/ceseeb3a.htm 
 
-# ```{r t1}
-# # Getting the downloaded file for everyone to access
-# #library(readxl)
-# #data_2022 <- read_excel("~/Downloads/EEO1 2022 PUF.xlsx")
-# #write.csv(data_2022, "dataset/EEO1_2022_PUF.csv", row.names = FALSE)
-# #saveRDS(data_2022, "dataset/EEO1_2022_PUF.rds")
-# ```
-# 
-# 
-# ```{r t2}
-# library(tidyverse)
-# library(here)
-# 
-# employment_2022 <- readRDS("dataset/EEO1_2022_PUF.rds")
-# employment_2022[employment_2022 == "*"] <- NA
-# 
-# total_columns <- c("TOTAL1", "TOTAL2", "TOTAL3", "TOTAL4", "TOTAL5", "TOTAL6", "TOTAL7", "TOTAL8", "TOTAL9", "TOTAL1_2")
-# 
-# employment_2022[total_columns] <- lapply(employment_2022[total_columns], function(x) as.numeric(x))
-# 
-# employment_2022[total_columns] <-
-#   lapply(employment_2022[total_columns], function(x) replace_na(x, 0))
-# 
-# total_counts <- colSums(employment_2022[total_columns], na.rm = TRUE)
-# 
-# proportion_df <- data.frame(Job_Type = names(total_counts), Count = total_counts)
-# 
-# proportion_df$Job_Type <- recode(proportion_df$Job_Type,
-#   TOTAL1 = "Senior Officers and Managers",
-#   TOTAL2 = "Professionals",
-#   TOTAL3 = "Technicians",
-#   TOTAL4 = "Sales Workers",
-#   TOTAL5 = "Clericals",
-#   TOTAL6 = "Craft",
-#   TOTAL7 = "Operatives",
-#   TOTAL8 = "Laborers",
-#   TOTAL9 = "Services",
-#   TOTAL1_2 = "Mid Officers and Managers"
-# )
-# 
-# proportion_df <- proportion_df %>%
-#   mutate(Proportion = Count / sum(Count))
-# 
-# ggplot(proportion_df, aes(x = Job_Type, y = Proportion, fill = Job_Type)) +
-#   geom_bar(stat = "identity") +
-#   labs(title = "Proportionality of Jobs by Type",
-#        x = "Job Type",
-#        y = "Proportion") +
-#   theme_gray() +
-#   scale_y_continuous(labels = scales::percent) +
-#   theme(legend.position = "none",
-#         axis.text.x = element_text(angle = 45, hjust = 1))
-# ```
-# 
-# ```{r t3}
-# race_columns <- c("WHT10", "BLKT10", "HISPT10", "ASIANT10", "AIANT10", "nhopiT10", "tomrT10")
-# 
-# 
-# employment_2022[race_columns] <- lapply(employment_2022[race_columns], function(x) as.numeric(x))
-# 
-# employment_2022[race_columns] <-
-#   lapply(employment_2022[race_columns], function(x) replace_na(x, 0))
-# 
-# total_race_counts <- colSums(employment_2022[race_columns], na.rm = TRUE)
-# 
-# race_proportion_df <- data.frame(Race = names(total_race_counts), Count = total_race_counts)
-# 
-# race_proportion_df$Race <- recode(race_proportion_df$Race,
-#   WHT10 = "White",
-#   BLKT10 = "Black or African American",
-#   HISPT10 = "Hispanic",
-#   ASIANT10 = "Asian",
-#   AIANT10 = "American Indian or Alaska Native",
-#   nhopiT10 = "Native Hawaiian or Other Pacific Islander",
-#   tomrT10 = "Two or more Races"
-# )
-# 
-# race_proportion_df <- race_proportion_df %>%
-#   mutate(Proportion = Count / sum(Count))
-# 
-# ggplot(race_proportion_df, aes(x = Race, y = Proportion, fill = Race)) +
-#   geom_bar(stat = "identity") +
-#   labs(title = "Proportionality of Race",
-#        x = "Race",
-#        y = "Proportion") +
-#   theme_gray() +
-#   scale_y_continuous(labels = scales::percent) +
-#   theme(legend.position = "none",
-#         axis.text.x = element_text(angle = 45, hjust = 1))
-# ```
-# 
-# ```{r t4}
-# gender_columns <- c("MT10", "FT10")
-# 
-# employment_2022[gender_columns] <- lapply(employment_2022[gender_columns], function(x) as.numeric(x))
-# 
-# employment_2022[gender_columns] <-
-#   lapply(employment_2022[gender_columns], function(x) replace_na(x, 0))
-# 
-# total_gender_counts <- colSums(employment_2022[gender_columns], na.rm = TRUE)
-# 
-# gender_proportion_df <- data.frame(Gender = names(total_gender_counts), Count = total_gender_counts)
-# 
-# gender_proportion_df$Gender <- recode(gender_proportion_df$Gender,
-#   MT10 = "Male", FT10 = "Female")
-# 
-# gender_proportion_df <- gender_proportion_df %>%
-#   mutate(Proportion = Count / sum(Count),
-#          Percentage = Proportion * 100)
-# 
-# ggplot(gender_proportion_df, aes(x = "", y = Proportion, fill = Gender)) +
-#   geom_bar(stat = "identity", width = 1) +
-#   coord_polar("y") +
-#   labs(title = "Proportionality of Gender",
-#        fill = "Gender") +
-#   theme_gray() +
-#   theme(axis.title.x = element_blank(),
-#         axis.title.y = element_blank(),
-#         axis.ticks = element_blank(),
-#         axis.text = element_blank()) +
-#   geom_text(aes(label = paste0(round(Percentage, 1), "%")),
-#             position = position_stack(vjust = 0.5))
-# ```
-# 
-# ```{r t5}
-# library(dplyr)
-# library(tidyselect)
-# 
-# employment_2022 <- readRDS("dataset/EEO1_2022_PUF.rds")
-# 
-# employment_2022 <- employment_2022 %>%
-#   rename_with(toupper)
-# 
-# cleaned_2022 <- employment_2022 %>%
-#   select(
-#     NATION, REGION, DIVISION, STATE, CBSA, COUNTY, NAICS2, NAICS2_NAME, NAICS3, NAICS3_NAME, ESTABLISHMENTS,
-#     matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)[1-9](_2)?$")
-#   )
-# 
-# if (!dir.exists("../ma-4615-fa24-final-project-group-5/dataset")) {
-#   dir.create("../ma-4615-fa24-final-project-group-5/dataset", recursive = TRUE)
-# }
-# 
-# saveRDS(cleaned_2022, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2022.rds")
-# cleaned_2022_dataset <- readRDS("dataset/Cleaned_Employment2022.rds")
-# ```
-# 
-# ```{r t6}
-# library(dplyr)
-# library(ggplot2)
-# library(tidyr)
-# 
-# # Read the cleaned data
-# cleaned_2022 <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2022.rds")
-# 
-# # Pivot to long format, including only specified race and job types
-# long_data_race <- cleaned_2022 %>%
-#   pivot_longer(
-#     cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$"),
-#     names_to = c("Race", "JobType"),
-#     names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$",
-#     values_to = "Count"
-#   ) %>%
-#   filter(!is.na(JobType) & !is.na(Race))
-# 
-# # Ensure only specified Job Types are included
-# valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
-# filtered_data_race <- long_data_race %>%
-#   filter(JobType %in% valid_job_types) %>%
-#   mutate(
-#     Count = gsub("[^0-9.-]", "", Count),  # Clean non-numeric characters
-#     Count = as.numeric(Count),            # Convert to numeric
-#     Count = ifelse(is.na(Count), 0, Count) # Replace NA with 0
-#   )
-# 
-# # Add descriptive labels for Job Types and set factor order
-# filtered_data_race <- filtered_data_race %>%
-#   mutate(
-#     JobTypeLabel = recode(JobType,
-#       "1" = "Senior Off and Managers",
-#       "2" = "Professionals",
-#       "3" = "Technicians",
-#       "4" = "Sales Workers",
-#       "5" = "Clericals",
-#       "6" = "Craft",
-#       "7" = "Operatives",
-#       "8" = "Laborers",
-#       "9" = "Services",
-#       "1_2" = "Mid Off and Managers"
-#     ),
-#     JobTypeLabel = factor(JobTypeLabel, levels = c(
-#       "Senior Off and Managers", "Professionals", "Technicians",
-#       "Sales Workers", "Clericals", "Craft", "Operatives", "Laborers", "Services",
-#       "Mid Off and Managers"
-#     ))
-#   )
-# 
-# # Plotting Race representation with descriptive job type labels
-# ggplot(filtered_data_race, aes(x = Race, y = Count, fill = Race)) +
-#   geom_bar(stat = "identity") +
-#   facet_wrap(~ JobTypeLabel, scales = "free_y") +  # Use JobTypeLabel for custom titles
-#   theme_gray() +
-#   labs(
-#     title = "Proportional Representation by Job Type and Race (2022)",
-#     x = "Race",
-#     y = "Count"
-#   ) +
-#   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
-#   theme(
-#     legend.position = "none",
-#     strip.text = element_text(size = 10, face = "bold"),
-#     axis.text.x = element_text(angle = 45, hjust = 1),
-#     axis.text.y = element_text(size = 8)
-#   )
-# 
-# ```
-# 
-# ```{r t7}
-# # Pivot to long format for gender data
-# long_data_gender <- cleaned_2022 %>%
-#   pivot_longer(
-#     cols = matches("^(MT|FT)([1-9]|1_2)?$"),
-#     names_to = c("Gender", "JobType"),
-#     names_pattern = "^(MT|FT)([1-9]|1_2)?$",
-#     values_to = "Count"
-#   ) %>%
-#   filter(!is.na(JobType) & !is.na(Gender))
-# 
-# # Ensure 'Count' is numeric, handling non-numeric values
-# long_data_gender <- long_data_gender %>%
-#   mutate(
-#     Count = as.numeric(Count),             # Convert 'Count' to numeric
-#     Count = ifelse(is.na(Count), 0, Count)  # Replace any NA with 0
-#   )
-# 
-# # Filter for valid job types and calculate percentages correctly for each gender
-# filtered_data_gender <- long_data_gender %>%
-#   filter(JobType %in% valid_job_types) %>%
-#   group_by(JobType) %>%
-#   mutate(
-#     Total = sum(Count, na.rm = TRUE),  # Total count for each JobType and Gender
-#     Percent = (Count / Total) * 100      # Calculate percentage within each JobType and Gender
-#   ) %>%
-#   ungroup()
-# 
-# # Add descriptive labels for Job Types and set factor order
-# filtered_data_gender <- filtered_data_gender %>%
-#   mutate(
-#     JobTypeLabel = recode(JobType,
-#       "1" = "Senior Off and Managers",
-#       "2" = "Professionals",
-#       "3" = "Technicians",
-#       "4" = "Sales Workers",
-#       "5" = "Clericals",
-#       "6" = "Craft",
-#       "7" = "Operatives",
-#       "8" = "Laborers",
-#       "9" = "Services",
-#       "1_2" = "Mid Off and Managers"
-#     ),
-#     JobTypeLabel = factor(JobTypeLabel, levels = c(
-#       "Senior Off and Managers", "Professionals", "Technicians",
-#       "Sales Workers", "Clericals", "Craft", "Operatives", "Laborers", "Services",
-#       "Mid Off and Managers"
-#     ))
-#   )
-# 
-# # Plotting Gender representation
-# ggplot(filtered_data_gender, aes(x = Gender, y = Percent, fill = Gender)) +
-#   geom_bar(stat = "identity") +
-#   facet_wrap(~ JobTypeLabel, scales = "free_y") +
-#   theme_gray() +
-#   labs(
-#     title = "Proportional Representation by Job Type and Gender (2022)",
-#     x = "Gender",
-#     y = "Percentage"
-#   ) +
-#   theme(
-#     legend.position = "none",              # Remove legend
-#     strip.text = element_text(size = 10, face = "bold"),
-#     axis.text.x = element_text(angle = 45, hjust = 1),
-#     axis.text.y = element_text(size = 8)
-#   )
-# ```
+```{r t2}
+ library(tidyverse)
+ library(here)
 
+ employment_2022 <- readRDS("dataset/EEO1_2022_PUF.rds")
+ employment_2022[employment_2022 == "*"] <- NA
+
+ total_columns <- c("TOTAL1", "TOTAL2", "TOTAL3", "TOTAL4", "TOTAL5", "TOTAL6", "TOTAL7", "TOTAL8", "TOTAL9", "TOTAL1_2")
+
+ employment_2022[total_columns] <- lapply(employment_2022[total_columns], function(x) as.numeric(x))
+
+ employment_2022[total_columns] <-
+   lapply(employment_2022[total_columns], function(x) replace_na(x, 0))
+
+ total_counts <- colSums(employment_2022[total_columns], na.rm = TRUE)
+
+ proportion_df <- data.frame(Job_Type = names(total_counts), Count = total_counts)
+
+ proportion_df$Job_Type <- recode(proportion_df$Job_Type,
+   TOTAL1 = "Senior Officers and Managers",
+   TOTAL2 = "Professionals",
+   TOTAL3 = "Technicians",
+   TOTAL4 = "Sales Workers",
+   TOTAL5 = "Clericals",
+   TOTAL6 = "Craft",
+   TOTAL7 = "Operatives",
+   TOTAL8 = "Laborers",
+   TOTAL9 = "Services",
+   TOTAL1_2 = "Mid Officers and Managers"
+ )
+
+ proportion_df <- proportion_df %>%
+   mutate(Proportion = Count / sum(Count))
+
+ ggplot(proportion_df, aes(x = Job_Type, y = Proportion, fill = Job_Type)) +
+   geom_bar(stat = "identity") +
+   labs(title = "Proportionality of Jobs by Type",
+        x = "Job Type",
+        y = "Proportion") +
+   theme_gray() +
+   scale_y_continuous(labels = scales::percent) +
+   theme(legend.position = "none",
+         axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r t3}
+ race_columns <- c("WHT10", "BLKT10", "HISPT10", "ASIANT10", "AIANT10", "nhopiT10", "tomrT10")
+
+ employment_2022[race_columns] <- lapply(employment_2022[race_columns], function(x) as.numeric(x))
+
+ employment_2022[race_columns] <-
+   lapply(employment_2022[race_columns], function(x) replace_na(x, 0))
+
+ total_race_counts <- colSums(employment_2022[race_columns], na.rm = TRUE)
+
+ race_proportion_df <- data.frame(Race = names(total_race_counts), Count = total_race_counts)
+
+ race_proportion_df$Race <- recode(race_proportion_df$Race,
+   WHT10 = "White",
+   BLKT10 = "Black or African American",
+   HISPT10 = "Hispanic",
+   ASIANT10 = "Asian",
+   AIANT10 = "American Indian or Alaska Native",
+   nhopiT10 = "Native Hawaiian or Other Pacific Islander",
+   tomrT10 = "Two or more Races"
+ )
+
+ race_proportion_df <- race_proportion_df %>%
+   mutate(Proportion = Count / sum(Count))
+
+ ggplot(race_proportion_df, aes(x = Race, y = Proportion, fill = Race)) +
+   geom_bar(stat = "identity") +
+   labs(title = "Proportionality of Race",
+        x = "Race",
+        y = "Proportion") +
+   theme_gray() +
+   scale_y_continuous(labels = scales::percent) +
+   theme(legend.position = "none",
+         axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r t4}
+ gender_columns <- c("MT10", "FT10")
+
+ employment_2022[gender_columns] <- lapply(employment_2022[gender_columns], function(x) as.numeric(x))
+
+ employment_2022[gender_columns] <-
+   lapply(employment_2022[gender_columns], function(x) replace_na(x, 0))
+
+ total_gender_counts <- colSums(employment_2022[gender_columns], na.rm = TRUE)
+
+ gender_proportion_df <- data.frame(Gender = names(total_gender_counts), Count = total_gender_counts)
+
+ gender_proportion_df$Gender <- recode(gender_proportion_df$Gender,
+   MT10 = "Male", FT10 = "Female")
+
+ gender_proportion_df <- gender_proportion_df %>%
+   mutate(Proportion = Count / sum(Count),
+          Percentage = Proportion * 100)
+
+ ggplot(gender_proportion_df, aes(x = "", y = Proportion, fill = Gender)) +
+   geom_bar(stat = "identity", width = 1) +
+   coord_polar("y") +
+   labs(title = "Proportionality of Gender",
+        fill = "Gender") +
+   theme_gray() +
+   theme(axis.title.x = element_blank(),
+         axis.title.y = element_blank(),
+         axis.ticks = element_blank(),
+         axis.text = element_blank()) +
+   geom_text(aes(label = paste0(round(Percentage, 1), "%")),
+             position = position_stack(vjust = 0.5))
+```
+
+```{r t5}
+ library(dplyr)
+ library(tidyselect)
+
+ employment_2022 <- readRDS("dataset/EEO1_2022_PUF.rds")
+
+ employment_2022 <- employment_2022 %>%
+   rename_with(toupper)
+
+ cleaned_2022 <- employment_2022 %>%
+   select(
+     NATION, REGION, DIVISION, STATE, CBSA, COUNTY, NAICS2, NAICS2_NAME, NAICS3, NAICS3_NAME, ESTABLISHMENTS,
+     matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT|MT|FT)[1-9](_2)?$")
+   )
+
+ if (!dir.exists("../ma-4615-fa24-final-project-group-5/dataset")) {
+   dir.create("../ma-4615-fa24-final-project-group-5/dataset", recursive = TRUE)
+ }
+
+ saveRDS(cleaned_2022, "../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2022.rds")
+ cleaned_2022_dataset <- readRDS("dataset/Cleaned_Employment2022.rds")
+```
+
+```{r t6}
+ library(dplyr)
+ library(ggplot2)
+ library(tidyr)
+
+ cleaned_2022 <- readRDS("../ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2022.rds")
+
+ long_data_race <- cleaned_2022 %>%
+   pivot_longer(
+     cols = matches("^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$"),
+     names_to = c("Race", "JobType"),
+     names_pattern = "^(WHT|BLKT|HISPT|ASIANT|AIANT|NHOPIT|TOMRT)([1-9]|1_2)?$",
+     values_to = "Count"
+   ) %>%
+   filter(!is.na(JobType) & !is.na(Race))
+
+ valid_job_types <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "1_2")
+ filtered_data_race <- long_data_race %>%
+   filter(JobType %in% valid_job_types) %>%
+   mutate(
+     Count = gsub("[^0-9.-]", "", Count), 
+     Count = as.numeric(Count),            
+     Count = ifelse(is.na(Count), 0, Count) 
+   )
+
+ filtered_data_race <- filtered_data_race %>%
+   mutate(
+     JobTypeLabel = recode(JobType,
+       "1" = "Senior Off and Managers",
+       "2" = "Professionals",
+       "3" = "Technicians",
+       "4" = "Sales Workers",
+       "5" = "Clericals",
+       "6" = "Craft",
+       "7" = "Operatives",
+       "8" = "Laborers",
+       "9" = "Services",
+       "1_2" = "Mid Off and Managers"
+     ),
+     JobTypeLabel = factor(JobTypeLabel, levels = c(
+       "Senior Off and Managers", "Professionals", "Technicians",
+       "Sales Workers", "Clericals", "Craft", "Operatives", "Laborers", "Services",
+       "Mid Off and Managers"
+     ))
+   )
+
+ ggplot(filtered_data_race, aes(x = Race, y = Count, fill = Race)) +
+   geom_bar(stat = "identity") +
+   facet_wrap(~ JobTypeLabel, scales = "free_y") +  
+   theme_gray() +
+   labs(
+     title = "Proportional Representation by Job Type and Race (2022)",
+     x = "Race",
+     y = "Count"
+   ) +
+   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
+   theme(
+     legend.position = "none",
+     strip.text = element_text(size = 10, face = "bold"),
+     axis.text.x = element_text(angle = 45, hjust = 1),
+     axis.text.y = element_text(size = 8)
+   )
+```
+
+```{r t7}
+long_data_gender <- cleaned_2022 %>%
+   pivot_longer(
+     cols = matches("^(MT|FT)([1-9]|1_2)?$"),
+     names_to = c("Gender", "JobType"),
+     names_pattern = "^(MT|FT)([1-9]|1_2)?$",
+     values_to = "Count"
+   ) %>%
+   filter(!is.na(JobType) & !is.na(Gender))
+
+ long_data_gender <- long_data_gender %>%
+   mutate(
+     Count = as.numeric(Count),             
+     Count = ifelse(is.na(Count), 0, Count)  
+   )
+
+ filtered_data_gender <- long_data_gender %>%
+   filter(JobType %in% valid_job_types) %>%
+   group_by(JobType) %>%
+   mutate(
+     Total = sum(Count, na.rm = TRUE),  
+     Percent = (Count / Total) * 100      
+   ) %>%
+   ungroup()
+
+ filtered_data_gender <- filtered_data_gender %>%
+   mutate(
+     JobTypeLabel = recode(JobType,
+       "1" = "Senior Off and Managers",
+       "2" = "Professionals",
+       "3" = "Technicians",
+       "4" = "Sales Workers",
+       "5" = "Clericals",
+       "6" = "Craft",
+       "7" = "Operatives",
+       "8" = "Laborers",
+       "9" = "Services",
+       "1_2" = "Mid Off and Managers"
+     ),
+     JobTypeLabel = factor(JobTypeLabel, levels = c(
+       "Senior Off and Managers", "Professionals", "Technicians",
+       "Sales Workers", "Clericals", "Craft", "Operatives", "Laborers", "Services", "Mid Off and Managers"
+     ))
+   )
+
+ ggplot(filtered_data_gender, aes(x = Gender, y = Percent, fill = Gender)) +
+   geom_bar(stat = "identity") +
+   facet_wrap(~ JobTypeLabel, scales = "free_y") +
+   theme_gray() +
+   labs(
+     title = "Proportional Representation by Job Type and Gender (2022)",
+     x = "Gender",
+     y = "Percentage"
+   ) +
+   theme(
+     legend.position = "none",              
+     strip.text = element_text(size = 10, face = "bold"),
+     axis.text.x = element_text(angle = 45, hjust = 1),
+     axis.text.y = element_text(size = 8)
+   )
+```
