@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -121,13 +155,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-makes-a-good-data-set" id="toc-what-makes-a-good-data-set" class="nav-link active" data-scroll-target="#what-makes-a-good-data-set">What makes a good data set?</a></li>
-  <li><a href="#where-to-keep-data" id="toc-where-to-keep-data" class="nav-link" data-scroll-target="#where-to-keep-data">Where to keep data?</a>
-  <ul class="collapse">
-  <li><a href="#sharing-your-data" id="toc-sharing-your-data" class="nav-link" data-scroll-target="#sharing-your-data">Sharing your data</a></li>
-  <li><a href="#load-and-clean-data-script" id="toc-load-and-clean-data-script" class="nav-link" data-scroll-target="#load-and-clean-data-script">Load and clean data script</a></li>
-  </ul></li>
-  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
+  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link active" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
   </ul>
 </nav>
     </div>
@@ -158,42 +186,233 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="images/data-import-cheatsheet-thumbs.png" class="img-fluid"></p>
-<p>#Write data description Blog Post 1: dataset description Blog Post 2: dataset origin, problems with data, importance of data Blog Post 3: Data Equity paragraphs, changed “*” to NA and assumed 0, and summed up various columns to see the proportionality of race, gender, and job types with aggregation, and lastly, create link for cleaned dataset file</p>
-<p>This comes from the file <code>data.qmd</code>.</p>
-<p>Your first steps in this project will be to find data to work on.</p>
-<p>I recommend trying to find data that interests you and that you are knowledgeable about. A bad example would be if you have no interest in video games but your data set is about video games. I also recommend finding data that is related to current events, social justice, and other areas that have an impact.</p>
-<p>Initially, you will study <em>one dataset</em> but later you will need to combine that data with another dataset. For this reason, I recommend finding data that has some date and/or location components. These types of data are conducive to interesting visualizations and analysis and you can also combine this data with other data that also has a date or location variable. Data from the census, weather data, economic data, are all relatively easy to combine with other data with time/location components.</p>
-<section id="what-makes-a-good-data-set" class="level2">
-<h2 class="anchored" data-anchor-id="what-makes-a-good-data-set">What makes a good data set?</h2>
-<ul>
-<li>Data you are interested in and care about.</li>
-<li>Data where there are a lot of potential questions that you can explore.</li>
-<li>A data set that isn’t completely cleaned already.</li>
-<li>Multiple sources for data that you can combine.</li>
-<li>Some type of time and/or location component.</li>
-</ul>
-</section>
-<section id="where-to-keep-data" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-keep-data">Where to keep data?</h2>
-<p>Below 50mb: In <code>dataset</code> folder</p>
-<p>Above 50mb: In <code>dataset_ignore</code> folder. This folder will be ignored by <code>git</code> so you’ll have to manually sync these files across your team.</p>
-<section id="sharing-your-data" class="level3">
-<h3 class="anchored" data-anchor-id="sharing-your-data">Sharing your data</h3>
-<p>For small datasets (&lt;50mb), you can use the <code>dataset</code> folder that is tracked by github. Add the files just like you would any other file.</p>
-<p>If you create a folder named <code>data</code> this will cause problems.</p>
-<p>For larger datasets, you’ll need to create a new folder in the project root directory named <code>dataset-ignore</code>. This will be ignored by git (based off the <code>.gitignore</code> file in the project root directory) which will help you avoid issues with Github’s size limits. Your team will have to manually make sure the data files in <code>dataset-ignore</code> are synced across team members.</p>
-<p>Your <a href=".\scripts/load_and_clean_data.R">load_and_clean_data.R</a> file is how you will load and clean your data. Here is a an example of a very simple one. (delete)</p>
-<p>Your <a href=".\scripts/cleaned_data.R">cleaning script</a> file is how you will load and clean your data. Here is an example of how to use it:</p>
-<p>You should never use absolute paths (eg. <code>/Users/danielsussman/path/to/project/</code> or <code>C:\MA415\\Final_Project\</code>).</p>
-<p>You might consider using the <code>here</code> function from the <a href="https://here.r-lib.org/articles/here.html"><code>here</code> package</a> to avoid path problems.</p>
-</section>
-<section id="load-and-clean-data-script" class="level3">
-<h3 class="anchored" data-anchor-id="load-and-clean-data-script">Load and clean data script</h3>
-<p>The idea behind this file is that someone coming to your website could largely replicate your analyses after running this script on the original data sets to clean them. This file might create a derivative data set that you then use for your subsequent analysis. Note that you don’t need to run this script from every post/page. Instead, you can load in the results of this script, which could be plain text files or <code>.RData</code> files. In your data page you’ll describe how these results were created. If you have a very large data set, you might save smaller data sets that you can use for exploration purposes. To link to this file, you can use <code>[cleaning script](/scripts/load_and_clean_data.R)</code> wich appears as <a href=".\scripts/load_and_clean_data.R">cleaning script</a>.</p>
-<hr>
-</section>
-</section>
+<p>The primary motivation behind this analysis is to explore disparities in workforce composition by race and ethnicity across industries and geographic regions in the United States. Understanding these disparities provides insights into how representation varies and may inform policy recommendations, diversity initiatives, or legal compliance measures.</p>
+<p>This dataset was published by the US Equal Employment Opportunity Commission and is maintained by Daniel McGregor. As part of its mandate under Title VII of the Civil Rights Act of 1964, as amended, the Equal Employment Opportunity Commission requires periodic reports from public and private employers, unions, and labor organizations that indicate the composition of their workforce by sex and by race/ethnic category. Among these reports, the EEO-1 is collected annually from Private employers with 100 or more employees or federal contractors with 50 more employees. (https://www.eeoc.gov/data/eeo-data-collections)</p>
+<p>Some key variables include: Demographic composition: WHT10 (White), BLKT10 (Black), HISPT10 (Hispanic), ASIANT10 (Asian), AIANT10 (American Indian/Alaska Native), NHOPIT10 (Native Hawaiian/Other Pacific Islander), and TOMRT10 (Two or more races). Industry classification: NAICS-2 and NAICS-3 codes. Geographic regions: Divisions at state and regional levels.</p>
+<p>To prepare the dataset for analysis, a systematic cleaning process was applied, with the goal of ensuring the data is manageable and meaningful for exploratory and inferential analysis. The following steps summarize the cleaning process:</p>
+<ol type="1">
+<li><p>Checking for Missing Values: Many missing values result from privacy protections (e.g., asterisks in cells). These were replaced with NA to maintain data consistency while noting that these gaps may affect certain analyses. Missing data due to underreporting or suppression in specific categories (e.g., small workforce sizes) were logged for potential exclusion or imputation strategies in future stages.</p></li>
+<li><p>Re-coding for Efficiency Columns with redundant or overly verbose labels were renamed for clarity (e.g., “White” re-coded to WHT10, “Black or African American” to BLKT10). Job categories were summed across all race and gender subcategories to simplify initial exploratory analysis.</p></li>
+<li><p>Focus on Key Variables Analysis was narrowed to ~10 job categories listed in the user guide (e.g., Senior Officials and Managers, Professionals, Technicians). Gender was aggregated into male (MT10) and female (FT10) totals to streamline visualizations.</p></li>
+<li><p>Summarizing Data Totals by race and job category were computed to analyze proportional representation. Separate summaries were created for gender and job category to enable visualization of workforce composition by both axes.</p></li>
+</ol>
+<p>After doing these steps, we have our cleaned dataaset below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cleaned_dataset <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"Employment2017.rds"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cleaned_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Nation Region Division State CBSA County NAICS2
+1 United States                                       NA
+2 United States                                       11
+3 United States                                       11
+4 United States                                       11
+5 United States                                       11
+6 United States                                       11
+                                 NAICS2_Name NAICS3
+1                                                NA
+2 Agriculture, Forestry, Fishing and Hunting     NA
+3 Agriculture, Forestry, Fishing and Hunting    111
+4 Agriculture, Forestry, Fishing and Hunting    112
+5 Agriculture, Forestry, Fishing and Hunting    113
+6 Agriculture, Forestry, Fishing and Hunting    114
+                        NAICS3_Name Establishments  TOTAL10    WHT10  BLKT10
+1                                           272693 54415353 32800729 8273600
+2                                             1364   294046    90943   18965
+3                   Crop Production            633   144726    34119    5103
+4 Animal Production and Aquaculture            384    69884    33554    9764
+5              Forestry and Logging             26     2406     1683     130
+6     Fishing, Hunting and Trapping             39     6386     2798    1359
+  HISPT10 ASIANT10 AIANT10 NHOPIT10 TOMRT10     MT10     FT10 TOTAL1   TOTAL2
+1 8108979  3579101  296587   258172 1098185 28249468 26165885 870957 11703073
+2  170480     8275    1538     1272    2573   198163    95883   4488    15310
+3   99406     3716     634      605    1143    97033    47693   2099     8886
+4   23174     1890     641      315     546    46987    22897   1175     2661
+5     511       21      40        7      14     1929      477     72      428
+6    1516      350      78      197      88     4503     1883     98      151
+   TOTAL3  TOTAL4  TOTAL5  TOTAL6  TOTAL7  TOTAL8  TOTAL9 TOTAL1_2    WHM10
+1 2901806 5785123 6803892 2913816 5596019 4421879 8264687  5154101 17422970
+2    6654    7672   14458   12440   43746  160691    7425    21162    62963
+3    2304    4879    6847    4322   16207   86192    3086     9904    22950
+4    2435     711    3188    4925   15772   30555    1749     6713    22937
+5      84      43     193     169     635     540      12      230     1335
+6      96     309     308     307    1333    3084     253      447     2153
+   BLKM10 HISPM10 ASIANM10 AIANM10 NHOPIM10 TOMRM10    WHF10  BLKF10 HISPF10
+1 3733494 4373832  1905150  153407   131043  529572 15377759 4540106 3735147
+2   12773  114417     4717    1123      881    1289    27980    6192   56063
+3    3573   67073     2087       *        *     503    11169    1530   32333
+4    6385   15516     1150     453      232     314    10617    3379    7658
+5     113     428       13       *        *       8      348      17      83
+6     838     983      233       *        *      71      645     521     533
+  ASIANF10 AIANF10 NHOPIF10 TOMRF10   WHT1    WHT2    WHT3    WHT4    WHT5
+1  1673951  143180   127129  568613 741872 8198233 1882059 3589392 4033473
+2     3558     415      391    1284   3814   11640    3799    6509    8835
+3     1629       *        *     640   1677    6559    1028    4069    3564
+4      740     188       83     232   1080    2006    1562     646    2518
+5        8       *        *       6     63     382      63      39     161
+6      117       *        *      17     89     125      69     251     213
+     WHT6    WHT7    WHT8    WHT9  WHT1_2 BLKT1  BLKT2  BLKT3  BLKT4   BLKT5
+1 1948407 3048992 1785513 3712000 3860788 28057 936516 405859 859037 1238893
+2    5810   14874   19212    1773   14677    58    460    391    153     504
+3    1569    3963    4989     493    6208    14    274     70     99     161
+4    2879    6668   10072     797    5326     *     98    220      *     169
+5     145     453     171       6     200     *      9      3      *       3
+6     151     455     931     159     355     *      6      3      *      19
+   BLKT6   BLKT7  BLKT8   BLKT9 BLKT1_2 HISPT1 HISPT2 HISPT3 HISPT4 HISPT5
+1 268358 1080578 997424 2078813  380065  37933 773749 328085 891915 992950
+2    862    5724   9674     570     569    472   1843   1925    792   4501
+3    126    1167   2986      53     153    321   1032    876    581   2787
+4    548    3407   4587     387     302     43    407    528     36    408
+5     11      57     40       *       4      *     14      *      *     13
+6     36     550    667       *      32      *      4      *      *     39
+  HISPT6  HISPT7  HISPT8  HISPT9 HISPT1_2 ASIANT1 ASIANT2 ASIANT3 ASIANT4
+1 542533 1068709 1306752 1734067   432286   50582 1512734  202019  238049
+2   5313   21231  124676    4676     5051      74    1135     314     102
+3   2409   10369   75555    2462     3014      46     875     194      67
+4   1349    5000   14107     393      903       9     117      82      10
+5      9     112     328       *       15       *      10       *       *
+6     92     194    1076       *       30       *      11       *       *
+  ASIANT5 ASIANT6 ASIANT7 ASIANT8 ASIANT9 ASIANT1_2 AIANT1 AIANT2 AIANT3 AIANT4
+1  293853   82755  253176  171738  399793    374402   2414  40312  17004  35929
+2     306     175     963    4450     189       567     15     55     98     17
+3     170       *       *       *      30       386      *     34     82     12
+4      42      46     358    1063      70        93      *     10      9      *
+5       *       *       *       *       *         4      7      *      *      *
+6       *      15      79     180       *        17      *      *      *      *
+  AIANT5 AIANT6 AIANT7 AIANT8 AIANT9 AIANT1_2 NHOPIT1 NHOPIT2 NHOPIT3 NHOPIT4
+1  39295  24125  37207  28385  52713    19203    1706   39714   14065   26284
+2     63    151    331    648     29      131       7      35      36      19
+3     29      *    104      *     17       66       *      25       *      14
+4     17     61    142    341      6       52       *       5       8       *
+5      *      *     10      *      *        *       *       *       *       *
+6      *      3      9     60      *        *       *       *       *       3
+  NHOPIT5 NHOPIT6 NHOPIT7 NHOPIT8 NHOPIT9 NHOPIT1_2 TOMRT1 TOMRT2 TOMRT3 TOMRT4
+1   34274   11492   29092   28839   56643     16063   8393 201815  52715 144517
+2      58      48     312     672      41        44     48    142     91     80
+3      27       *       *       *      13        21     28     87      *     37
+4       5      19      76     185       6        10      8     18     26      4
+5       5       *       *       *       *         *      *      *      *      *
+6      12       3      33     131       *         *      *      *      *     15
+  TOMRT5 TOMRT6 TOMRT7 TOMRT8 TOMRT9 TOMRT1_2    MT1     MT2     MT3     MT4
+1 171154  36146  78265 103228 230658    71294 605967 5448165 1433116 2693241
+2    191     81    311   1359    147      123   3663    9346    4036    5307
+3    109      *      *      *     18       56   1697    5360    1536       *
+4     29     23    121    200     90       27    996    1465    1176     423
+5      *      *      *      *      *        *     56     290      65       *
+6      *      7     13     39      *        *     87     114      85     206
+      MT5     MT6     MT7     MT8     MT9   MT1_2    FT1     FT2     FT3
+1 1805120 2707615 4253134 2943767 3257300 3102043 264990 6254908 1468690
+2    3375   11184   33447  106999    4805   16001    825    5964    2618
+3    1783       *   12221   57785    1925    7520    402    3526     768
+4     559    4495   11465   20340    1041    5027    179    1196    1259
+5      28       *     620     467       9     184     16     138      19
+6      70     279    1013    2147     156     346     11      37      11
+      FT4     FT5    FT6     FT7     FT8     FT9   FT1_2   WHM1 BLKM1 HISPM1
+1 3091882 4998772 206201 1342885 1478112 5007387 2052058 523418 14061  24341
+2    2365   11083   1256   10299   53692    2620    5161      *    47    375
+3       *    5064      *    3986   28407    1161    2384      *    10      *
+4     288    2629    430    4307   10215     708    1686      *     *     37
+5       *     165      *      15      73       3      46      *     *      *
+6     103     238     28     320     937      97     101      *     *      *
+  ASIANM1 AIANM1 NHOPIM1 TOMRM1   WHF1 BLKF1 HISPF1 ASIANF1 AIANF1 NHOPIF1
+1   36367   1519    1083   5178 218454 13996  13592   14215    895     623
+2       *      *       *     26      *    11     97       *      *       *
+3       *      *       *     11      *     4      *       *      *       *
+4       *      *       *      *      *     *      6       *      *       *
+5       *      *       *      *      *     *      *       *      *       *
+6       *      *       *      *      *     *      *       *      *       *
+  TOMRF1    WHM2  BLKM2 HISPM2 ASIANM2 AIANM2 NHOPIM2 TOMRM2    WHF2  BLKF2
+1   3215 3835936 316486 349143  820432  17681   17452  91035 4362297 620030
+2     22    7143    249   1189     643     22      24     76    4497    211
+3     17       *    142      *     491      *       *     50       *    132
+4      *       *     50    299      56      5       *      8       *     48
+5      *     267      *      8       7      *       *      *     115      *
+6      *       *      *      *       7      *       *      *       *      *
+  HISPF2 ASIANF2 AIANF2 NHOPIF2 TOMRF2   WHM3  BLKM3 HISPM3 ASIANM3 AIANM3
+1 424606  692302  22631   22262 110780 956698 149759 178459  106378   8327
+2    654     492     33      11     66      *    205   1197     156     67
+3      *     384      *       *     37      *      *    611     100      *
+4    108      61      5       *     10      *     82    247      29      3
+5      6       3      *       *      *      *      *      *       *      *
+6      *       4      *       *      *      *      *      *       *      *
+  NHOPIM3 TOMRM3   WHF3  BLKF3 HISPF3 ASIANF3 AIANF3 NHOPIF3 TOMRF3    WHM4
+1    7478  26017 925361 256100 149626   95641   8677    6587  26698 1791895
+2       *     48      *    186    728     158     31       *     43       *
+3       *      *      *      *    265      94      *       *      *       *
+4       *     11      *    138    281      53      6       *     15       *
+5       *      *      *      *      *       *      *       *      *       *
+6       *      *      *      *      *       *      *       *      *       *
+   BLKM4 HISPM4 ASIANM4 AIANM4 NHOPIM4 TOMRM4    WHF4  BLKF4 HISPF4 ASIANF4
+1 326495 381333  103154  14468   10765  65131 1797497 532542 510582  134895
+2     99    471       *      *       *     44       *     54    321       *
+3      *      *       *      *       *      *       *      *      *       *
+4      *     19       *      *       *      *       *      *     17       *
+5      *      *       *      *       *      *       *      *      *       *
+6      *      *       *      *       *      8       *      *      *       *
+  AIANF4 NHOPIF4 TOMRF4    WHM5  BLKM5 HISPM5 ASIANM5 AIANM5 NHOPIM5 TOMRM5
+1  21461   15519  79386 1046450 303793 285468   96201  11083   10039  52086
+2      *       *     36    1705    129   1363      82     17      15     64
+3      *       *      *     775      *    878      43      *       *     38
+4      *       *      *       *     27    100      12      3       *      8
+5      *       *      *      15      *      3       *      *       *      *
+6      *       *      7      41      9     14       *      *       *      *
+     WHF5  BLKF5 HISPF5 ASIANF5 AIANF5 NHOPIF5 TOMRF5    WHM6  BLKM6 HISPM6
+1 2987023 935100 707482  197652  28212   24235 119068 1833747 235916 503878
+2    7130    375   3138     224     46      43    127    5490    685   4603
+3    2789      *   1909     127      *       *     71       *      *      *
+4       *    142    308      30     14       *     21    2717    422   1226
+5     146      *     10       *      *       *      *       *      *      *
+6     172     10     25       *      *       *      *     144     31     78
+  ASIANM6 AIANM6 NHOPIM6 TOMRM6   WHF6 BLKF6 HISPF6 ASIANF6 AIANF6 NHOPIF6
+1   69335  22366   10454  31919 114660 32442  38655   13420   1759    1038
+2     151      *       *     74    320   177    710      24      *       *
+3       *      *       *      *      *     *      *       *      *       *
+4      40      *       *     20    162   126    123       6      *       *
+5       *      *       *      *      *     *      *       *      *       *
+6       *      *       *      *      7     5     14       *      *       *
+  TOMRF6    WHM7  BLKM7 HISPM7 ASIANM7 AIANM7 NHOPIM7 TOMRM7   WHF7  BLKF7
+1   4227 2416833 785578 778433  164939  28013   21418  57920 632159 295000
+2      7   12494   4037  15478     685      *       *    231   2380   1687
+3      *    3306      *   7493       *      *       *      *    657      *
+4      3    5324   2312   3313     243      *       *     91   1344   1095
+5      *     443      *    109       *      *       *      *     10      *
+6      *     423    312    168      66      *       *      *     32    238
+  HISPF7 ASIANF7 AIANF7 NHOPIF7 TOMRF7    WHM8  BLKM8 HISPM8 ASIANM8 AIANM8
+1 290276   88237   9194    7674  20345 1248831 643188 845776  103476  18854
+2   5753     278      *       *     80   14020   6591  82521       *      *
+3   2876       *      *       *      *       *   2167  50637       *      *
+4   1687     115      *       *     30    6923   3046   9253       *      *
+5      3       *      *       *      *       *     34    269       *      *
+6     26      13      *       *      *       *    411    640       *      *
+  NHOPIM8 TOMRM8   WHF8  BLKF8 HISPF8 ASIANF8 AIANF8 NHOPIF8 TOMRF8    WHM9
+1   18957  64685 536682 354236 460976   68262   9531    9882  38543 1411250
+2       *    584   5192   3083  42155       *      *       *    775       *
+3       *      *      *    819  24918       *      *       *      *       *
+4       *    129   3149   1541   4854       *      *       *     71       *
+5       *      *      *      6     59       *      *       *      *       *
+6       *     36      *    256    436       *      *       *      3       *
+   BLKM9 HISPM9 ASIANM9 AIANM9 NHOPIM9 TOMRM9    WHF9   BLKF9 HISPF9 ASIANF9
+1 770130 764455  170038  19758   24717  96952 2300750 1308683 969612  229755
+2    365   3095     159      *      32     67       *     205   1581      30
+3     32   1554       *      *       *     10       *      21    908       *
+4    221    292      57      *       *     24       *     166    101      13
+5      *      *       *      *       *      *       *       *      *       *
+6      *      *       *      *       *      *       *       *      *       *
+  AIANF9 NHOPIF9 TOMRF9  WHM1_2 BLKM1_2 HISPM1_2 ASIANM1_2 AIANM1_2 NHOPIM1_2
+1  32955   31926 133706 2357912  188088   262546    234830    11338      8680
+2      *       9     80   10944     366     4125       366       96        29
+3      *       *      8       *       *     2494         *        *         *
+4      *       *     66       *     187      730        71       39         *
+5      *       *      *       *       *       12         *        *         *
+6      *       *      *     273      29       22        12        *         *
+  TOMRM1_2  WHF1_2 BLKF1_2 HISPF1_2 ASIANF1_2 AIANF1_2 NHOPIF1_2 TOMRF1_2
+1    38649 1502876  191977   169740    139572     7865      7383    32645
+2       75    3733     203      926       201       35        15       48
+3       35       *       *      520         *        *         *       21
+4       13       *     115      173        22       13         *       14
+5        *       *       *        3         *        *         *        *
+6        *      82       3        8         5        *         *        *</code></pre>
+</div>
+</div>
 <section id="rubric-on-this-page" class="level2">
 <h2 class="anchored" data-anchor-id="rubric-on-this-page">Rubric: On this page</h2>
 <p>You will</p>
