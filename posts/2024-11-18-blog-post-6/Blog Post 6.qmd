@@ -14,7 +14,7 @@ For future weeks, we would like to see how this data by job category varies for 
 
 
 
-```{r}
+```{r p1}
 #load in our wage data!
 
 wage_data <- read.csv("dataset/wage_data.csv")
@@ -25,12 +25,12 @@ head(wage_data)
 ```
 
 
-```{r}
-colnames(wage_data)
-print(wage_data)
+```{r p2}
+#colnames(wage_data)
+#print(wage_data)
 ```
 
-```{r}
+```{r p3}
 # Step 1: Load the datasets
 Cleaned_Employment2017 <- readRDS("dataset/Employment2017.rds")
 wage_data <- readRDS("dataset/wage_data.rds")
@@ -59,13 +59,12 @@ data2017WithWages <- Cleaned_Employment2017[!is.na(Cleaned_Employment2017$`Oct20
 saveRDS(data2017WithWages, "dataset/2017WithWages.rds")
 
 # Optional: Preview the filtered table
-print(data2017WithWages)
-
+#print(data2017WithWages)
 ```
 
 
 
-```{r}
+```{r p4}
 # Load necessary libraries
 library(dplyr)
 
@@ -98,7 +97,8 @@ ggplot(aggregated_data, aes(x = reorder(NAICS2_Name, Avg_Wage), y = Avg_Wage)) +
   ) +
   theme_minimal()
 ```
-```{r}
+
+```{r p5}
 # Aggregate the data by NAICS3_Name
 aggregated_data_naics3 <- data2017WithWages %>%
   select(NAICS3_Name, NAICS2, `Oct2023 wages`, all_of(cols)) %>%
