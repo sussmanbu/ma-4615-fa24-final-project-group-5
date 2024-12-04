@@ -25,11 +25,6 @@ head(wage_data)
 ```
 
 
-```{r p2}
-#colnames(wage_data)
-#print(wage_data)
-```
-
 ```{r p3}
 # Step 1: Load the datasets
 Cleaned_Employment2017 <- readRDS("dataset/Employment2017.rds")
@@ -50,16 +45,10 @@ Cleaned_Employment2017$`Oct2023 wages` <- ifelse(
 # Step 4: Save the updated dataset
 #saveRDS(Cleaned_Employment2017, "dataset/Updated_Cleaned_Employment2017.rds")
 
-# Optional: Preview the updated dataset
-#print(Cleaned_Employment2017)
-
 data2017WithWages <- Cleaned_Employment2017[!is.na(Cleaned_Employment2017$`Oct2023 wages`), ]
 
 # Step 5: Save the new table
 saveRDS(data2017WithWages, "dataset/2017WithWages.rds")
-
-# Optional: Preview the filtered table
-#print(data2017WithWages)
 ```
 
 
