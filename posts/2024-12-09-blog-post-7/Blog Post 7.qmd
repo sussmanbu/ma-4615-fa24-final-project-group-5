@@ -1,0 +1,44 @@
+---
+title: "Blog Post 7"
+author: "Group 5" 
+date: "2024-12-09"
+date-modified: "2024-12-09"
+draft: FALSE
+---
+
+For the final stages of our project, we aim to deepen our exploratory data analysis by 
+making additional visual representations that might reveal previously hidden trends. 
+We'll focus particularly on plots, paying special attention to the CBSA column, which 
+offers rich geographical insights spanning multiple states like 
+Allentown-Bethlehem-Easton, PA-NJ. It may be difficult to look for a separating factor 
+to get data based on states, but we will work for that. 
+
+Our tentative thesis is as follows: “Disparities in occupational representations and 
+earnings persist across race and gender, as evidenced by labor data from 2017 and 2022, 
+with notable variances in specific job categories and evolving wage trends suggesting 
+systematic inequalities.” The analysis reveals significant inequalities across job 
+categories and wage structures. Notably, sector-specific trends demonstrate nuanced 
+patterns of workforce representation and growth.
+
+For example, the "HISPT" sector experienced notable proportional growth in job 
+categories including Crafts, Technicians, Laborers, Services, and Senior Officers & 
+Managers. Despite a smaller absolute job increase compared to the "WHT" sector, the 
+growth rates were particularly striking. Similarly, the "BLKT" sector showed expansion 
+in Laborers, Technicians, and Services roles. We will look into further tests to prove these trends if possible with our dataset. 
+
+There was consistency across all sectors regarding the increased proportional 
+representation of women, especially in key professional categories such as Senior 
+Officers and Managers, Technicians, Crafts, Services, and Mid-level Officer positions.
+To enhance the project's visual communication, we plan to leverage advanced data 
+visualization tools. Specifically, we'll use the Plotly package in R to improve figure 
+quality and the DT package to create tables. 
+
+Our refinement strategy included several critical improvements:
+-Clarifying axis labels
+-Ensuring scales are intuitive and readable
+-Adding explanatory captions and annotations
+-Strategically highlighting key findings to improve interpretability
+
+These enhancements will help make our complex data more accessible and meaningful to the
+general audience. We will also continue working on the wages dataset to see if we can 
+provide visual representation to the audience. 
