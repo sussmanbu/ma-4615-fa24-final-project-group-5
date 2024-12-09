@@ -28,12 +28,10 @@ Analysis was narrowed to ~10 job categories listed in the user guide (e.g., Seni
 4. Summarizing Data
 Totals by race and job category were computed to analyze proportional representation. Separate summaries were created for gender and job category to enable visualization of workforce composition by both axes.
 
-After doing these steps, we have our cleaned dataaset below:
+After doing these steps, we have our dataset below:
 
 ```{r}
 cleaned_dataset <- readRDS("Employment2017.rds")
-head(cleaned_dataset)
-
 ```
 
 ## Rubric: On this page
