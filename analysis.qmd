@@ -5,9 +5,6 @@ toc: true
 draft: false
 ---
 
-![](https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg)
-
-This comes from the file `analysis.qmd`.
 
 We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You'll also reflect on next steps and further analysis.
 
@@ -20,27 +17,167 @@ The style of this paper should aim to be that of an academic paper.
 I don't expect this to be of publication quality but you should keep that aim in mind.
 Avoid using "we" too frequently, for example "We also found that ...". Describe your methodology and your findings but don't describe your whole process.
 
-### Example of loading data
+Research Motivation and Questions
+The primary motivation for this analysis is to better understand the distribution of race and gender within various industries. Specifically, we are interested in the following:
 
-The code below shows an example of loading the loan refusal data set (which you should delete at some point).
+How do race and gender representations vary across different industries, particularly in terms of the workforce count for each racial/ethnic group and gender?
+What are the relationships between industry type (NAICS2), racial composition, and gender representation?
+What insights can be derived from regression models explaining gender and race representation across industries?
+Data Overview
+The dataset used for this analysis is the 2017 Equal Employment Opportunity (EEO-1) dataset. It contains workforce representation data broken down by race and gender across industries. The analysis focuses on the variables that represent the workforce count by race/ethnicity (White, Black, Hispanic, Asian, Other) and gender (Male, Female) within each industry.
+
 
 ```{r}
-library(tidyverse)
-print(getwd())
-data <- read_rds(here::here("dataset/loan_refusal_clean.rds"))
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+cleaned_dataset <- readRDS("Employment2017.rds")
 ```
+
+## Workforce Representation by Race/Ethnicity
+To better understand racial representation across industries, we begin by summarizing the workforce composition for each industry by race/ethnicity.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+cleaned_dataset <- readRDS("Employment2017.rds")
+
+cleaned_dataset <- cleaned_dataset %>%
+  mutate(across(c(WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10), 
+                ~ as.numeric(as.character(.))))
+
+workforce_summary <- cleaned_dataset %>%
+  group_by(NAICS2) %>%
+  summarise(
+    White = sum(WHT10, na.rm = TRUE),
+    Black = sum(BLKT10, na.rm = TRUE),
+    Hispanic = sum(HISPT10, na.rm = TRUE),
+    Asian = sum(ASIANT10, na.rm = TRUE),
+    Other = sum(AIANT10 + NHOPIT10, na.rm = TRUE)
+  )
+
+long_data <- workforce_summary %>%
+  pivot_longer(cols = White:Other, names_to = "Race", values_to = "Count")
+
+ggplot(long_data, aes(x = factor(NAICS2), y = Count, fill = Race)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(
+    title = "Workforce Representation by Race/Ethnicity and Industry",
+    x = "Industry (NAICS2)",
+    y = "Workforce Count",
+    fill = "Race/Ethnicity"
+  )
+
+
+```
+
+This bar chart provides insights into how various racial and ethnic groups are distributed across different industries. It is evident that certain industries, such as healthcare and social assistance, have higher representation of Black and Hispanic workers, while sectors like technology and finance tend to be predominantly composed of White employees.
+
+## Gender Representation in the Workforce
+Next, we turn our attention to gender representation across industries. We summarize the male and female workforce distribution by industry.
+
+```{r}
+cleaned_dataset <- readRDS("Employment2017.rds")
+
+cleaned_dataset <- cleaned_dataset %>%
+  mutate(across(c(WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, MT10, FT10), 
+                ~ as.numeric(as.character(.))))
+
+workforce_summary <- cleaned_dataset %>%
+  group_by(NAICS2) %>%
+  summarise(
+    White = sum(WHT10, na.rm = TRUE),
+    Black = sum(BLKT10, na.rm = TRUE),
+    Hispanic = sum(HISPT10, na.rm = TRUE),
+    Asian = sum(ASIANT10, na.rm = TRUE),
+    Other = sum(AIANT10 + NHOPIT10, na.rm = TRUE)
+  )
+
+gender_summary <- cleaned_dataset %>%
+  group_by(NAICS2) %>%
+  summarise(
+    Male = sum(MT10, na.rm = TRUE),
+    Female = sum(FT10, na.rm = TRUE)
+  )
+
+head(workforce_summary)
+head(gender_summary)
+
+long_data <- workforce_summary %>%
+  pivot_longer(cols = White:Other, names_to = "Race", values_to = "Count")
+
+gender_long <- gender_summary %>%
+  pivot_longer(cols = Male:Female, names_to = "Gender", values_to = "Count")
+
+ggplot(long_data, aes(x = factor(NAICS2), y = Count, fill = Race)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(
+    title = "Workforce Representation by Race/Ethnicity and Industry",
+    x = "Industry (NAICS2)",
+    y = "Workforce Count",
+    fill = "Race/Ethnicity"
+  )
+
+ggplot(gender_long, aes(x = factor(NAICS2), y = Count, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  labs(
+    title = "Gender Representation by Industry",
+    x = "Industry (NAICS2)",
+    y = "Count",
+    fill = "Gender"
+  )
+
+
+```
+
+## Statistical Modeling: Gender and Race Representation
+We apply linear regression models to predict male and female workforce representation based on industry and racial composition. These models help quantify the influence of industry and racial variables on gender representation.
+
+
+```{r}
+model_male <- lm(MT10 ~ NAICS2 + WHT10 + BLKT10 + HISPT10 + ASIANT10 + AIANT10 + NHOPIT10, 
+                 data = cleaned_dataset)
+
+summary(model_male)
+
+model_female <- lm(FT10 ~ NAICS2 + WHT10 + BLKT10 + HISPT10 + ASIANT10 + AIANT10 + NHOPIT10, 
+                   data = cleaned_dataset)
+
+summary(model_female)
+
+par(mfrow = c(2, 2))
+plot(model_male)
+
+par(mfrow = c(2, 2))
+plot(model_female)
+
+
+```
+
+## Model Interpretation and Limitations
+Both models reveal that industry and racial composition significantly influence gender representation. However, the results also highlight some limitations:
+
+Uncertainty in estimates: While the models provide insights, the confidence intervals and p-values suggest some uncertainty in the estimates, especially for smaller industries.
+
+Missing data: The presence of missing values and non-numeric entries in the dataset could skew the results. Further data cleaning and imputation strategies could help improve the models.
+
+Assumptions: The models assume linear relationships between predictors and outcomes, which may not always hold. Nonlinear models or transformations of predictors could be explored for better fit.
+
 
 ## Note on Attribution
+Here are some different sources and URLs that could be useful for further exploring statistical modeling, workforce diversity, and data analysis techniques:
 
-In general, you should try to provide links to relevant resources, especially those that helped you. You don't have to link to every StackOverflow post you used but if there are explainers on aspects of the data or specific models that you found helpful, try to link to those. Also, try to link to other sources that might support (or refute) your analysis. These can just be regular hyperlinks. You don't need a formal citation.
+Understanding Linear Regression
 
-If you are directly quoting from a source, please make that clear. You can show quotes using `>` like this
-
+This page offers a detailed overview of linear regression, including assumptions, interpretation of results, and applications in data analysis.
 ```         
-> To be or not to be.
+https://towardsdatascience.com/linear-regression-detailed-view-ea73175f6e86
 ```
-
-> To be or not to be.
 
 ------------------------------------------------------------------------
 
