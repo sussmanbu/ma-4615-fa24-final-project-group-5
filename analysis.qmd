@@ -150,12 +150,6 @@ model_female <- lm(FT10 ~ NAICS2 + WHT10 + BLKT10 + HISPT10 + ASIANT10 + AIANT10
 
 summary(model_female)
 
-par(mfrow = c(2, 2))
-plot(model_male)
-
-par(mfrow = c(2, 2))
-plot(model_female)
-
 
 ```
 

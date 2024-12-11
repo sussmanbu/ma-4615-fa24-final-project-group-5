@@ -11,11 +11,89 @@ filters:
   - shinylive
 ---
 
-![](images/The_Big_Picture_2.jpeg)
+# 2022 Workforce Trends: Exploring Disparities in Race, Gender, and Job Types
+**Author**: Group 5  
+**Date**: November 11, 2024  
+**Status**: Published  
 
-This comes from the file `big_picture.Rmd`.
+---
 
-Think of this page as your 538/Upshot style article. This means that you should try to tell a story through the data and your analysis. Read articles from those sites and similar sites to get a feeling for what they are like. Try to write in the style of a news or popular article. Importantly, this page should be geared towards the general public. You shouldn't assume the reader understands how to interpret a linear regression or a complicated plot. Focus on interpretation and visualizations.
+## Thesis/Goal
+
+In this analysis, we delve into the trends of the U.S. workforce as observed in 2022, focusing on disparities in job types, race, and gender. Our goal is to provide insights into how these factors influence representation and wage distributions across different sectors. We aim to explore patterns of inequality and highlight where progress has been made — and where challenges remain.
+
+By analyzing the relationship between race, gender, and employment type, we uncover valuable insights into systemic inequalities that persist within our workforce. Our exploration not only compares job distributions but also examines the evolving wage trends and occupational shifts.
+
+---
+
+## The Story Behind the Data
+
+This analysis tells the story of how various groups are represented in the workforce, how wages are distributed across job types, and how these elements have shifted from 2017 to 2022. By looking at data across job sectors (NAICS categories) and comparing them by race and gender, we gain a clearer picture of where inequality still exists, and where certain groups are underrepresented or overrepresented.
+
+We highlight key insights such as:
+
+- **Which industries are dominated by certain races or genders.**
+- **The wage gap and its persistence in 2022.**
+- **Which job types have seen the most growth for specific racial and gender groups.**
+
+This story isn’t just about numbers; it’s about real-world implications for economic equity, workplace diversity, and inclusivity.
+
+---
+
+## Figures and Analysis
+
+Each figure below has been carefully designed to present a clear, interpretable insight. We've avoided overly complex statistics to ensure that everyone — from policy makers to the general public — can grasp the key findings without needing a statistical background.
+
+### Figure 1: Workforce Distribution by Race and Gender (2022)
+
+This interactive figure allows you to explore how the workforce is distributed across different racial and gender categories for various job types. You can click on specific job categories to see the breakdown of workers by race and gender in each industry.
+
+**Interpretation**: The data shows which job types are most disproportionately represented by certain groups. For example, you may see a higher proportion of women in healthcare, while tech jobs may have a higher percentage of men.
+
+---
+
+### Figure 2: Wage Disparities by Job Type and Demographics
+
+This figure highlights the wage disparities between different racial and gender groups across various job sectors. Hover over each bar to explore wage figures by job category and compare across racial and gender lines.
+
+**Interpretation**: The chart will help us see if certain demographic groups consistently earn less in similar roles. This ties directly to systemic wage inequality, a key issue in today's workforce.
+
+---
+
+### Figure 3: Change in Job Type Growth by Race and Gender (2017-2022)
+
+This dynamic bar chart illustrates how the employment distribution for different racial and gender groups has shifted between 2017 and 2022. By using this tool, you can select different demographic groups to compare their employment growth over the past five years.
+
+**Interpretation**: This figure shows us which groups have seen growth in job representation and which ones have fallen behind. Are women and racial minorities catching up in tech fields? Or are they still underrepresented?
+
+---
+
+## Interactive Components
+
+To enhance your understanding of the data, we’ve incorporated interactive elements that allow you to explore the dataset in more detail. These components are intuitive and easy to use:
+
+- **Explore the Data**: You can filter by job category, race, gender, and year to see how specific groups have changed over time. This helps to uncover hidden patterns in the workforce that static charts might miss.
+
+- **Gain Deeper Insights**: The interactive components let you explore complex relationships in the data. For example, by clicking on a particular industry, you can dive into the wage distribution or racial representation within that sector.
+
+These features make it easier to see the implications of the data for different demographic groups and draw your own conclusions based on what interests you most.
+
+---
+
+## Creativity and Storytelling
+
+This isn’t just another data visualization. Each figure and analysis point builds on the previous one to weave a cohesive narrative about the state of race, gender, and wage inequality in the workforce. We start by looking at basic distributions, then move into deeper insights about how certain groups are progressing or stagnating in specific sectors. This logical flow provides a comprehensive understanding of the broader trends.
+
+---
+
+## Video Recording
+
+As part of our project, we’ve created a **4-minute video** that walks you through the key findings and demonstrates how to use the interactive components on this page. This video is available in the README.md file on our Github repository, where you can view a quick summary of our analysis and explore the interactive elements firsthand.
+
+
+
+
+
 
 
 
