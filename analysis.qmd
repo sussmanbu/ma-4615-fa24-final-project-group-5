@@ -140,18 +140,44 @@ We apply linear regression models to predict male and female workforce represent
 
 
 ```{r}
-model_male <- lm(MT10 ~ NAICS2 + WHT10 + BLKT10 + HISPT10 + ASIANT10 + AIANT10 + NHOPIT10, 
-                 data = cleaned_dataset)
+library(dplyr)
+library(ggplot2)
 
-summary(model_male)
+# Prepare data
+gender_model_data <- cleaned_dataset %>%
+  select(MT10, FT10) %>%
+  na.omit()
 
-model_female <- lm(FT10 ~ NAICS2 + WHT10 + BLKT10 + HISPT10 + ASIANT10 + AIANT10 + NHOPIT10, 
-                   data = cleaned_dataset)
+# Linear regression model
+linear_model <- lm(FT10 ~ MT10, data = gender_model_data)
 
-summary(model_female)
+# Summarize the model
+summary(linear_model)
+
+# Visualize with regression line
+ggplot(gender_model_data, aes(x = MT10, y = FT10)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  labs(
+    title = "Linear Regression: Female vs. Male Workforce Representation",
+    x = "Male Workforce Count",
+    y = "Female Workforce Count",
+    caption = "Red line shows predicted trend from linear regression"
+  ) +
+  theme_minimal()
+
+
 
 
 ```
+
+In this context:
+
+X-axis (MT10): Represents the count of male workforce in all job type.
+Y-axis (FT10): Represents the count of female workforce in all job type.
+The graph shows the relationship between the number of men and women in the workforce across industries. Each point on the graph corresponds to one industry (or observation in your dataset), with its position determined by the male and female workforce counts for that industry.
+
+
 
 ## Model Interpretation and Limitations
 Both models reveal that industry and racial composition significantly influence gender representation. However, the results also highlight some limitations:
