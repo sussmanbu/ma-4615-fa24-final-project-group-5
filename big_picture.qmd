@@ -9,6 +9,7 @@ format:
       - shinylive-sw.js
 filters:
   - shinylive
+#| echo: FALSE
 ---
 
 # 2022 Workforce Trends: Exploring Disparities in Race, Gender, and Job Types
@@ -36,35 +37,38 @@ We highlight key insights such as:
 - **The wage gap and its persistence in 2022.**
 - **Which job types have seen the most growth for specific racial and gender groups.**
 
-This story isn’t just about numbers; it’s about real-world implications for economic equity, workplace diversity, and inclusivity.
-
 ---
 
 ## Figures and Analysis
 
-Each figure below has been carefully designed to present a clear, interpretable insight. We've avoided overly complex statistics to ensure that everyone — from policy makers to the general public — can grasp the key findings without needing a statistical background.
 
-### Figure 1: Workforce Distribution by Race and Gender (2022)
 
-This interactive figure allows you to explore how the workforce is distributed across different racial and gender categories for various job types. You can click on specific job categories to see the breakdown of workers by race and gender in each industry.
+### Figure 1:
 
-**Interpretation**: The data shows which job types are most disproportionately represented by certain groups. For example, you may see a higher proportion of women in healthcare, while tech jobs may have a higher percentage of men.
+![Proportionality of Race](images/Proportionality_of_race.png)
 
----
-
-### Figure 2: Wage Disparities by Job Type and Demographics
-
-This figure highlights the wage disparities between different racial and gender groups across various job sectors. Hover over each bar to explore wage figures by job category and compare across racial and gender lines.
-
-**Interpretation**: The chart will help us see if certain demographic groups consistently earn less in similar roles. This ties directly to systemic wage inequality, a key issue in today's workforce.
 
 ---
 
-### Figure 3: Change in Job Type Growth by Race and Gender (2017-2022)
+### Figure 2:
 
-This dynamic bar chart illustrates how the employment distribution for different racial and gender groups has shifted between 2017 and 2022. By using this tool, you can select different demographic groups to compare their employment growth over the past five years.
+![Proportionality of Jobs by Type](images/Proportionality_of_jobs_by_type.png)
 
-**Interpretation**: This figure shows us which groups have seen growth in job representation and which ones have fallen behind. Are women and racial minorities catching up in tech fields? Or are they still underrepresented?
+---
+
+### Figure 3:
+
+![Proportionality of Gender](images/Proportionality_of_gender.png)
+
+![Proportional Representation by Job Type and Gender](images/Proportional_representation_by_job_type_and_gender.png)
+
+![Proportional_Representation_by_job_type_and_race.png](images/Proportional_Representation_by_job_type_and_race.png)
+
+![Average Wage by NAICS2 Name](images/Average_Wages_By_NAICS2_Name.png)
+
+
+
+![Average Wage by NAICS3 Name](images/Average_Wage_by_NAICS3_Name.png)
 
 ---
 
@@ -77,12 +81,6 @@ To enhance your understanding of the data, we’ve incorporated interactive elem
 - **Gain Deeper Insights**: The interactive components let you explore complex relationships in the data. For example, by clicking on a particular industry, you can dive into the wage distribution or racial representation within that sector.
 
 These features make it easier to see the implications of the data for different demographic groups and draw your own conclusions based on what interests you most.
-
----
-
-## Creativity and Storytelling
-
-This isn’t just another data visualization. Each figure and analysis point builds on the previous one to weave a cohesive narrative about the state of race, gender, and wage inequality in the workforce. We start by looking at basic distributions, then move into deeper insights about how certain groups are progressing or stagnating in specific sectors. This logical flow provides a comprehensive understanding of the broader trends.
 
 ---
 
