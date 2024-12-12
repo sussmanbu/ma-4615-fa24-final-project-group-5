@@ -1,0 +1,2 @@
+load("/Users/emilymusiclin/Downloads/CAS MA 415/ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2017.rds")
+load("/Users/emilymusiclin/Downloads/CAS MA 415/ma-4615-fa24-final-project-group-5/dataset/Cleaned_Employment2022.rds")
