@@ -1,41 +1,23 @@
 ---
 title: Analysis
-description: Here we provide a detailed analysis using more sophisticated statistics techniques.
+description: A detailed analysis using statistics techniques
 toc: true
 draft: false
 ---
 
+## Research Motivation and Questions
+The primary motivation for this analysis is to better understand the distribution of race and gender within various job types.
+Specifically, we are interested in the following:
 
-We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You'll also reflect on next steps and further analysis.
+* How do race and gender representations vary across different job types, particularly in terms of the workforce count for each racial group and gender?
 
-The audience for this page is someone like your class mates, so you can expect that they have some level of statistical and quantitative sophistication and understand ideas like linear and logistic regression, coefficients, confidence intervals, overfitting, etc. 
+* What insights can be derived from regression models explaining gender and race representation across industries?
 
-While the exact number of figures and tables will vary and depend on your analysis, you should target around 5 to 6. An overly long analysis could lead to losing points.
-If you want you can link back to your blog posts or create separate pages with more details.
+## Data Overview
+The dataset used for this analysis is the 2017 Equal Employment Opportunity (EEO-1) dataset. It contains workforce representation data broken down by race and gender across the job categories provided by the US Employment dataset. The analysis focuses on the variables that represent the workforce count by race (White, Black, Hispanic, Asian, and more) as well as gender (Male, Female) within each job category provided by this website.
 
-The style of this paper should aim to be that of an academic paper. 
-I don't expect this to be of publication quality but you should keep that aim in mind.
-Avoid using "we" too frequently, for example "We also found that ...". Describe your methodology and your findings but don't describe your whole process.
-
-Research Motivation and Questions
-The primary motivation for this analysis is to better understand the distribution of race and gender within various industries. Specifically, we are interested in the following:
-
-How do race and gender representations vary across different industries, particularly in terms of the workforce count for each racial/ethnic group and gender?
-What are the relationships between industry type (NAICS2), racial composition, and gender representation?
-What insights can be derived from regression models explaining gender and race representation across industries?
-Data Overview
-The dataset used for this analysis is the 2017 Equal Employment Opportunity (EEO-1) dataset. It contains workforce representation data broken down by race and gender across industries. The analysis focuses on the variables that represent the workforce count by race/ethnicity (White, Black, Hispanic, Asian, Other) and gender (Male, Female) within each industry.
-
-
-```{r}
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-cleaned_dataset <- readRDS("Employment2017.rds")
-```
-
-## Workforce Representation by Race/Ethnicity
-To better understand racial representation across industries, we begin by summarizing the workforce composition for each industry by race/ethnicity.
+## Workforce Representation by Race
+To better understand racial representation across the job categories, we begin by summarizing the workforce composition for each category by race.
 
 ```{r}
 library(dplyr)
@@ -74,7 +56,7 @@ ggplot(long_data, aes(x = factor(NAICS2), y = Count, fill = Race)) +
 
 ```
 
-This bar chart provides insights into how various racial and ethnic groups are distributed across different industries. It is evident that certain industries, such as healthcare and social assistance, have higher representation of Black and Hispanic workers, while sectors like technology and finance tend to be predominantly composed of White employees.
+This bar chart provides insights into how various racial groups are distributed across different industries. It is evident that certain job industries, such as healthcare and social assistance, have higher representation of Black and Hispanic workers, while sectors like technology and finance tend to be predominantly composed of White employees.
 
 ## Gender Representation in the Workforce
 Next, we turn our attention to gender representation across industries. We summarize the male and female workforce distribution by industry.
@@ -135,8 +117,8 @@ ggplot(gender_long, aes(x = factor(NAICS2), y = Count, fill = Gender)) +
 
 ```
 
-## Statistical Modeling: Gender and Race Representation
-We apply linear regression models to predict male and female workforce representation based on industry and racial composition. These models help quantify the influence of industry and racial variables on gender representation.
+## Statistical Modeling: Gender Representation
+Due to time constraints, we focus on a linear regression model for gender representation. This model predicts male and female workforce representation in the employment data of 2017.
 
 
 ```{r}
@@ -165,39 +147,23 @@ ggplot(gender_model_data, aes(x = MT10, y = FT10)) +
     caption = "Red line shows predicted trend from linear regression"
   ) +
   theme_minimal()
-
-
-
-
 ```
 
 In this context:
 
 X-axis (MT10): Represents the count of male workforce in all job type.
 Y-axis (FT10): Represents the count of female workforce in all job type.
-The graph shows the relationship between the number of men and women in the workforce across industries. Each point on the graph corresponds to one industry (or observation in your dataset), with its position determined by the male and female workforce counts for that industry.
 
+The graph shows the relationship between the number of men and women in the workforce across all industries. Each point on the graph corresponds to different major city/regions in the US, with its position determined by the male and female workforce counts for that location. 
+Although barely noticable, the trend caters toward the male workforce count which means that there is a higher likelihood that males are overrepresented in the overall job employment in the United States.
 
 
 ## Model Interpretation and Limitations
-Both models reveal that industry and racial composition significantly influence gender representation. However, the results also highlight some limitations:
+The results highlight some limitations:
 
-Uncertainty in estimates: While the models provide insights, the confidence intervals and p-values suggest some uncertainty in the estimates, especially for smaller industries.
+Missing data: The presence of missing values and non-numeric entries in the dataset could skew the results.
 
-Missing data: The presence of missing values and non-numeric entries in the dataset could skew the results. Further data cleaning and imputation strategies could help improve the models.
-
-Assumptions: The models assume linear relationships between predictors and outcomes, which may not always hold. Nonlinear models or transformations of predictors could be explored for better fit.
-
-
-## Note on Attribution
-Here are some different sources and URLs that could be useful for further exploring statistical modeling, workforce diversity, and data analysis techniques:
-
-Understanding Linear Regression
-
-This page offers a detailed overview of linear regression, including assumptions, interpretation of results, and applications in data analysis.
-```         
-https://towardsdatascience.com/linear-regression-detailed-view-ea73175f6e86
-```
+Assumptions: The models assume linear relationships between predictors and outcomes, which may not always hold.
 
 ------------------------------------------------------------------------
 
