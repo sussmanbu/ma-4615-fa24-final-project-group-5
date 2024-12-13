@@ -3,7 +3,10 @@ title: Analysis
 description: A detailed analysis using statistics techniques
 toc: true
 draft: false
+#| echo: FALSE
 ---
+
+![ia](images/image_1.png)
 
 ## Research Motivation and Questions
 The primary motivation for this analysis is to better understand the distribution of race and gender within various job types.
