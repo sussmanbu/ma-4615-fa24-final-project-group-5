@@ -1,6 +1,6 @@
 ---
 title: Analysis
-description: A detailed analysis using statistics techniques
+description: Brought to you by Group 5
 toc: true
 draft: false
 ---
@@ -17,16 +17,19 @@ Specifically, we are interested in the following:
 * What insights can be derived from regression models explaining gender and race representation across industries?
 
 ## Data Overview
-The dataset used for this analysis is the 2017 Equal Employment Opportunity (EEO-1) dataset. It contains workforce representation data broken down by race and gender across the job categories provided by the US Employment dataset. The analysis focuses on the variables that represent the workforce count by race (White, Black, Hispanic, Asian, and more) as well as gender (Male, Female) within each job category provided by this website.
+The dataset used for this analysis is the 2017 Equal Employment Opportunity (EEO-1) dataset. It contains workforce representation data broken down by race and gender across the job categories provided by the US Employment dataset. 
+
+This analysis page focuses on the variables that represent the workforce count by race (White, Black, Hispanic, Asian, and Other) as well as gender (Male, Female) within each job category provided by this website. In the actual dataset, there are a few more race categories (Two or More Races, Native Hawaiian or Other Pacific Islander, and American Indian or Alaska Native); however, they are combined all together as 'Other'. 
 
 ## Workforce Representation by Race
-To better understand racial representation across the job categories, we begin by summarizing the workforce composition for each category by race.
+To better understand racial representation across the job categories, we begin by summarizing the workforce composition for each category by race. One important thing to note is that we grouped the data by the NAICS2 variable. 
+
+The NAICS 2017 definitions were used for the two- and three-digits industry codes. As described in the North American Industry Classification System, United States, 2017 (https://www.census.gov/naics/?58967?yearbck=2017), all economic activities can be divided into 20 sectors that are designated by two-digit NAICS codes. 
 
 ```{r}
 #| echo: false
 #| message: false
 #| warning: false
-
 library(dplyr)
 library(ggplot2)
 library(tidyr)
@@ -34,8 +37,14 @@ library(tidyr)
 cleaned_dataset <- readRDS("Employment2017.rds")
 
 cleaned_dataset <- cleaned_dataset %>%
-  mutate(across(c(WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10), 
-                ~ as.numeric(as.character(.))))
+  mutate(across(c(WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, TOMRT10), 
+                ~ as.numeric(as.character(.)))) %>%
+  mutate(NAICS2 = case_when(
+    NAICS2 %in% c("31", "32", "33") ~ "31-33",
+    NAICS2 %in% c("44", "45") ~ "44-45",
+    NAICS2 %in% c("48", "49") ~ "48-49",
+    TRUE ~ as.character(NAICS2) 
+  ))
 
 workforce_summary <- cleaned_dataset %>%
   group_by(NAICS2) %>%
@@ -44,26 +53,49 @@ workforce_summary <- cleaned_dataset %>%
     Black = sum(BLKT10, na.rm = TRUE),
     Hispanic = sum(HISPT10, na.rm = TRUE),
     Asian = sum(ASIANT10, na.rm = TRUE),
-    Other = sum(AIANT10 + NHOPIT10, na.rm = TRUE)
+    Other = sum(AIANT10 + NHOPIT10 + TOMRT10, na.rm = TRUE)
   )
 
 long_data <- workforce_summary %>%
   pivot_longer(cols = White:Other, names_to = "Race", values_to = "Count")
 
-ggplot(long_data, aes(x = factor(NAICS2), y = Count, fill = Race)) +
+sector_labels <- c(
+  "11" = "Agriculture, Forestry, Fishing and Hunting",
+  "21" = "Mining, Quarrying, and Oil and Gas Extraction",
+  "22" = "Utilities",
+  "23" = "Construction",
+  "31-33" = "Manufacturing",
+  "42" = "Wholesale Trade",
+  "44-45" = "Retail Trade",
+  "48-49" = "Transportation and Warehousing",
+  "51" = "Information",
+  "52" = "Finance and Insurance",
+  "53" = "Real Estate and Rental and Leasing",
+  "54" = "Professional, Scientific, and Technical Services",
+  "55" = "Management of Companies and Enterprises",
+  "56" = "Administrative and Support and Waste Management and Remediation Services",
+  "61" = "Educational Services",
+  "62" = "Health Care and Social Assistance",
+  "71" = "Arts, Entertainment, and Recreation",
+  "72" = "Accommodation and Food Services",
+  "81" = "Other Services (except Public Administration)",
+  "92" = "Public Administration"
+)
+
+ggplot(long_data, aes(x = factor(NAICS2, levels = names(sector_labels)), y = Count, fill = Race)) +
   geom_bar(stat = "identity", position = "dodge") +
   theme_minimal() +
   labs(
-    title = "Workforce Representation by Race/Ethnicity and Industry",
+    title = "Workforce Representation by Race and Industry",
     x = "Industry (NAICS2)",
     y = "Workforce Count",
-    fill = "Race/Ethnicity"
-  )
-
-
+    fill = "Race"
+  ) +
+  scale_x_discrete(labels = sector_labels) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 5))
 ```
 
-This bar chart provides insights into how various racial groups are distributed across different industries. It is evident that certain job industries, such as healthcare and social assistance, have higher representation of Black and Hispanic workers, while sectors like technology and finance tend to be predominantly composed of White employees.
+This bar chart provides insights into how various racial groups are distributed across different industries. Since the US population is predominantly white, the employment counts will be noticably higher in the White category. Nevertheless, it is evident that certain job industries, such as Healthcare and Social Assistance & Accommodation and Food Services, have higher representation of Black and Hispanic workers, while sectors like Finance and Insurance tend to be predominantly composed of White employees.
 
 ## Gender Representation in the Workforce
 Next, we turn our attention to gender representation across industries. We summarize the male and female workforce distribution by industry.
@@ -72,22 +104,21 @@ Next, we turn our attention to gender representation across industries. We summa
 #| echo: false
 #| message: false
 #| warning: false
+library(dplyr)
+library(ggplot2)
+library(tidyr)
 
 cleaned_dataset <- readRDS("Employment2017.rds")
 
 cleaned_dataset <- cleaned_dataset %>%
-  mutate(across(c(WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, MT10, FT10), 
-                ~ as.numeric(as.character(.))))
-
-workforce_summary <- cleaned_dataset %>%
-  group_by(NAICS2) %>%
-  summarise(
-    White = sum(WHT10, na.rm = TRUE),
-    Black = sum(BLKT10, na.rm = TRUE),
-    Hispanic = sum(HISPT10, na.rm = TRUE),
-    Asian = sum(ASIANT10, na.rm = TRUE),
-    Other = sum(AIANT10 + NHOPIT10, na.rm = TRUE)
-  )
+  mutate(across(c(MT10, FT10), 
+                ~ as.numeric(as.character(.)))) %>%
+  mutate(NAICS2 = case_when(
+    NAICS2 %in% c("31", "32", "33") ~ "31-33",
+    NAICS2 %in% c("44", "45") ~ "44-45",
+    NAICS2 %in% c("48", "49") ~ "48-49",
+    TRUE ~ as.character(NAICS2) 
+  ))
 
 gender_summary <- cleaned_dataset %>%
   group_by(NAICS2) %>%
@@ -96,26 +127,33 @@ gender_summary <- cleaned_dataset %>%
     Female = sum(FT10, na.rm = TRUE)
   )
 
-head(workforce_summary)
-head(gender_summary)
-
-long_data <- workforce_summary %>%
-  pivot_longer(cols = White:Other, names_to = "Race", values_to = "Count")
-
 gender_long <- gender_summary %>%
   pivot_longer(cols = Male:Female, names_to = "Gender", values_to = "Count")
 
-ggplot(long_data, aes(x = factor(NAICS2), y = Count, fill = Race)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  theme_minimal() +
-  labs(
-    title = "Workforce Representation by Race/Ethnicity and Industry",
-    x = "Industry (NAICS2)",
-    y = "Workforce Count",
-    fill = "Race/Ethnicity"
-  )
+sector_labels <- c(
+  "11" = "Agriculture, Forestry, Fishing and Hunting",
+  "21" = "Mining, Quarrying, and Oil and Gas Extraction",
+  "22" = "Utilities",
+  "23" = "Construction",
+  "31-33" = "Manufacturing",
+  "42" = "Wholesale Trade",
+  "44-45" = "Retail Trade",
+  "48-49" = "Transportation and Warehousing",
+  "51" = "Information",
+  "52" = "Finance and Insurance",
+  "53" = "Real Estate and Rental and Leasing",
+  "54" = "Professional, Scientific, and Technical Services",
+  "55" = "Management of Companies and Enterprises",
+  "56" = "Administrative and Support and Waste Management and Remediation Services",
+  "61" = "Educational Services",
+  "62" = "Health Care and Social Assistance",
+  "71" = "Arts, Entertainment, and Recreation",
+  "72" = "Accommodation and Food Services",
+  "81" = "Other Services (except Public Administration)",
+  "92" = "Public Administration"
+)
 
-ggplot(gender_long, aes(x = factor(NAICS2), y = Count, fill = Gender)) +
+ggplot(gender_long, aes(x = factor(NAICS2, levels = names(sector_labels)), y = Count, fill = Gender)) +
   geom_bar(stat = "identity", position = "dodge") +
   theme_minimal() +
   labs(
@@ -123,14 +161,79 @@ ggplot(gender_long, aes(x = factor(NAICS2), y = Count, fill = Gender)) +
     x = "Industry (NAICS2)",
     y = "Count",
     fill = "Gender"
-  )
+  ) +
+  scale_x_discrete(labels = sector_labels) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 5))
+```
+This bar chart provides insights into how females and males are distributed across different industries. For females, they dominate the Health Care and Social Assistance industry. For males, they dominate the Manufacturing industry. On the other hand, they share the playground for Retail Trade & Accommodation and Food Services. Fun information!
 
+## Statistical Modeling: Racial Representation
+This linear regression model predicts racial workforce representation in the employment data of 2017.
+Two or More Races, Native Hawaiian or Other Pacific Islander, and American Indian or Alaska Native
 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(dplyr)
+library(nnet)
+library(ggplot2)
+
+race_model_data <- cleaned_dataset %>%
+  select(NAICS2, AIANT10, NHOPIT10, TOMRT10) %>%
+  na.omit() %>%
+  mutate(NAICS2 = as.factor(NAICS2)) 
+
+multi_logit_model <- multinom(NAICS2 ~ AIANT10 + NHOPIT10 + TOMRT10, data = race_model_data)
+
+race_model_data$predicted_class <- predict(multi_logit_model)
+race_model_data$predicted_prob <- predict(multi_logit_model, type = "probs")
+
+sectors <- c("23", "62", "72")
+
+race_model_data_filtered <- race_model_data %>%
+  filter(NAICS2 %in% sectors)
+
+race_model_data_long <- race_model_data_filtered %>%
+  select(NAICS2, AIANT10, NHOPIT10, TOMRT10, predicted_prob) %>%
+  pivot_longer(cols = c(AIANT10, NHOPIT10, TOMRT10), 
+               names_to = "race", 
+               values_to = "workforce_count") %>%
+  pivot_longer(cols = starts_with("predicted_prob"), 
+               names_to = "sector", 
+               values_to = "predicted_prob") %>%
+  filter(sector %in% sectors)
+
+ggplot(race_model_data_long, aes(x = workforce_count, y = predicted_prob, color = NAICS2)) +
+  geom_point(alpha = 0.6) +
+  facet_wrap(~ sector, scales = "free_y", labeller = as_labeller(c(
+    "23" = "Construction",
+    "62" = "Health Care and Social Assistance",
+    "72" = "Accommodation and Food Services"
+  ))) +
+  labs(
+    title = "Predicted Probabilities for Different Job Sectors by Minority Race",
+    x = "Workforce Count by Race",
+    y = "Predicted Probability",
+    color = "Industry"
+  ) +
+  scale_x_continuous(name = "Workforce Counts by Race") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
 ```
 
-## Statistical Modeling: Gender Representation
-Due to time constraints, we focus on a linear regression model for gender representation. This model predicts male and female workforce representation in the employment data of 2017.
+In this context:
 
+X-axis (MT10): Represents the count of male workforce in all job type.
+
+Y-axis (FT10): Represents the count of female workforce in all job type.
+
+The graph shows the relationship between the number of men and women in the workforce across all industries. Each point on the graph corresponds to different major city/regions in the US, with its position determined by the male and female workforce counts for that location.
+
+Although barely noticable, the trend caters toward the male workforce count which means that there is a higher likelihood that males are overrepresented or just more males are working in the overall job employment in the United States. 
+
+## Statistical Modeling: Gender Representation
+This linear regression model predicts male and female workforce representation in the overall employment data of 2017.
 
 ```{r}
 #| echo: false
@@ -140,18 +243,12 @@ Due to time constraints, we focus on a linear regression model for gender repres
 library(dplyr)
 library(ggplot2)
 
-# Prepare data
 gender_model_data <- cleaned_dataset %>%
   select(MT10, FT10) %>%
   na.omit()
 
-# Linear regression model
 linear_model <- lm(FT10 ~ MT10, data = gender_model_data)
 
-# Summarize the model
-summary(linear_model)
-
-# Visualize with regression line
 ggplot(gender_model_data, aes(x = MT10, y = FT10)) +
   geom_point(alpha = 0.5, color = "blue") +
   geom_smooth(method = "lm", se = TRUE, color = "red") +
@@ -167,18 +264,21 @@ ggplot(gender_model_data, aes(x = MT10, y = FT10)) +
 In this context:
 
 X-axis (MT10): Represents the count of male workforce in all job type.
+
 Y-axis (FT10): Represents the count of female workforce in all job type.
 
-The graph shows the relationship between the number of men and women in the workforce across all industries. Each point on the graph corresponds to different major city/regions in the US, with its position determined by the male and female workforce counts for that location. 
-Although barely noticable, the trend caters toward the male workforce count which means that there is a higher likelihood that males are overrepresented in the overall job employment in the United States.
+The graph shows the relationship between the number of men and women in the workforce across all industries. Each point on the graph corresponds to different major city/regions in the US, with its position determined by the male and female workforce counts for that location.
 
+Although barely noticable, the trend caters toward the male workforce count which means that there is a higher likelihood that males are overrepresented or just more males are working in the overall job employment in the United States. 
 
-## Model Interpretation and Limitations
+## Graphs and Model Limitations
 The results highlight some limitations:
 
-Missing data: The presence of missing values and non-numeric entries in the dataset could skew the results.
+Missing data: 
+* The presence of missing values and non-numeric entries in the dataset could skew the results and cause certain industries to not be presented as clearly. 
 
-Assumptions: The models assume linear relationships between predictors and outcomes, which may not always hold.
+Assumptions: 
+* The models assume linear relationships between predictors and outcomes, which may not always hold.
 
 ------------------------------------------------------------------------
 
