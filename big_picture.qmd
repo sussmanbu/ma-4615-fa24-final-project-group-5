@@ -1,6 +1,6 @@
 ---
 title: "Big Picture"
-description: "A 538/Upshot style article about the data."
+description: "An article style about the data."
 toc: true
 draft: FALSE
 format:
@@ -18,6 +18,8 @@ filters:
 **Status**: Published  
 
 ---
+
+![](images/image_2.png)
 
 ## Thesis/Goal
 

@@ -3,10 +3,10 @@ title: Analysis
 description: A detailed analysis using statistics techniques
 toc: true
 draft: false
-#| echo: FALSE
 ---
 
-![ia](images/image_1.png)
+
+![](images/image_1.png)
 
 ## Research Motivation and Questions
 The primary motivation for this analysis is to better understand the distribution of race and gender within various job types.
@@ -23,6 +23,10 @@ The dataset used for this analysis is the 2017 Equal Employment Opportunity (EEO
 To better understand racial representation across the job categories, we begin by summarizing the workforce composition for each category by race.
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
 library(dplyr)
 library(ggplot2)
 library(tidyr)
@@ -65,6 +69,10 @@ This bar chart provides insights into how various racial groups are distributed 
 Next, we turn our attention to gender representation across industries. We summarize the male and female workforce distribution by industry.
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
 cleaned_dataset <- readRDS("Employment2017.rds")
 
 cleaned_dataset <- cleaned_dataset %>%
@@ -125,6 +133,10 @@ Due to time constraints, we focus on a linear regression model for gender repres
 
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
 library(dplyr)
 library(ggplot2)
 
