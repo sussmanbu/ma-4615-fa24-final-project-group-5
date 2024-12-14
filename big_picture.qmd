@@ -49,6 +49,7 @@ We highlight key insights such as:
 
 ![Proportionality of Race](images/Proportionality_of_race.png)
 
+The bar chart visualizes the proportional distribution of workers across 10 different job types in the dataset. Each bar represents a job type, such as "Senior Officers and Managers" or "Professionals," with the height of the bar corresponding to the proportion of workers in that job type relative to the total workforce. The proportions are calculated by summing the values in the relevant dataset columns (e.g., TOTAL1, TOTAL2, etc.), converting them into percentages. Larger bars indicate job types with a higher share of the workforce, while smaller bars represent job types with a smaller share. The x-axis shows the job types, and the y-axis shows the proportions as percentages. The chart provides a clear visual comparison of how the workforce is distributed across different job categories, highlighting which types of employment dominate and which are less common.
 
 ---
 
@@ -56,45 +57,41 @@ We highlight key insights such as:
 
 ![Proportionality of Jobs by Type](images/Proportionality_of_jobs_by_type.png)
 
+
+The plot displays a bar chart showing the proportional distribution of workers across different job types. Each bar represents a specific job category, such as "Senior Officers and Managers," "Professionals," "Technicians," and others, with their height corresponding to the proportion of workers in that category relative to the total workforce. The y-axis shows these proportions as percentages, making it easy to compare the relative sizes of each job type. The chart highlights the distribution of job types, emphasizing which roles are more prevalent and which are less common within the dataset. The x-axis labels are rotated for better readability, and the chart uses a gray background theme for a clean, simple presentation.
 ---
 
 ### Figure 3:
 
 ![Proportionality of Gender](images/Proportionality_of_gender.png)
 
+This plot is a pie chart showing the proportional distribution of male and female workers in the dataset. The chart is created by transforming the data into proportions and then representing them in a circular format. The two segments of the pie represent males and females, with their size corresponding to the percentage of each gender within the total workforce. Each segment is labeled with its respective percentage, rounded to one decimal place, making it easy to see the relative proportions of males and females. The chart uses a gray background theme for clarity and removes axis labels and ticks to focus on the pie segments themselves. The legend clearly identifies the two gender categories, "Male" and "Female."
+
+
+### Figure 4:
 ![Proportional Representation by Job Type and Gender](images/Proportional_representation_by_job_type_and_gender.png)
 
+This plot visualizes the proportional representation of genders across various job types. Each facet represents a different job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.), with the y-axis showing the percentage of each gender within that job type. The percentages are calculated by dividing the count of each gender by the total count for the respective job type, allowing us to see how each gender is represented proportionally within each job category. The x-axis represents gender, and the bars display the percentage of men and women (or other genders) in each job type. The plot is designed to help identify gender disparities across job categories and offers a clear comparison of gender distribution for each job type. The y-axis is adjusted for each facet to better accommodate the varying percentage scales across different job categories.
+
+### Figure 5:
 ![Proportional_Representation_by_job_type_and_race.png](images/Proportional_Representation_by_job_type_and_race.png)
 
+The plot displays the proportional representation of different races across various job types. Each facet represents a specific job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.). Within each facet, bars show the count of workers from different racial groups (e.g., White, Black, Hispanic) for that particular job type. The counts are visualized as bar heights, making it easy to compare the racial distribution within each job category. The y-axis is adjusted for each facet, with "free_y" scaling to accommodate different ranges for each job type. The x-axis represents the race categories, and the plot's labels are customized for clarity. The plot helps identify racial disparities in job type representation and allows for a visual comparison of racial diversity across job categories.
+
+### Figure 6:
 ![Average Wage by NAICS2 Name](images/Average_Wages_By_NAICS2_Name.png)
 
+The plot displays the average wages across various sectors, with each bar representing a different industry sector. The sectors are listed on the vertical axis, and the corresponding average wage is shown on the horizontal axis. The chart is oriented horizontally for better readability, making it easier to compare the wages across sectors. The title and labels clearly indicate that the plot illustrates the average wages by industry sector. This visualization provides insights into how wages differ between sectors, highlighting which industries offer higher or lower average compensation.
 
-
+### Figure 7:
 ![Average Wage by NAICS3 Name](images/Average_Wage_by_NAICS3_Name.png)
 
----
-
-## Interactive Components
-
-To enhance your understanding of the data, we’ve incorporated interactive elements that allow you to explore the dataset in more detail. These components are intuitive and easy to use:
-
-- **Explore the Data**: You can filter by job category, race, gender, and year to see how specific groups have changed over time. This helps to uncover hidden patterns in the workforce that static charts might miss.
-
-- **Gain Deeper Insights**: The interactive components let you explore complex relationships in the data. For example, by clicking on a particular industry, you can dive into the wage distribution or racial representation within that sector.
-
-These features make it easier to see the implications of the data for different demographic groups and draw your own conclusions based on what interests you most.
-
+The bar chart illustrates the average wages across different NAICS3 sectors, with each bar representing a sector. The sectors are displayed on the vertical axis, while the horizontal axis shows the average wage for each sector as of October 2023. The chart is flipped horizontally for better readability, allowing for easier comparison of wage levels across sectors. The title of the plot clearly indicates that it presents the average wages by NAICS3 sector, and the labels on the axes provide clarity about the variables being visualized. The chart also adjusts the text size on the y-axis to ensure the sector names are legible, especially when there are many sectors. This visualization highlights wage disparities between industries at a more granular NAICS3 level.
 ---
 
 ## Video Recording
 
 As part of our project, we’ve created a **4-minute video** that walks you through the key findings and demonstrates how to use the interactive components on this page. This video is available in the README.md file on our Github repository, where you can view a quick summary of our analysis and explore the interactive elements firsthand.
-
-
-
-
-
-
 
 
 ---
