@@ -1,92 +1,109 @@
 ---
 title: "Big Picture"
-description: "An article style about the data."
-toc: true
 draft: FALSE
-format:
-  html:
-    resources: 
-      - shinylive-sw.js
+format: html
+resources: 
+  - shinylive-sw.js
 filters:
   - shinylive
-#| echo: FALSE
+runtime: shiny
 ---
 
-# 2022 Workforce Trends: Exploring Disparities in Race, Gender, and Job Types
-**Author**: Group 5  
-**Date**: November 11, 2024  
-**Status**: Published  
+# Shocking 2022 Workforce Trends: Uncovering the Hidden Disparities in Race, Gender, and Job Types!
+
+**Author**: Group 5
+
+**Published**: December 18, 2024  
 
 ---
 
 ![](images/image_2.png)
 
+
 ## Thesis/Goal
 
-In this analysis, we delve into the trends of the U.S. workforce as observed in 2022, focusing on disparities in job types, race, and gender. Our goal is to provide insights into how these factors influence representation and wage distributions across different sectors. We aim to explore patterns of inequality and highlight where progress has been made — and where challenges remain.
+In 2022, the U.S. workforce continued to show significant disparities when it comes to job types, race, and gender. This article takes a closer look at those trends, aiming to understand how these factors impact representation and wage distribution across different sectors. Our goal is to uncover patterns of inequality, while also highlighting where progress has been made and where challenges still exist.
 
-By analyzing the relationship between race, gender, and employment type, we uncover valuable insights into systemic inequalities that persist within our workforce. Our exploration not only compares job distributions but also examines the evolving wage trends and occupational shifts.
+By analyzing the relationship between race, gender, and employment type, we gain a better understanding of the ongoing systemic inequalities within the workforce. This isn’t just about comparing how jobs are distributed across different racial and gender groups; it’s also about looking at how wages and job roles are shifting over time. 
+
+Since the United States is predominantly white, we can expect to see trends skewed in that direction; however, we will do our best to provide analysis outside of population count. 
 
 ---
 
 ## The Story Behind the Data
 
-This analysis tells the story of how various groups are represented in the workforce, how wages are distributed across job types, and how these elements have shifted from 2017 to 2022. By looking at data across job sectors (NAICS categories) and comparing them by race and gender, we gain a clearer picture of where inequality still exists, and where certain groups are underrepresented or overrepresented.
+Do you ever think about how different racial and gender groups are represented in the workforce, how wages are distributed across various job types, and how these trends have evolved over time? Probably not, but we did. By examining data across job sectors (using NAICS categories) and comparing it by race and gender, we get a clearer understanding of where inequality persists, as well as where certain groups are either underrepresented or overrepresented.
 
 We highlight key insights such as:
 
-- **Which industries are dominated by certain races or genders.**
-- **The wage gap and its persistence in 2022.**
-- **Which job types have seen the most growth for specific racial and gender groups.**
+- **Which industries are dominated by certain races or genders?**
+- **The persistence of the wage gap?**
+- **Which job types have seen the most growth for specific racial and gender groups?**
 
 ---
 
-## Figures and Analysis
-
-
-
-### Figure 1:
+## Visualizing Workforce Trends
 
 ![Proportionality of Race](images/Proportionality_of_race.png)
 
-The bar chart visualizes the proportional distribution of workers across 10 different job types in the dataset. Each bar represents a job type, such as "Senior Officers and Managers" or "Professionals," with the height of the bar corresponding to the proportion of workers in that job type relative to the total workforce. The proportions are calculated by summing the values in the relevant dataset columns (e.g., TOTAL1, TOTAL2, etc.), converting them into percentages. Larger bars indicate job types with a higher share of the workforce, while smaller bars represent job types with a smaller share. The x-axis shows the job types, and the y-axis shows the proportions as percentages. The chart provides a clear visual comparison of how the workforce is distributed across different job categories, highlighting which types of employment dominate and which are less common.
+According to the 2022 Equal Employment Opportunity (EEO-1) dataset, the United States workforce is split into these 7 races: American Indian or Alaska Native, Asian, Black or African American, Hispanic, Native Hawaiian or Other Pacific islander, Two or more races, and White. 
 
 ---
-
-### Figure 2:
 
 ![Proportionality of Jobs by Type](images/Proportionality_of_jobs_by_type.png)
 
 
-The plot displays a bar chart showing the proportional distribution of workers across different job types. Each bar represents a specific job category, such as "Senior Officers and Managers," "Professionals," "Technicians," and others, with their height corresponding to the proportion of workers in that category relative to the total workforce. The y-axis shows these proportions as percentages, making it easy to compare the relative sizes of each job type. The chart highlights the distribution of job types, emphasizing which roles are more prevalent and which are less common within the dataset. The x-axis labels are rotated for better readability, and the chart uses a gray background theme for a clean, simple presentation.
----
+Using the same information, we also present the proportionality of the Job Type Categories the 2022 Equal Employment Opportunity (EEO-1) dataset focused on: Clericals, Craft, Laborers, Mid Officers and Managers, Operatives, professionals, Sales Workers, Senior Officers and Managers, Services, and Technicians. 
 
-### Figure 3:
+---
 
 ![Proportionality of Gender](images/Proportionality_of_gender.png)
 
-This plot is a pie chart showing the proportional distribution of male and female workers in the dataset. The chart is created by transforming the data into proportions and then representing them in a circular format. The two segments of the pie represent males and females, with their size corresponding to the percentage of each gender within the total workforce. Each segment is labeled with its respective percentage, rounded to one decimal place, making it easy to see the relative proportions of males and females. The chart uses a gray background theme for clarity and removes axis labels and ticks to focus on the pie segments themselves. The legend clearly identifies the two gender categories, "Male" and "Female."
+Lastly, this is the split of males and females in the United States. 
+
+---
+
+Now, we get to the fun stuff. 
 
 
-### Figure 4:
 ![Proportional Representation by Job Type and Gender](images/Proportional_representation_by_job_type_and_gender.png)
 
-This plot visualizes the proportional representation of genders across various job types. Each facet represents a different job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.), with the y-axis showing the percentage of each gender within that job type. The percentages are calculated by dividing the count of each gender by the total count for the respective job type, allowing us to see how each gender is represented proportionally within each job category. The x-axis represents gender, and the bars display the percentage of men and women (or other genders) in each job type. The plot is designed to help identify gender disparities across job categories and offers a clear comparison of gender distribution for each job type. The y-axis is adjusted for each facet to better accommodate the varying percentage scales across different job categories.
+This plot visualizes the proportional representation of genders across various job types. Each facet represents a different job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.), with the y-axis showing the percentage of each gender within that job type. The percentages are calculated by dividing the count of each gender by the total count for the respective job type, allowing us to see how each gender is represented proportionally within each job category. The x-axis represents gender, and the bars display the percentage of men and women in each job type. The y-axis is adjusted for each facet to better accommodate the varying percentage scales across different job categories. The plot is designed to help identify gender disparities across job categories and offers a clear comparison of gender distribution for each job type. 
 
-### Figure 5:
+---
+
 ![Proportional_Representation_by_job_type_and_race.png](images/Proportional_Representation_by_job_type_and_race.png)
 
-The plot displays the proportional representation of different races across various job types. Each facet represents a specific job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.). Within each facet, bars show the count of workers from different racial groups (e.g., White, Black, Hispanic) for that particular job type. The counts are visualized as bar heights, making it easy to compare the racial distribution within each job category. The y-axis is adjusted for each facet, with "free_y" scaling to accommodate different ranges for each job type. The x-axis represents the race categories, and the plot's labels are customized for clarity. The plot helps identify racial disparities in job type representation and allows for a visual comparison of racial diversity across job categories.
+Similarly, this plot displays the workforce count representation of different races across various job types. Each facet represents a specific job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.). Within each facet, bars show the count of workers from different racial groups (e.g., White, Black, Hispanic) for that particular job type. The counts are visualized as bar heights, making it easy to compare the racial distribution within each job category. The x-axis represents the race categories. The y-axis is adjusted for each facet, with "free_y" scaling to accommodate different ranges for each job type. This plot helps identify racial disparities in job type representation and allows a visual comparison of racial diversity across job categories.
 
-### Figure 6:
+
+---
+
+Since one dataset isn't enough, we incorporated a second that talks money.
+
+From the link below, you will be brought to the US Bureau of Labor Statistics that provides hourly and weekly earnings for employees according to the NAICS job industry standards. 
+
+[Click here to visit the website](https://www.bls.gov/web/empsit/ceseeb3a.htm)
+
+Within each of the 10 Job Categories, there may or may not be more precise job types for them. The NAICS2 variable brings out that for us to look at. 
+
+
 ![Average Wage by NAICS2 Name](images/Average_Wages_By_NAICS2_Name.png)
 
-The plot displays the average wages across various sectors, with each bar representing a different industry sector. The sectors are listed on the vertical axis, and the corresponding average wage is shown on the horizontal axis. The chart is oriented horizontally for better readability, making it easier to compare the wages across sectors. The title and labels clearly indicate that the plot illustrates the average wages by industry sector. This visualization provides insights into how wages differ between sectors, highlighting which industries offer higher or lower average compensation.
+This plot displays the average wages across various sectors, with each bar representing a different industry sector. The sectors are listed on the vertical axis, and the corresponding average wage is shown on the horizontal axis. This visualization provides insights into how wages differ between sectors, highlighting which industries offer higher or lower average compensation. 
 
-### Figure 7:
+I don't know about you, but working in finance and insurance sounds like a great deal!
+
+---
+
+Unfortunately, our wage dataset cannot be merged with the 2022 data to look for correlations between racial/gender disparities in job industries with income rates, so we present a deeper look into even more niche job titles from the wage dataset.
+
 ![Average Wage by NAICS3 Name](images/Average_Wage_by_NAICS3_Name.png)
 
-The bar chart illustrates the average wages across different NAICS3 sectors, with each bar representing a sector. The sectors are displayed on the vertical axis, while the horizontal axis shows the average wage for each sector as of October 2023. The chart is flipped horizontally for better readability, allowing for easier comparison of wage levels across sectors. The title of the plot clearly indicates that it presents the average wages by NAICS3 sector, and the labels on the axes provide clarity about the variables being visualized. The chart also adjusts the text size on the y-axis to ensure the sector names are legible, especially when there are many sectors. This visualization highlights wage disparities between industries at a more granular NAICS3 level.
+This bar chart illustrates the average wages across different NAICS3 sectors, with each bar representing a sector. The sectors are displayed on the vertical axis, while the horizontal axis shows the average wage for each sector as of October 2023. The chart is flipped horizontally for better readability, allowing for easier comparison of wage levels across sectors. This visualization highlights wage disparities between job industries at a more granular NAICS3 level.
+
+Is data science the key to securing a high-demand job in today's rapidly evolving workforce???
+
 ---
 
 ## Video Recording
@@ -96,108 +113,149 @@ As part of our project, we’ve created a **4-minute video** that walks you thro
 
 ---
 
-
 ### Interactive
 
-You will also be required to make an interactive dashboard like [this one](/flex/flex.html).
+This interactive allows you to input two variables: CBSA and Race. It'll, then, output the information from the employment data for different job types across various races for the years 2017 and 2022. It's a fun interactive that lets the user visually compare the employment counts between 2017 and 2022. Try it out!
 
-Your Big Data page should also include a small interactive dashboard. The dashboard should be created either using Shinylive, as below. This interactive component should in some way support your thesis from your big picture page. Good interactives often provide both high-level understanding of the data while allowing a user to investigate specific scenarios, observations, subgroups, etc.
-
-
-
-
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 640 # You will have to adjust this to fit everything
-
-
+```{r shiny}
+#| echo: false
+#| message: false
+#| warning: false
 library(shiny)
+library(ggplot2)
+library(dplyr)
+library(readr)
 library(tidyverse)
-options("readr.edition" = 1) # keep this to ensure you can download the data
 
+options("readr.edition" = 1) 
 
-# Define UI for app that draws a histogram ----
+employment_2022 <- readRDS("./dataset/Cleaned_Employment2022.rds")
+employment_2017 <- readRDS("./dataset/Cleaned_Employment2017.rds")
+
+CBSA_2022 <- unique(employment_2022$CBSA)
+CBSA_2017 <- unique(employment_2017$CBSA)
+
+colnames(employment_2017) <- toupper(colnames(employment_2017))
+colnames(employment_2022) <- toupper(colnames(employment_2022))
+
+CBSA <- sort(unique(c(CBSA_2022, CBSA_2017)))
+
+race_mapping <- c(
+  "White" = "WHT",
+  "Black or African American" = "BLKT",
+  "Hispanic" = "HISPT",
+  "Asian" = "ASIANT",
+  "American Indian or Alaska Native" = "AIANT",
+  "Native Hawaiian or Other Pacific Islander" = "NHOPIT",
+  "Two or More Races" = "TOMRT"
+)
+
+job_type_mapping <- list(
+  "Senior Off and Managers" = c("WHT1", "BLKT1", "HISPT1", "ASIANT1", "AIANT1", "NHOPIT1", "TOMRT1"),
+  "Professionals" = c("WHT2", "BLKT2", "HISPT2", "ASIANT2", "AIANT2", "NHOPIT2", "TOMRT2"),
+  "Technicians" = c("WHT3", "BLKT3", "HISPT3", "ASIANT3", "AIANT3", "NHOPIT3", "TOMRT3"),
+  "Sales Workers" = c("WHT4", "BLKT4", "HISPT4", "ASIANT4", "AIANT4", "NHOPIT4", "TOMRT4"),
+  "Clericals" = c("WHT5", "BLKT5", "HISPT5", "ASIANT5", "AIANT5", "NHOPIT5", "TOMRT5"),
+  "Craft" = c("WHT6", "BLKT6", "HISPT6", "ASIANT6", "AIANT6", "NHOPIT6", "TOMRT6"),
+  "Operatives" = c("WHT7", "BLKT7", "HISPT7", "ASIANT7", "AIANT7", "NHOPIT7", "TOMRT7"),
+  "Laborers" = c("WHT8", "BLKT8", "HISPT8", "ASIANT8", "AIANT8", "NHOPIT8", "TOMRT8"),
+  "Services" = c("WHT9", "BLKT9", "HISPT9", "ASIANT9", "AIANT9", "NHOPIT9", "TOMRT9"),
+  "Mid Off and Managers" = c("WHT1_2", "BLKT1_2", "HISPT1_2", "ASIANT1_2", "AIANT1_2", "NHOPIT1_2", "TOMRT1_2")
+)
+
 ui <- fluidPage(
-
-  # App title ----
-  titlePanel("Hello Shiny!"),
-
-  # Sidebar layout with input and output definitions ----
-  verticalLayout(
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30),
-
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
-
+  titlePanel("US Employment Data Trends (2017 vs 2022)"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("CBSA", "Select CBSA:", choices = CBSA),
+      selectInput("race", "Select Race:", choices = names(race_mapping))
+    ),
+    mainPanel(
+      fluidRow(
+        column(6, plotOutput("employment_plot_2017")),
+        column(6, plotOutput("employment_plot_2022"))
+      )
+    )
   )
 )
 
-# Define server logic required to draw a histogram ----
 server <- function(input, output) {
-  # The URL below has to point to a dataset on your github pages website
-  # I recommend creating a small-ish rds file that has only the data relevant to 
-  # the interactive.
-  data <- read_rds("https://sussmanbu.github.io/ma4615-final-project-quarto/dataset/loan_refusal_clean.rds")
   
-  output$distPlot <- renderPlot({
-    ggplot(data, aes(x = refusal_rate)) +
-      geom_histogram(bins = input$bins + 1)
-
+  filtered_data <- reactive({
+    validate(
+      need(nrow(employment_2017) > 0, "2017 dataset failed to load."),
+      need(nrow(employment_2022) > 0, "2022 dataset failed to load.")
+    )
+    
+    selected_race_code <- race_mapping[input$race]
+    
+    selected_job_columns <- unlist(lapply(job_type_mapping, function(job) grep(selected_race_code, job, value = TRUE)))
+    
+    process_data <- function(dataset, year) {
+      selected_data <- dataset %>%
+        { if (input$CBSA != "") filter(., CBSA == input$CBSA) else . } %>%  
+        select(all_of(selected_job_columns))  
+      
+      if (ncol(selected_data) == 0) {
+        return(data.frame())  
+      }
+      
+      selected_data %>%
+        mutate(across(everything(), ~ as.numeric(as.character(.)))) %>%
+        summarise(across(everything(), sum, na.rm = TRUE)) %>%
+        pivot_longer(cols = everything(), names_to = "Job_Type", values_to = "Total_Employment") %>%
+        mutate(
+          Job_Type = sub("\\d+$", "", Job_Type),
+          Year = year
+        )
+    }
+    
+    employment_data_2017 <- process_data(employment_2017, 2017)  
+    employment_data_2022 <- process_data(employment_2022, 2022)
+    
+    combined_data <- bind_rows(employment_data_2017, employment_data_2022)
+    
+    validate(
+      need(nrow(combined_data) > 0, "No data available for the selected CBSA or race.")
+    )
+    
+    combined_data
   })
-
+  
+  output$employment_plot_2017 <- renderPlot({
+    data <- filtered_data() %>%
+      filter(Year == 2017)  
+    
+    plot_title <- paste("Employment in 2017 for", input$CBSA, "and", input$race)
+    
+    ggplot(data, aes(x = Job_Type, y = Total_Employment, fill = Job_Type)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      labs(
+        title = ifelse(input$CBSA != "", plot_title, paste("Employment in 2017 for", input$race)),
+        x = "Job Type",
+        y = "Total Employment"
+      ) +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
+  
+  output$employment_plot_2022 <- renderPlot({
+    data <- filtered_data() %>%
+      filter(Year == 2022)  # Filter for 2022 data
+    
+    plot_title <- paste("Employment in 2022 for", input$CBSA, "and", input$race)
+    
+    ggplot(data, aes(x = Job_Type, y = Total_Employment, fill = Job_Type)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      labs(
+        title = ifelse(input$CBSA != "", plot_title, paste("Employment in 2022 for", input$race)),
+        x = "Job Type",
+        y = "Total Employment"
+      ) +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
 }
 
-# Create Shiny app ----
 shinyApp(ui = ui, server = server)
 ```
-
----
-
-## Rubric: On this page
-
-You will
-
-* Title
-  * Your big picture page should have a creative/click-bait-y title/headline that provides a hint about your thesis.
-* Clarity of Explanation
-  * You should have a clear thesis/goal for this page. What are you trying to show? Make sure that you explain your analysis in detail but don't go into top much mathematics or statistics. The audience for this page is the general public (to the extent possible). Your thesis should be a statement, not a question.
-  * Each figure should be very polished and also not too complicated. There should be a clear interpretation of the figure so the figure has a clear purpose. Even something like a histogram can be difficult to interpret for non-experts.
-* Creativity
-  * Do your best to make things interesting. Think of a story. Think of how each part of your analysis supports the previous part or provides a different perspective.
-* Interactive component
-  * Quality and ease of use of the interactive components.
-Is it clear what can be explored using your interactive components?
-Does it enhance and reinforce your conclusions?
-* This page should be self-contained.
-  
-**Note**: This page should have no code visible, i.e. use `#| echo: FALSE`.  
-
-
-
-
-## Rubric: Other components
-
-### Video Recording
-
-Make a video recording (probably using Zoom) demonstrating your interactive components.
-You should provide a quick explanation of your data and demonstrate some of the conclusions from your EDA.
-This video should be no longer than 4 minutes.
-Include a link to your video (and password if needed) in your README.md file on your Github repository. You are not required to provide a link on the website.
-This can be presented by any subset of the team members.
-
-
-### Rest of the Site
-
-Finally, here are important things to keep in mind for the rest of the site. 
-
-The main title of your page is informative.
-Each post has an author/description/informative title.
-All lab required posts are present.
-Each page (including the home page) has a nice featured image associated with it.
-Your about page is up to date and clean.
-You have removed the generic posts from the initial site template.

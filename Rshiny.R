@@ -1,29 +1,22 @@
-#| standalone: true
-#| viewerHeight: 640 # You will have to adjust this to fit everything
-# Load libraries
 library(shiny)
 library(ggplot2)
 library(dplyr)
 library(readr)
 library(tidyverse)
-options("readr.edition" = 1) # keep this to ensure you can download the data
 
-# Load datasets
+options("readr.edition" = 1) 
+
 employment_2022 <- readRDS("./dataset/Cleaned_Employment2022.rds")
 employment_2017 <- readRDS("./dataset/Cleaned_Employment2017.rds")
 
-# Extract cbsa from the datasets
 CBSA_2022 <- unique(employment_2022$CBSA)
 CBSA_2017 <- unique(employment_2017$CBSA)
 
-# Ensure consistent column names across both datasets
 colnames(employment_2017) <- toupper(colnames(employment_2017))
 colnames(employment_2022) <- toupper(colnames(employment_2022))
 
-# Combine and remove duplicates
 CBSA <- sort(unique(c(CBSA_2022, CBSA_2017)))
 
-# Create a race mapping for the dropdown (without the 10 suffix)
 race_mapping <- c(
   "White" = "WHT",
   "Black or African American" = "BLKT",
@@ -34,7 +27,6 @@ race_mapping <- c(
   "Two or More Races" = "TOMRT"
 )
 
-# Create a Job Type mapping for the dropdown (mapping race acronyms with job types)
 job_type_mapping <- list(
   "Senior Off and Managers" = c("WHT1", "BLKT1", "HISPT1", "ASIANT1", "AIANT1", "NHOPIT1", "TOMRT1"),
   "Professionals" = c("WHT2", "BLKT2", "HISPT2", "ASIANT2", "AIANT2", "NHOPIT2", "TOMRT2"),
@@ -48,7 +40,6 @@ job_type_mapping <- list(
   "Mid Off and Managers" = c("WHT1_2", "BLKT1_2", "HISPT1_2", "ASIANT1_2", "AIANT1_2", "NHOPIT1_2", "TOMRT1_2")
 )
 
-# UI definition
 ui <- fluidPage(
   titlePanel("US Employment Data Trends (2017 vs 2022)"),
   sidebarLayout(
@@ -67,31 +58,25 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  # Reactive data preparation
   filtered_data <- reactive({
-    # Debugging: Confirm datasets are loaded
     validate(
       need(nrow(employment_2017) > 0, "2017 dataset failed to load."),
       need(nrow(employment_2022) > 0, "2022 dataset failed to load.")
     )
     
-    # Get selected race code
     selected_race_code <- race_mapping[input$race]
     
-    # Get job type columns associated with the selected race
     selected_job_columns <- unlist(lapply(job_type_mapping, function(job) grep(selected_race_code, job, value = TRUE)))
     
-    # Helper function to process a single dataset
     process_data <- function(dataset, year) {
       selected_data <- dataset %>%
-        { if (input$CBSA != "") filter(., CBSA == input$CBSA) else . } %>%  # Filter by CBSA if provided
-        select(all_of(selected_job_columns))  # Select relevant columns
+        { if (input$CBSA != "") filter(., CBSA == input$CBSA) else . } %>%  
+        select(all_of(selected_job_columns))  
       
       if (ncol(selected_data) == 0) {
-        return(data.frame())  # No relevant columns found
+        return(data.frame())  
       }
       
-      # Convert columns to numeric and summarize
       selected_data %>%
         mutate(across(everything(), ~ as.numeric(as.character(.)))) %>%
         summarise(across(everything(), sum, na.rm = TRUE)) %>%
@@ -102,11 +87,9 @@ server <- function(input, output) {
         )
     }
     
-    # Process both datasets
-    employment_data_2017 <- process_data(employment_2017, 2017)  # Include CBSA filtering
+    employment_data_2017 <- process_data(employment_2017, 2017)  
     employment_data_2022 <- process_data(employment_2022, 2022)
     
-    # Combine data and validate output
     combined_data <- bind_rows(employment_data_2017, employment_data_2022)
     
     validate(
@@ -116,10 +99,9 @@ server <- function(input, output) {
     combined_data
   })
   
-  # Generate plot for 2017 data
   output$employment_plot_2017 <- renderPlot({
     data <- filtered_data() %>%
-      filter(Year == 2017)  # Filter for 2017 data
+      filter(Year == 2017)  
     
     plot_title <- paste("Employment in 2017 for", input$CBSA, "and", input$race)
     
@@ -134,7 +116,6 @@ server <- function(input, output) {
       theme(axis.text.x = element_text(angle = 45, hjust = 1))
   })
   
-  # Generate plot for 2022 data
   output$employment_plot_2022 <- renderPlot({
     data <- filtered_data() %>%
       filter(Year == 2022)  # Filter for 2022 data
@@ -153,5 +134,4 @@ server <- function(input, output) {
   })
 }
 
-# Run the application
 shinyApp(ui = ui, server = server)
