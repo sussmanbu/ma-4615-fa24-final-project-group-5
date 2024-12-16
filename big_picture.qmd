@@ -1,13 +1,10 @@
 ---
 title: "Big Picture"
 draft: FALSE
-runtime: shiny
-filters:
-  - shinylive
-format: 
-  html:
-    resources:
-      - shinylive-sw.js
+format: html
+runtime: shinylive
+resources:
+  - https://cdn.jsdelivr.net/npm/shinylive@0.5.0/shinylive-sw.js
 ---
 
 # Shocking 2022 Workforce Trends: Uncovering the Hidden Disparities in Race, Gender, and Job Types!

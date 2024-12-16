@@ -319,7 +319,7 @@ gender_model_data_clean <- gender_model_data_clean %>%
 # Plot the data with adjusted axis and line of best fit
 ggplot(gender_model_data_clean, aes(x = MT10, y = FT10)) +
   geom_point(aes(color = industry), alpha = 0.6) +  
-  geom_smooth(method = "lm", se = TRUE, aes(color = industry), size = 1, linetype = "solid") +  
+  geom_smooth(method = "lm", se = TRUE, aes(color = industry), size = 1, linetype = "solid", color = "purple") +  
   facet_wrap(~ industry, scales = "free") +
   labs(
     title = "Linear Regression: Female vs. Male Workforce Representation by Industry (Outliers Removed)",
