@@ -1,13 +1,13 @@
 ---
 title: "MA [46]15 Final Project"
 draft: FALSE
+runtime: shiny
+filters:
+  - shinylive
 format: 
   html:
     resources:
       - shinylive-sw.js
-filters:
-  - shinylive
-runtime: shiny
 listing:
   contents: "posts/*/*.qmd"
   sort: "date desc"
@@ -19,7 +19,8 @@ page-layout: full
 title-block-banner: true
 ---
 
-```{r shiny}
+```{shinylive-r}
+#| standalone: true
 #| echo: false
 #| message: false
 #| warning: false
@@ -31,8 +32,8 @@ library(tidyverse)
 
 options("readr.edition" = 1) 
 
-employment_2022 <- readRDS("./dataset/Cleaned_Employment2022.rds")
-employment_2017 <- readRDS("./dataset/Cleaned_Employment2017.rds")
+employment_2022 <- readRDS("./scripts/Cleaned_Employment2022.rds")
+employment_2017 <- readRDS("./scripts/Cleaned_Employment2017.rds")
 
 CBSA_2022 <- unique(employment_2022$CBSA)
 CBSA_2017 <- unique(employment_2017$CBSA)

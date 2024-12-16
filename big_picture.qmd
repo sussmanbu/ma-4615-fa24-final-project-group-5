@@ -1,13 +1,13 @@
 ---
 title: "Big Picture"
 draft: FALSE
+runtime: shiny
+filters:
+  - shinylive
 format: 
   html:
     resources:
       - shinylive-sw.js
-filters:
-  - shinylive
-runtime: shiny
 ---
 
 # Shocking 2022 Workforce Trends: Uncovering the Hidden Disparities in Race, Gender, and Job Types!
@@ -118,7 +118,8 @@ As part of our project, we’ve created a **4-minute video** that walks you thro
 
 This interactive allows you to input two variables: CBSA and Race. It'll, then, output the information from the employment data for different job types across various races for the years 2017 and 2022. It's a fun interactive that lets the user visually compare the employment counts between 2017 and 2022. Try it out!
 
-```{r shiny}
+```{shinylive-r}
+#| standalone: true
 #| echo: false
 #| message: false
 #| warning: false
@@ -130,8 +131,8 @@ library(tidyverse)
 
 options("readr.edition" = 1) 
 
-employment_2022 <- readRDS("./dataset/Cleaned_Employment2022.rds")
-employment_2017 <- readRDS("./dataset/Cleaned_Employment2017.rds")
+employment_2022 <- readRDS("./scripts/Cleaned_Employment2022.rds")
+employment_2017 <- readRDS("./scripts/Cleaned_Employment2017.rds")
 
 CBSA_2022 <- unique(employment_2022$CBSA)
 CBSA_2017 <- unique(employment_2017$CBSA)
