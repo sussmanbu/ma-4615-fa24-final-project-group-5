@@ -112,7 +112,12 @@ Is data science the key to securing a high-demand job in today's rapidly evolvin
 
 ### Interactive
 
-This interactive allows you to input two variables: CBSA and Race. It'll, then, output the information from the employment data for different job types across various races for the years 2017 and 2022. It's a fun interactive that lets the user visually compare the employment counts between 2017 and 2022. Try it out!
+This interactive allows you to input two variables: CBSA and Race 
+
+* A CBSA code is a five-digit FIPS code that identifies a Core-Based Statistical Area, which is a metropolitan or micropolitan statistical area)
+* Race: 7 categories
+
+It'll, then, output the information from the employment data for different job types across various races for the years 2017 and 2022. It's a fun interactive that lets the user visually compare the employment counts between 2017 and 2022. Try it out!
 
 ```{r shiny}
 #| standalone: true
