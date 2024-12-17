@@ -106,8 +106,7 @@ Is data science the key to securing a high-demand job in today's rapidly evolvin
 
 ## Video Recording
 
-As part of our project, we’ve created a **4-minute video** that walks you through the key findings and demonstrates how to use the interactive components on this page. This video is available in the README.md file on our Github repository, where you can view a quick summary of our analysis and explore the interactive elements firsthand.
-
+[Recording](https://drive.google.com/file/d/1F1pNZxQIDloGSBvHYnWLFcJMaD4T2M6E/view?usp=sharing)
 
 ---
 
