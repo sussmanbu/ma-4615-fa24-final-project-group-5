@@ -5,50 +5,115 @@ toc: true
 draft: false
 ---
 
-The primary motivation behind this analysis is to explore disparities in workforce composition by race and ethnicity across industries and geographic regions in the United States. Understanding these disparities provides insights into how representation varies and may inform policy recommendations, diversity initiatives, or legal compliance measures. 
+# Exploring the Data: Research, Cleaning, and Analysis!
 
-This dataset was published by the US Equal Employment Opportunity Commission and is maintained by Daniel McGregor. As part of its mandate under Title VII of the Civil Rights Act of 1964, as amended, the Equal Employment Opportunity Commission requires periodic reports from public and private employers, unions, and labor organizations that indicate the composition of their workforce by sex and by race/ethnic category. Among these reports, the EEO-1 is collected annually from Private employers with 100 or more employees or federal contractors with 50 more employees. (https://www.eeoc.gov/data/eeo-data-collections)
+**Author**: Group 5
 
-Some key variables include:
-Demographic composition: WHT10 (White), BLKT10 (Black), HISPT10 (Hispanic), ASIANT10 (Asian), AIANT10 (American Indian/Alaska Native), NHOPIT10 (Native Hawaiian/Other Pacific Islander), and TOMRT10 (Two or more races).
-Industry classification: NAICS-2 and NAICS-3 codes.
-Geographic regions: Divisions at state and regional levels.
+**Published**: December 18, 2024  
 
-To prepare the dataset for analysis, a systematic cleaning process was applied, with the goal of ensuring the data is manageable and meaningful for exploratory and inferential analysis. The following steps summarize the cleaning process:
+![](images/image_3.png)
 
-1. Checking for Missing Values:
-Many missing values result from privacy protections (e.g., asterisks in cells). These were replaced with NA to maintain data consistency while noting that these gaps may affect certain analyses. Missing data due to underreporting or suppression in specific categories (e.g., small workforce sizes) were logged for potential exclusion or imputation strategies in future stages.
+## What is the data?
 
-2. Re-coding for Efficiency
-Columns with redundant or overly verbose labels were renamed for clarity (e.g., “White” re-coded to WHT10, “Black or African American” to BLKT10). Job categories were summed across all race and gender subcategories to simplify initial exploratory analysis.
+We have found datasets pertaining to race and sex distributions published by the US Equal Employment Opportunity Commission and maintained by Daniel McGregor. It breaks down industries occording to NAICS2 and NAICS3 codes, classifications used in North America to differentiate between all industries. It is collected as a part of the Civil Rights Act of 1964, which specifies that the Equal Employment Opportunity Commission must make periodic reports from public and private employers to gauge the composition of the workforce according to sex and race/ethnicity, from all employers with 100 or more employees, or federal contractors with 50 or more employees. The data was collected in 2017 and 2022 respectively.
 
-3. Focus on Key Variables
-Analysis was narrowed to ~10 job categories listed in the user guide (e.g., Senior Officials and Managers, Professionals, Technicians). Gender was aggregated into male (MT10) and female (FT10) totals to streamline visualizations.
+[Click here to visit the website](https://catalog.data.gov/dataset/job-patterns-for-minorities-and-women-in-private-industry-2017-eeo-1-national-aggregate-re)
 
-4. Summarizing Data
-Totals by race and job category were computed to analyze proportional representation. Separate summaries were created for gender and job category to enable visualization of workforce composition by both axes.
+We have also found another data set that matches median wage data over a time frame of several months spanning 2023 and 2024 which matches the NAICS job categories we found earlier, sourced from the Bureau of Labor Statistics, called the Current Employment Statistics (CES), which is conducted every month to gauge the overall health of the economy.
 
-After doing these steps, we have our dataset below:
+[Click here to visit the website](https://www.bls.gov/web/empsit/ceseeb3a.htm)
 
-```{r}
-cleaned_dataset <- readRDS("Employment2017.rds")
-```
+## Why was this data assembled?
 
-## Rubric: On this page
+The first two data sets relating to ethnic and gender distributions across different fields of employment come from a census commissioned by the US Equal Opportunity Commission, which gathers data on the distribution of protected groups over different industries. Its principal purpose is to ensure adherence within industries and companies to equality and mitigating racial or sex based discrimination in the work force.
 
-You will
+The other data set pertaining to wage data comes from the Bureau of Labor Statistics, a non-partisan organization whose purpose is to gather data about nationwide labor related statistics to inform congress and the American people.
 
-* Describe where/how to find data.
-  * You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.
-  * Why was the data collected/curated? Who put it together? (This is important, if you don't know why it was collected then that might not be a good dataset to look at.
-* Describe the different data files used and what each variable means. 
-  * If you have many variables then only describe the most relevant ones and summarize the rest.
-* Describe any cleaning you had to do for your data.
-  * You *must* include a link to your `load_and_clean_data.R` file.
-  * Rename variables and recode factors to make data more clear.
-  * Also, describe any additional R packages you used outside of those covered in class.
-  * Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.
-  * Some repetition of what you do in your `load_and_clean_data.R` file is fine and encouraged if it helps explain what you did.
-* Organization, clarity, cleanliness of the page
-  * Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.
-  * This page should be self-contained.
+
+## About the data, and our variables
+
+
+[cleaned_data.R](scripts/cleaned_data.R)
+
+The columns of our first datasets, cleaned_employment2017 and cleaned_employment2022, primarily break down along racial and gender categories, with each column featuring one of the racial categories featured:
+
+* WHT_: White
+
+* BLK_: Black or African American
+
+* HISP_: Hispanic
+
+* ASIAN_: Asian
+
+* AIAN_: American Indian or Alaska Native
+
+* NHOPI_: Native Hawaiian or Other Pacific Islander
+
+* TOMR_: Two or More Races
+
+As well as additional categorizations for male or female. 
+
+* MT_: Male
+
+* FT_: Female
+
+Within each race/gender category, there is also a breakdown of the various job types belonging to each industry, numbered as follows:
+
+* 1 for senior officers and managers
+
+* 2 for professionals
+
+* 3 for technicians
+
+* 4 for sales workers
+
+* 5 for clericals
+
+* 6 for craft
+
+* 7 for operatives
+
+* 8 for laborers
+
+* 9 for services
+
+* 1_2 for mid officers and managers
+
+* 10 for the aggregate for the entire category.
+
+If we wanted to look at both Race and Gender, the column would look like:
+
+* TOMRF_
+
+* TOMRM_
+
+For instance, a column like TOMRF1 would indicate "females" of "two or more races" working as "senior officers or managers". Then, each row of the dataset corresponds to some NAICS industry designation, delineated by its NAICS number, featuring 246 unique job titles, split by geographic region, for a total of 43,000 rows. Below is a PDF of the column definitions. 
+
+[Variable Overview](https://www.eeoc.gov/sites/default/files/2020-11/PUF%20Data%20Download%20User%20Guide.pdf)
+
+Our second dataset, wage_data, features a number of unique industry designations, as well as the associated hourly wage for each of those industries, across the months of October 2023, August 2024, September 2024, and October 2024.
+
+
+## Data Cleaning
+
+There was significant cleaning involved in the data sets for employment2017 and employment2022. To prepare these data sets for analysis, a systematic cleaning process was applied, with the goal of ensuring the data is manageable and meaningful for exploratory and inferential analysis. The following steps summarize the cleaning process:
+
+* Many missing values result from privacy protections (e.g., asterisks in cells). These were replaced with NA to maintain data consistency while noting that these gaps may affect certain analyses. Missing data due to underreporting or suppression in specific categories (e.g., small workforce sizes) were logged for potential exclusion or imputation strategies in future stages.
+
+* Columns with redundant or overly verbose labels were renamed for clarity (e.g., “White” re-coded to WHT10, “Black or African American” to BLKT10). Job categories were summed across all race and gender subcategories to simplify initial exploratory analysis.
+
+* Analysis was narrowed to ~10 job categories listed in the user guide (e.g., Senior Officials and Managers, Professionals, Technicians). Gender was aggregated into male (MT10) and female (FT10) totals to streamline visualizations.
+
+* Totals by race and job category were computed to analyze proportional representation. Separate summaries were created for gender and job category to enable visualization of workforce composition by both axes.
+
+We did not have to do significant cleaning for the wages data set, because we parsed it directly from a website, so we just picked which data which we were going to actually use in our extraction.
+
+## Additional R Packages
+
+We used the "here" library which simplifies the process of managing file paths, which was crucial, working across multiple different systems and computers, for making sure that directories lined up and that the same body of code could work for everyone, no matter how they organized their files on their computer.
+
+## Combining multiple data files
+
+In order to produce the analysis of race proportion as a function of wages, we needed to combine the data set that listed the racial distributions for each industry with the data set that listed the median wages over different time periods for each industry, using the three digit NAICS number as a key.
+
+Some issues that came up involve having multiple entries for the same NAICS number, having to filter out NAICS numbers that were more or less than three digits (the number of digits indicating more or less detail in the industry category), and filtering out different time periods to focus on a single month's median wages, of August 2024.

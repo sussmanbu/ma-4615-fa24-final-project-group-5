@@ -41,4 +41,108 @@ Our refinement strategy included several critical improvements:
 
 These enhancements will help make our complex data more accessible and meaningful to the
 general audience. We will also continue working on the wages dataset to see if we can 
-provide visual representation to the audience. 
+provide visual representation to the audience.
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+# Load datasets
+employment_data <- read.csv("dataset/Employment2017.csv")
+wage_data <- read.csv("dataset/wage_data.csv")
+
+# Extract and format 3-digit NAICS codes from both datasets
+wage_data <- wage_data %>%
+  mutate(NAICS3 = substr(as.character(X2022.NAICS.code), 1, 3))
+
+employment_data <- employment_data %>%
+  mutate(NAICS3 = substr(as.character(NAICS3), 1, 3))
+
+# Identify matching 3-digit NAICS codes
+matching_codes <- intersect(wage_data$NAICS3, employment_data$NAICS3)
+
+# Print the matching 3-digit NAICS codes
+cat("Matching 3-digit NAICS codes:\n")
+print(matching_codes)
+
+# Filter Aug. 2024 values for matching NAICS codes (keep only the first occurrence)
+aug_2024_values <- wage_data %>%
+  filter(NAICS3 %in% matching_codes) %>%
+  distinct(NAICS3, .keep_all = TRUE) %>%  # Keep only the first occurrence of each NAICS3
+  select(NAICS3, Aug..2024)
+
+# Merge Aug. 2024 wages with employment data to get racial distribution
+merged_data <- aug_2024_values %>%
+  left_join(employment_data, by = "NAICS3") %>%
+  select(NAICS3, Aug..2024, WHT10, BLKT10, HISPT10, ASIANT10, AIANT10, NHOPIT10, TOMRT10) %>%
+  gather(key = "Race", value = "Percentage", WHT10:TOMRT10) %>%
+  mutate(Percentage = as.numeric(as.character(Percentage))) %>%
+  filter(!is.na(Percentage))
+
+# Sort data by wages in descending order
+sorted_data <- aug_2024_values %>%
+  arrange(desc(Aug..2024))
+
+# Generate charts for each industry, sorted by wages
+for (i in 1:nrow(sorted_data)) {
+  naics_code <- sorted_data$NAICS3[i]
+  wage <- sorted_data$Aug..2024[i]
+  plot_data <- merged_data %>%
+	filter(NAICS3 == naics_code)
+ 
+  # Create the chart
+  plot <- ggplot(plot_data, aes(x = Race, y = Percentage, fill = Race)) +
+	geom_bar(stat = "identity") +
+	labs(
+  	title = paste0("NAICS: ", naics_code, " | Wage: $", round(wage, 2)),
+  	x = "Race",
+  	y = "Percentage",
+  	fill = "Race"
+	) +
+	theme_minimal() +
+	theme(
+  	axis.text.x = element_text(angle = 45, hjust = 1)
+	)
+ 
+  # Print the chart
+  print(plot)
+}
+
+# Calculate the mean percentage across all races
+mean_percentage <- merged_data %>%
+  group_by(Race) %>%
+  summarize(Mean_Percentage = mean(Percentage, na.rm = TRUE))
+
+# Merge mean percentage back into the data to calculate the difference from the mean
+race_diff <- merged_data %>%
+  left_join(mean_percentage, by = "Race") %>%
+  mutate(Diff_From_Mean = Percentage - Mean_Percentage) %>%
+  group_by(Aug..2024, Race) %>%
+  summarize(Diff_From_Mean = mean(Diff_From_Mean, na.rm = TRUE)) %>%
+  ungroup() %>%
+  arrange(desc(Aug..2024)) %>%
+  filter(abs(Diff_From_Mean) <= 10000)  # Remove outliers where difference exceeds 10,000
+
+# Generate a line plot for each race showing the difference from the mean as wages decrease
+diff_plot <- ggplot(race_diff, aes(x = Aug..2024, y = Diff_From_Mean, color = Race)) +
+  geom_line(size = 1) +
+  geom_point() +
+  labs(
+	title = "Difference from Mean Racial Representation as a Function of Wage",
+	x = "Wages (Aug. 2024)",
+	y = "Difference from Mean (%)",
+	color = "Race"
+  ) +
+  theme_minimal()
+
+# Print the difference plot
+print(diff_plot)
+
+```

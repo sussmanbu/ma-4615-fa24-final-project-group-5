@@ -94,13 +94,20 @@ I don't know about you, but working in finance and insurance sounds like a great
 
 ---
 
-Unfortunately, our wage dataset cannot be merged with the 2022 data to look for correlations between racial/gender disparities in job industries with income rates, so we present a deeper look into even more niche job titles from the wage dataset.
+We also present a deeper look into even more niche job titles from the wage dataset.
 
 ![Average Wage by NAICS3 Name](images/Average_Wage_by_NAICS3_Name.png)
 
 This bar chart illustrates the average wages across different NAICS3 sectors, with each bar representing a sector. The sectors are displayed on the vertical axis, while the horizontal axis shows the average wage for each sector as of October 2023. The chart is flipped horizontally for better readability, allowing for easier comparison of wage levels across sectors. This visualization highlights wage disparities between job industries at a more granular NAICS3 level.
 
-Is data science the key to securing a high-demand job in today's rapidly evolving workforce???
+---
+
+Finally, combining our wage data with the racial distribution data set, we analyzed 52 jobs (with 3 digit NAICS codes) for which entries existed in both data sets, looking at how different ethnic groups were distributed across jobs with differing average wage levels (specifically focusing on the median wages seen in August of 2024 for each industry).
+
+
+![Difference from Mean Racial Representation as a Function of Wage](images/Difference_from_Mean_Racial_Representation_as_a_Function_of_Wage.png)
+
+While data is a little sparse for higher income jobs, we see right away that generally, white people are significantly underrepresented in most lower wage jobs, while Black people and Hispanic people are somewhat over represented, meaning that a higher proportion than their mean proportion of the population is represented in these jobs. At the same time, Asian and White people are over represented among the higher income jobs.
 
 ---
 
