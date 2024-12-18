@@ -16,7 +16,7 @@ page-layout: full
 title-block-banner: true
 ---
 
-```{r shiny}
+```{shinylive-r}
 #| standalone: true
 #| echo: false
 #| message: false

@@ -126,7 +126,7 @@ This interactive allows you to input two variables: CBSA and Race
 
 It'll, then, output the information from the employment data for different job types across various races for the years 2017 and 2022. It's a fun interactive that lets the user visually compare the employment counts between 2017 and 2022. Try it out!
 
-```{r shiny}
+```{shinylive-r}
 #| standalone: true
 #| echo: false
 #| message: false
