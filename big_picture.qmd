@@ -70,7 +70,7 @@ This plot visualizes the proportional representation of genders across various j
 
 ---
 
-![Proportional_Representation_by_job_type_and_race.png](images/Proportional_Representation_by_job_type_and_race.png)
+![Proportional Representation by Job Type and Race](images/Proportional_Representation_by_job_type_and_race.png)
 
 Similarly, this plot displays the workforce count representation of different races across various job types. Each facet represents a specific job category (e.g., Senior Officers and Managers, Professionals, Technicians, etc.). Within each facet, bars show the count of workers from different racial groups (e.g., White, Black, Hispanic) for that particular job type. The counts are visualized as bar heights, making it easy to compare the racial distribution within each job category. The x-axis represents the race categories. The y-axis is adjusted for each facet, with "free_y" scaling to accommodate different ranges for each job type. This plot helps identify racial disparities in job type representation and allows a visual comparison of racial diversity across job categories.
 
