@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="description" content="We describe the sources of our data and the cleaning process.">
 
-<title>MA [46]15 Final Project Group 5 - Data</title>
+<title>Data – MA [46]15 Final Project Group 5</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -118,7 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -141,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -155,7 +121,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link active" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
+  <li><a href="#exploring-the-data-research-cleaning-and-analysis" id="toc-exploring-the-data-research-cleaning-and-analysis" class="nav-link active" data-scroll-target="#exploring-the-data-research-cleaning-and-analysis">Exploring the Data: Research, Cleaning, and Analysis!</a>
+  <ul class="collapse">
+  <li><a href="#what-is-the-data" id="toc-what-is-the-data" class="nav-link" data-scroll-target="#what-is-the-data">What is the data?</a></li>
+  <li><a href="#why-was-this-data-assembled" id="toc-why-was-this-data-assembled" class="nav-link" data-scroll-target="#why-was-this-data-assembled">Why was this data assembled?</a></li>
+  <li><a href="#about-the-data-and-our-variables" id="toc-about-the-data-and-our-variables" class="nav-link" data-scroll-target="#about-the-data-and-our-variables">About the data, and our variables</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
+  <li><a href="#additional-r-packages" id="toc-additional-r-packages" class="nav-link" data-scroll-target="#additional-r-packages">Additional R Packages</a></li>
+  <li><a href="#combining-multiple-data-files" id="toc-combining-multiple-data-files" class="nav-link" data-scroll-target="#combining-multiple-data-files">Combining multiple data files</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -186,49 +160,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>The primary motivation behind this analysis is to explore disparities in workforce composition by race and ethnicity across industries and geographic regions in the United States. Understanding these disparities provides insights into how representation varies and may inform policy recommendations, diversity initiatives, or legal compliance measures.</p>
-<p>This dataset was published by the US Equal Employment Opportunity Commission and is maintained by Daniel McGregor. As part of its mandate under Title VII of the Civil Rights Act of 1964, as amended, the Equal Employment Opportunity Commission requires periodic reports from public and private employers, unions, and labor organizations that indicate the composition of their workforce by sex and by race/ethnic category. Among these reports, the EEO-1 is collected annually from Private employers with 100 or more employees or federal contractors with 50 more employees. (https://www.eeoc.gov/data/eeo-data-collections)</p>
-<p>Some key variables include: Demographic composition: WHT10 (White), BLKT10 (Black), HISPT10 (Hispanic), ASIANT10 (Asian), AIANT10 (American Indian/Alaska Native), NHOPIT10 (Native Hawaiian/Other Pacific Islander), and TOMRT10 (Two or more races). Industry classification: NAICS-2 and NAICS-3 codes. Geographic regions: Divisions at state and regional levels.</p>
-<p>To prepare the dataset for analysis, a systematic cleaning process was applied, with the goal of ensuring the data is manageable and meaningful for exploratory and inferential analysis. The following steps summarize the cleaning process:</p>
-<ol type="1">
-<li><p>Checking for Missing Values: Many missing values result from privacy protections (e.g., asterisks in cells). These were replaced with NA to maintain data consistency while noting that these gaps may affect certain analyses. Missing data due to underreporting or suppression in specific categories (e.g., small workforce sizes) were logged for potential exclusion or imputation strategies in future stages.</p></li>
-<li><p>Re-coding for Efficiency Columns with redundant or overly verbose labels were renamed for clarity (e.g., “White” re-coded to WHT10, “Black or African American” to BLKT10). Job categories were summed across all race and gender subcategories to simplify initial exploratory analysis.</p></li>
-<li><p>Focus on Key Variables Analysis was narrowed to ~10 job categories listed in the user guide (e.g., Senior Officials and Managers, Professionals, Technicians). Gender was aggregated into male (MT10) and female (FT10) totals to streamline visualizations.</p></li>
-<li><p>Summarizing Data Totals by race and job category were computed to analyze proportional representation. Separate summaries were created for gender and job category to enable visualization of workforce composition by both axes.</p></li>
-</ol>
-<p>After doing these steps, we have our dataset below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cleaned_dataset <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"Employment2017.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="rubric-on-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="rubric-on-this-page">Rubric: On this page</h2>
-<p>You will</p>
+<section id="exploring-the-data-research-cleaning-and-analysis" class="level1">
+<h1>Exploring the Data: Research, Cleaning, and Analysis!</h1>
+<p><strong>Author</strong>: Group 5</p>
+<p><strong>Published</strong>: December 18, 2024</p>
+<p><img src="images/image_3.png" class="img-fluid"></p>
+<section id="what-is-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-data">What is the data?</h2>
+<p>We have found datasets pertaining to race and sex distributions published by the US Equal Employment Opportunity Commission and maintained by Daniel McGregor. It breaks down industries occording to NAICS2 and NAICS3 codes, classifications used in North America to differentiate between all industries. It is collected as a part of the Civil Rights Act of 1964, which specifies that the Equal Employment Opportunity Commission must make periodic reports from public and private employers to gauge the composition of the workforce according to sex and race/ethnicity, from all employers with 100 or more employees, or federal contractors with 50 or more employees. The data was collected in 2017 and 2022 respectively.</p>
+<p><a href="https://catalog.data.gov/dataset/job-patterns-for-minorities-and-women-in-private-industry-2017-eeo-1-national-aggregate-re">Click here to visit the website</a></p>
+<p>We have also found another data set that matches median wage data over a time frame of several months spanning 2023 and 2024 which matches the NAICS job categories we found earlier, sourced from the Bureau of Labor Statistics, called the Current Employment Statistics (CES), which is conducted every month to gauge the overall health of the economy.</p>
+<p><a href="https://www.bls.gov/web/empsit/ceseeb3a.htm">Click here to visit the website</a></p>
+</section>
+<section id="why-was-this-data-assembled" class="level2">
+<h2 class="anchored" data-anchor-id="why-was-this-data-assembled">Why was this data assembled?</h2>
+<p>The first two data sets relating to ethnic and gender distributions across different fields of employment come from a census commissioned by the US Equal Opportunity Commission, which gathers data on the distribution of protected groups over different industries. Its principal purpose is to ensure adherence within industries and companies to equality and mitigating racial or sex based discrimination in the work force.</p>
+<p>The other data set pertaining to wage data comes from the Bureau of Labor Statistics, a non-partisan organization whose purpose is to gather data about nationwide labor related statistics to inform congress and the American people.</p>
+</section>
+<section id="about-the-data-and-our-variables" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data-and-our-variables">About the data, and our variables</h2>
+<p><a href="scripts/cleaned_data.R">cleaned_data.R</a></p>
+<p>The columns of our first datasets, cleaned_employment2017 and cleaned_employment2022, primarily break down along racial and gender categories, with each column featuring one of the racial categories featured:</p>
 <ul>
-<li>Describe where/how to find data.
-<ul>
-<li>You must include a link to the original data source(s). Make sure to provide attribution to those who collected the data.</li>
-<li>Why was the data collected/curated? Who put it together? (This is important, if you don’t know why it was collected then that might not be a good dataset to look at.</li>
-</ul></li>
-<li>Describe the different data files used and what each variable means.
-<ul>
-<li>If you have many variables then only describe the most relevant ones and summarize the rest.</li>
-</ul></li>
-<li>Describe any cleaning you had to do for your data.
-<ul>
-<li>You <em>must</em> include a link to your <code>load_and_clean_data.R</code> file.</li>
-<li>Rename variables and recode factors to make data more clear.</li>
-<li>Also, describe any additional R packages you used outside of those covered in class.</li>
-<li>Describe and show code for how you combined multiple data files and any cleaning that was necessary for that.</li>
-<li>Some repetition of what you do in your <code>load_and_clean_data.R</code> file is fine and encouraged if it helps explain what you did.</li>
-</ul></li>
-<li>Organization, clarity, cleanliness of the page
-<ul>
-<li>Make sure to remove excessive warnings, use clean easy-to-read code (without side scrolling), organize with sections, use bullets and other organization tools, etc.</li>
-<li>This page should be self-contained.</li>
-</ul></li>
+<li><p>WHT_: White</p></li>
+<li><p>BLK_: Black or African American</p></li>
+<li><p>HISP_: Hispanic</p></li>
+<li><p>ASIAN_: Asian</p></li>
+<li><p>AIAN_: American Indian or Alaska Native</p></li>
+<li><p>NHOPI_: Native Hawaiian or Other Pacific Islander</p></li>
+<li><p>TOMR_: Two or More Races</p></li>
 </ul>
+<p>As well as additional categorizations for male or female.</p>
+<ul>
+<li><p>MT_: Male</p></li>
+<li><p>FT_: Female</p></li>
+</ul>
+<p>Within each race/gender category, there is also a breakdown of the various job types belonging to each industry, numbered as follows:</p>
+<ul>
+<li><p>1 for senior officers and managers</p></li>
+<li><p>2 for professionals</p></li>
+<li><p>3 for technicians</p></li>
+<li><p>4 for sales workers</p></li>
+<li><p>5 for clericals</p></li>
+<li><p>6 for craft</p></li>
+<li><p>7 for operatives</p></li>
+<li><p>8 for laborers</p></li>
+<li><p>9 for services</p></li>
+<li><p>1_2 for mid officers and managers</p></li>
+<li><p>10 for the aggregate for the entire category.</p></li>
+</ul>
+<p>If we wanted to look at both Race and Gender, the column would look like:</p>
+<ul>
+<li><p>TOMRF_</p></li>
+<li><p>TOMRM_</p></li>
+</ul>
+<p>For instance, a column like TOMRF1 would indicate “females” of “two or more races” working as “senior officers or managers”. Then, each row of the dataset corresponds to some NAICS industry designation, delineated by its NAICS number, featuring 246 unique job titles, split by geographic region, for a total of 43,000 rows. Below is a PDF of the column definitions.</p>
+<p><a href="https://www.eeoc.gov/sites/default/files/2020-11/PUF%20Data%20Download%20User%20Guide.pdf">Variable Overview</a></p>
+<p>Our second dataset, wage_data, features a number of unique industry designations, as well as the associated hourly wage for each of those industries, across the months of October 2023, August 2024, September 2024, and October 2024.</p>
+</section>
+<section id="data-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h2>
+<p>There was significant cleaning involved in the data sets for employment2017 and employment2022. To prepare these data sets for analysis, a systematic cleaning process was applied, with the goal of ensuring the data is manageable and meaningful for exploratory and inferential analysis. The following steps summarize the cleaning process:</p>
+<ul>
+<li><p>Many missing values result from privacy protections (e.g., asterisks in cells). These were replaced with NA to maintain data consistency while noting that these gaps may affect certain analyses. Missing data due to underreporting or suppression in specific categories (e.g., small workforce sizes) were logged for potential exclusion or imputation strategies in future stages.</p></li>
+<li><p>Columns with redundant or overly verbose labels were renamed for clarity (e.g., “White” re-coded to WHT10, “Black or African American” to BLKT10). Job categories were summed across all race and gender subcategories to simplify initial exploratory analysis.</p></li>
+<li><p>Analysis was narrowed to ~10 job categories listed in the user guide (e.g., Senior Officials and Managers, Professionals, Technicians). Gender was aggregated into male (MT10) and female (FT10) totals to streamline visualizations.</p></li>
+<li><p>Totals by race and job category were computed to analyze proportional representation. Separate summaries were created for gender and job category to enable visualization of workforce composition by both axes.</p></li>
+</ul>
+<p>We did not have to do significant cleaning for the wages data set, because we parsed it directly from a website, so we just picked which data which we were going to actually use in our extraction.</p>
+</section>
+<section id="additional-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="additional-r-packages">Additional R Packages</h2>
+<p>We used the “here” library which simplifies the process of managing file paths, which was crucial, working across multiple different systems and computers, for making sure that directories lined up and that the same body of code could work for everyone, no matter how they organized their files on their computer.</p>
+</section>
+<section id="combining-multiple-data-files" class="level2">
+<h2 class="anchored" data-anchor-id="combining-multiple-data-files">Combining multiple data files</h2>
+<p>In order to produce the analysis of race proportion as a function of wages, we needed to combine the data set that listed the racial distributions for each industry with the data set that listed the median wages over different time periods for each industry, using the three digit NAICS number as a key.</p>
+<p>Some issues that came up involve having multiple entries for the same NAICS number, having to filter out NAICS numbers that were more or less than three digits (the number of digits indicating more or less detail in the industry category), and filtering out different time periods to focus on a single month’s median wages, of August 2024.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -267,18 +278,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -310,7 +310,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/sussmanbu\.github\.io\/ma-4615-fa24-final-project-group-5\/");
@@ -318,7 +340,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
